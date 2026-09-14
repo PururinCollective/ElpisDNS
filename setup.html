@@ -29,8 +29,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-<link href="style-main.css?version=3.8" rel="stylesheet">
-<link href="style-mobile.css?version=3.8" rel="stylesheet">
+<link href="style-main.css?version=3.9" rel="stylesheet">
+<link href="style-mobile.css?version=3.9" rel="stylesheet">
 
 <meta name="description" content="How to point Android, Windows, iOS, Firefox, Chrome, MikroTik, OpenWrt and AdGuard Home at an encrypted ΕΛΠΙΣ DNS resolver.">
 <meta name="theme-color" content="#f24f2f">
@@ -95,7 +95,14 @@
 		<div class="doc-text">
 			<b>DoH endpoint</b> &mdash; <span class="picked" data-picked="https">https://b.hitoha.moe/dns-query</span><br />
 			<b>DoT address</b> &mdash; <span class="picked" data-picked="tls">tls://b.hitoha.moe</span><br />
-			<b>Hostname</b> &mdash; <span class="picked" data-picked="host">b.hitoha.moe</span>
+			<b>Hostname</b> &mdash; <span class="picked" data-picked="host">b.hitoha.moe</span><br />
+			<b>DNS stamp</b> &mdash; <span class="picked" data-picked="stamp">sdns://AgMAAAAAAAAAAAAMYi5oaXRvaGEubW9lCi9kbnMtcXVlcnk</span>
+		</div>
+
+		<div class="doc-text">
+			The stamp is the whole endpoint in one string &mdash; protocol, host, path
+			and what the resolver promises. Anything built on dnscrypt-proxy takes it
+			directly, which saves filling in four fields by hand.
 		</div>
 
 		<div class="doc-note">
@@ -437,9 +444,9 @@ uci commit dhcp
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<script src="js/app-theme.js?version=3.8"></script>
-<script src="js/app-setup.js?version=3.8"></script>
-<script src="js/app-quote.js?version=3.8"></script>
+<script src="js/app-theme.js?version=3.9"></script>
+<script src="js/app-setup.js?version=3.9"></script>
+<script src="js/app-quote.js?version=3.9"></script>
 
 </body>
 </html>

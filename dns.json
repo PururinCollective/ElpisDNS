@@ -27,7 +27,12 @@
 
 	"defaults": {
 		"dohPath": "/dns-query",
-		"dotPort": 853
+		"dotPort": 853,
+		"stamp": {
+			"dnssec": true,
+			"nolog": true,
+			"nofilter": false
+		}
 	},
 
 	"resolvers": [

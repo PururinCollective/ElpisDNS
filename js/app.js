@@ -297,19 +297,28 @@ function renderGroup(group){
 	});
 }
 
-function buildEndpoint(entry, kind){
+function pickHost(entry){
 
-	const host = entry.servers[
+	return entry.servers[
 		Math.floor(Math.random() * entry.servers.length)
 	];
+}
+
+// Host with the port attached, but only when it is not the default one
+// for the transport. Both the endpoint and the stamp need the same string.
+function authority(entry, kind){
+
+	if(kind !== "DoT") return null;
+
+	const port = entry.dotPort || db.defaults.dotPort;
+
+	return port === 853 ? "" : `:${port}`;
+}
+
+function buildEndpoint(entry, kind, host){
 
 	if(kind === "DoT"){
-
-		const port = entry.dotPort || db.defaults.dotPort;
-
-		return port === 853
-			? `tls://${host}`
-			: `tls://${host}:${port}`;
+		return `tls://${host}${authority(entry, kind)}`;
 	}
 
 	const path = entry.dohPath || db.defaults.dohPath;
@@ -317,6 +326,27 @@ function buildEndpoint(entry, kind){
 	return kind === "DoQ"
 		? `quic://${host}`
 		: `https://${host}${path}`;
+}
+
+// The stamp has to describe the same host the endpoint above points at,
+// which is why the host is picked once and passed to both.
+function buildStamp(entry, kind, host){
+
+	try{
+
+		return dnsStamp(
+			kind,
+			host + (authority(entry, kind) || ""),
+			entry.dohPath || db.defaults.dohPath,
+			{ ...db.defaults.stamp, ...entry.stamp }
+		);
+	}
+	catch(err){
+
+		console.error("Could not build a stamp for", host, err);
+
+		return "";
+	}
 }
 
 function setText(id, value){
@@ -346,11 +376,12 @@ function escapeHTML(value){
 
 // The setup page reads this back, so the guide can show the
 // endpoint the visitor actually picked instead of an example.
-function remember(endpoint){
+function remember(endpoint, stamp){
 
 	try{
 		localStorage.setItem("elpis-endpoint", endpoint);
 		localStorage.setItem("elpis-host", hostnameOf(endpoint));
+		localStorage.setItem("elpis-stamp", stamp || "");
 	}
 	catch(err){
 		/* private browsing, nothing to remember */
@@ -364,17 +395,23 @@ function renderResult(entry){
 	if(!entry){
 
 		setText("endpoint", "No resolver matches that combination.");
+		setText("stamp", "");
 		setHTML("server-list", "");
 		setHTML("summary", "");
 
 		return;
 	}
 
-	const endpoint = buildEndpoint(entry, state.kind);
+	const host = pickHost(entry);
+
+	const endpoint = buildEndpoint(entry, state.kind, host);
+
+	const stamp = buildStamp(entry, state.kind, host);
 
 	setText("endpoint", endpoint);
+	setText("stamp", stamp || "No stamp: this transport has no stamp format.");
 
-	remember(endpoint);
+	remember(endpoint, stamp);
 
 	setHTML("server-list", entry.servers.map(server => `
 		<span class="server-badge">${escapeHTML(server)}</span>
@@ -504,6 +541,15 @@ wire("copy-btn", event => {
 	);
 });
 
+wire("copy-stamp-btn", event => {
+
+	copy(
+		document.getElementById("stamp").innerText,
+		event.currentTarget,
+		"Copied"
+	);
+});
+
 wire("copy-host-btn", event => {
 
 	copy(
@@ -517,11 +563,16 @@ wire("shuffle-btn", () => {
 
 	if(!current) return;
 
-	const endpoint = buildEndpoint(current, state.kind);
+	const host = pickHost(current);
+
+	const endpoint = buildEndpoint(current, state.kind, host);
+
+	const stamp = buildStamp(current, state.kind, host);
 
 	setText("endpoint", endpoint);
+	setText("stamp", stamp || "No stamp: this transport has no stamp format.");
 
-	remember(endpoint);
+	remember(endpoint, stamp);
 });
 
 window.addEventListener("hashchange", () => {

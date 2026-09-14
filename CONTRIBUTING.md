@@ -48,6 +48,7 @@ tooltip before you push.
 | `maintainer` | no | Who to poke when it breaks. |
 | `homepage` | no | Operator page, AS page or status page. |
 | `notes` | no | One or two sentences, shown under the selection. |
+| `stamp` | no | What the generated `sdns://` stamp claims: `{ "dnssec": true, "nolog": true, "nofilter": false }`. Defaults to DNSSEC on, no logs, filtering on. |
 
 Entries that share a region, provider, filter, network and feature are the
 same entry &mdash; add your hostname to its `servers` list instead of creating
@@ -63,6 +64,7 @@ at whatever is on it, so the bar is not decorative.
 - **No answer tampering** beyond the filtering profile you declared. If you block ads, say `NSFW`. If you also block adult content, say `SFW`. If you block anything else, say so in `notes` &mdash; a surprise block list is exactly what this project exists to route around.
 - **Don't sell the queries.** Do not log, profile, or hand query data to third parties. If you are legally required to keep something, put it in `notes` and be honest about it.
 - **Keep it up.** Occasional maintenance is normal; a host that is dead for weeks gets removed.
+- **Your stamp must be true.** The site generates an `sdns://` stamp for your entry, and clients act on the flags inside it. If you do not validate DNSSEC, or you keep query logs, set `"stamp": { "dnssec": false }` or `{ "nolog": false }` on your entry. Claiming a property you do not provide is worse than not being listed.
 
 ## 4. Test before you push
 
@@ -107,6 +109,7 @@ plan to run it. That is the whole ritual.
 | `js/app.js` | Selector engine, endpoint building, share links |
 | `js/app-theme.js` | System, light and dark switching |
 | `js/app-copy.js` | Clipboard, shared by every page |
+| `js/app-stamp.js` | Builds the `sdns://` stamp for the selected endpoint |
 | `js/app-quote.js` | Footer quotes |
 | `js/app-mikrotik.js` | The `.rsc` generator |
 | `js/app-setup.js` | Setup page helpers |

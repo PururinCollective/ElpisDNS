@@ -8,6 +8,8 @@
 
 const FALLBACK_ENDPOINT = "https://b.hitoha.moe/dns-query";
 const FALLBACK_HOST = "b.hitoha.moe";
+const FALLBACK_STAMP =
+	"sdns://AgMAAAAAAAAAAAAMYi5oaXRvaGEubW9lCi9kbnMtcXVlcnk";
 
 function picked(key, fallback){
 
@@ -36,7 +38,8 @@ function fillPicked(){
 		endpoint,
 		host,
 		tls,
-		https
+		https,
+		stamp: picked("elpis-stamp", FALLBACK_STAMP)
 	};
 
 	document.querySelectorAll("[data-picked]").forEach(node => {

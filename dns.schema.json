@@ -89,7 +89,8 @@
 					"minimum": 1,
 					"maximum": 65535,
 					"default": 853
-				}
+				},
+				"stamp": { "$ref": "#/$defs/stamp" }
 			}
 		},
 
@@ -102,6 +103,28 @@
 	},
 
 	"$defs": {
+		"stamp": {
+			"type": "object",
+			"description": "What the sdns:// stamp claims about this resolver. Only say true if it is true - clients act on these flags.",
+			"additionalProperties": false,
+			"properties": {
+				"dnssec": {
+					"type": "boolean",
+					"description": "The resolver validates DNSSEC signatures.",
+					"default": true
+				},
+				"nolog": {
+					"type": "boolean",
+					"description": "The resolver keeps no query log.",
+					"default": true
+				},
+				"nofilter": {
+					"type": "boolean",
+					"description": "The resolver blocks nothing at all. False for every filtering profile.",
+					"default": false
+				}
+			}
+		},
 		"resolver": {
 			"type": "object",
 			"required": ["region", "provider", "filter", "network", "feature", "kind", "servers"],
@@ -177,7 +200,8 @@
 				"notes": {
 					"type": "string",
 					"description": "One or two sentences shown to the user when this entry is selected."
-				}
+				},
+				"stamp": { "$ref": "#/$defs/stamp" }
 			}
 		}
 	}

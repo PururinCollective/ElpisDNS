@@ -23,6 +23,7 @@ Aligned with the vision of [EFF Internet Freedom and Privacy](https://www.eff.or
 ## What it is built on
 
 - Privacy first: encrypted transport, no query logging, no profiling
+- An `sdns://` DNS stamp generated for every endpoint, for dnscrypt-proxy and friends
 - Ads, trackers, malware and phishing filtered by default
 - A Family profile with adult content blocked and safe search enforced
 - CDN acceleration and regional routing optimisation
@@ -79,6 +80,7 @@ fetched over HTTP.
 | `js/app.js` | Selector engine, endpoint building, share links |
 | `js/app-theme.js` | System / light / dark switching |
 | `js/app-copy.js` | Clipboard, shared by every page |
+| `js/app-stamp.js` | `sdns://` DNS stamp generator |
 | `js/app-quote.js` | Footer quotes |
 | `js/app-mikrotik.js` | RouterOS `.rsc` generator |
 | `js/app-setup.js` | Setup page helpers |

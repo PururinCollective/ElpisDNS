@@ -534,12 +534,28 @@ code,
 	word-break:break-word;
 }
 
-#endpoint{
+#endpoint,
+#stamp{
 	white-space:nowrap;
 	overflow-x:auto;
 	font-size:16px;
 	color:var(--text);
 	padding:4px 0;
+}
+
+/* Stamps are long and nobody reads them, they only get copied. */
+#stamp{
+	font-size:13.5px;
+	color:var(--text-soft);
+}
+
+.stamp-hint{
+	margin-top:10px;
+
+	font-family:var(--font-body);
+	font-size:13px;
+	line-height:1.6;
+	color:var(--text-faint);
 }
 
 .btn-elpis{
