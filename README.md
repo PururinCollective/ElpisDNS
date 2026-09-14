@@ -86,6 +86,7 @@ fetched over HTTP.
 | `js/app-setup.js` | Setup page helpers |
 | `img/hero-map.svg` | Animated night map behind the hero, generated |
 | `tools/make-hero-map.py` | Regenerates that map. Only needed if you change it |
+| `tools/stamp-assets.py` | Re-stamps `?hash=` cache busters after any asset change |
 
 The banner is a self-contained animated SVG: encrypted traffic leaving the
 resolver in orange, a HUD walking the autonomous systems on the path, and
@@ -101,6 +102,22 @@ which is what visitors who ask for reduced motion get served.
 
 The site follows your operating system's light or dark preference out of the box;
 the icon in the top bar cycles system, light and dark, and the choice is remembered.
+
+### Cache busting
+
+Asset links carry a content hash rather than a hand-maintained version number:
+
+```
+python tools/stamp-assets.py
+```
+
+Every local `.css`, `.js`, `.json` and `.svg` reference becomes
+`style-main.css?hash=2338f332`, the first eight hex characters of the file's
+SHA-256. Change a file and its URL changes with it, so Cloudflare has to
+fetch the new copy; leave a file alone and the URL is stable, so nobody
+re-downloads it. Run it after any asset change, or wire `--check` into CI to
+be told when you forget. It follows references through files, so editing
+`dns.json` re-stamps `js/app.js` and then the pages that load it.
 
 ## Usage
 

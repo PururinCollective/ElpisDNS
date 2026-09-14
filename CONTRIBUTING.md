@@ -92,7 +92,21 @@ kdig -d @dns.example.com +tls-ca +tls-host=dns.example.com example.com
 If you do not have `kdig`, the [Setup page](setup.html) lists other ways to
 check what is really answering.
 
-## 5. Open the pull request
+## 5. Re-stamp the assets
+
+If you touched any CSS, JS or JSON - `dns.json` counts - refresh the cache
+busting hashes before you commit:
+
+```bash
+python tools/stamp-assets.py
+```
+
+Every local asset link is suffixed with the first eight hex characters of the
+file's SHA-256, so a changed file lands on a URL no cache has seen before.
+It rewrites nothing when nothing changed, and `--check` exits non-zero if a
+stamp is stale, which makes it a one line CI guard.
+
+## 6. Open the pull request
 
 Say who you are, where the server sits, what it filters, and how long you
 plan to run it. That is the whole ritual.
@@ -115,6 +129,7 @@ plan to run it. That is the whole ritual.
 | `js/app-setup.js` | Setup page helpers |
 | `img/hero-map.svg` | The animated banner. Generated, do not hand edit |
 | `tools/make-hero-map.py` | Regenerates the banner and its reduced-motion still |
+| `tools/stamp-assets.py` | Re-stamps `?hash=` cache busters. Run after changing CSS, JS or JSON |
 
 The banner is the one file in the project that is not written by hand. The
 ASN list the HUD walks through, the traffic arcs and the blocked queries all
