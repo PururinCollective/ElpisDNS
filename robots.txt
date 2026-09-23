@@ -1,0 +1,13 @@
+# ΕΛΠΙΣ DNS — https://elpis.violetnetworks.xyz/
+#
+# Nothing here is private. The whole site is three static pages and the
+# JSON behind them, so everything is open to everything.
+
+User-agent: *
+Allow: /
+
+# Source files nobody should be downloading from a crawl.
+Disallow: /img/banner.psd
+Disallow: /img/the-expanse.mp4
+
+Sitemap: https://elpis.violetnetworks.xyz/sitemap.xml

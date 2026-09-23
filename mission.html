@@ -4,9 +4,10 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>Mission &mdash; ΕΛΠΙΣ DNS</title>
+<title>Why ΕΛΠΙΣ DNS exists — block lists, recursion, DNSSEC</title>
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/svg+xml" href="img/elpis-mark.svg?hash=edbc1f49">
+<link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
 
 <!-- Paint the correct theme before the first frame, no white flash -->
 <script>
@@ -22,6 +23,7 @@
 	})();
 </script>
 
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
@@ -32,17 +34,109 @@
 <link href="style-main.css?hash=68968e7f" rel="stylesheet">
 <link href="style-mobile.css?hash=37f4fe49" rel="stylesheet">
 
-<meta name="description" content="Why ΕΛΠΙΣ DNS exists: what it blocks, what it refuses to keep, why it runs its own recursion, and how to check every word of it.">
+<meta name="description" content="What Elpis DNS blocks and why, the filter lists with their URLs, our own C99 resolver with ML-DSA-44 DNSSEC, and raw recursors for your own AdGuard Home.">
+<link rel="canonical" href="https://elpis.violetnetworks.xyz/mission.html">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
-<!-- Open Graph / Facebook -->
+<!-- Open Graph: Facebook, Discord, Telegram, Slack, WhatsApp, LinkedIn -->
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="ΕΛΠΙΣ DNS">
+<meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://elpis.violetnetworks.xyz/mission.html">
 <meta property="og:title" content="Why ΕΛΠΙΣ exists">
-<meta property="og:description" content="No middlemen, no ledger, no opinions about where you go.">
-<meta property="og:image" content="https://elpis.violetnetworks.xyz/banner.jpg">
+<meta property="og:description" content="No middlemen, no ledger, no opinions about where you go — and the second resolver in the world to validate ML-DSA-44 after Cloudflare.">
+<meta property="og:image" content="https://elpis.violetnetworks.xyz/img/og-image.jpg">
+<meta property="og:image:secure_url" content="https://elpis.violetnetworks.xyz/img/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ΕΛΠΙΣ DNS — Resolve freely. Answer to no one.">
 
-<!-- Theme -->
+<!-- X / Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://elpis.violetnetworks.xyz/mission.html">
+<meta name="twitter:title" content="Why ΕΛΠΙΣ exists">
+<meta name="twitter:description" content="No middlemen, no ledger, no opinions about where you go — and the second resolver in the world to validate ML-DSA-44 after Cloudflare.">
+<meta name="twitter:image" content="https://elpis.violetnetworks.xyz/img/og-image.jpg">
+<meta name="twitter:image:alt" content="ΕΛΠΙΣ DNS — Resolve freely. Answer to no one.">
+
+<!-- The stripe Discord paints down the side of the embed -->
 <meta name="theme-color" content="#f24f2f">
+
+<script type="application/ld+json">
+{
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": "WebSite",
+			"@id": "https://elpis.violetnetworks.xyz/#website",
+			"url": "https://elpis.violetnetworks.xyz/",
+			"name": "ΕΛΠΙΣ DNS",
+			"alternateName": [
+				"Elpis DNS",
+				"ELPIS DNS"
+			],
+			"description": "Community-run encrypted DNS resolvers: DNS over HTTPS and DNS over TLS, filtered, with no query logging.",
+			"inLanguage": "en",
+			"publisher": {
+				"@id": "https://elpis.violetnetworks.xyz/#org"
+			}
+		},
+		{
+			"@type": "Organization",
+			"@id": "https://elpis.violetnetworks.xyz/#org",
+			"name": "ΕΛΠΙΣ DNS",
+			"alternateName": "Elpis DNS",
+			"url": "https://elpis.violetnetworks.xyz/",
+			"logo": "https://elpis.violetnetworks.xyz/img/elpis-logo.svg",
+			"image": "https://elpis.violetnetworks.xyz/img/og-image.jpg",
+			"sameAs": [
+				"https://github.com/PururinCollective/ElpisDNS",
+				"https://github.com/PururinCollective/elpis-resolver",
+				"https://discord.gg/aw8pt2SWnv",
+				"https://pururin.moe/",
+				"https://openpon.org/"
+			]
+		},
+		{
+			"@type": "SoftwareApplication",
+			"@id": "https://elpis.violetnetworks.xyz/mission.html#software",
+			"name": "ΕΛΠΙΣ Resolver",
+			"applicationCategory": "UtilitiesApplication",
+			"operatingSystem": "Linux, FreeBSD, macOS",
+			"description": "A recursive DNS resolver in portable C99 with SIMD kernels and DNSSEC validation including post-quantum ML-DSA-44.",
+			"programmingLanguage": "C",
+			"codeRepository": "https://github.com/PururinCollective/elpis-resolver",
+			"isAccessibleForFree": true,
+			"offers": {
+				"@type": "Offer",
+				"price": "0",
+				"priceCurrency": "USD"
+			},
+			"author": {
+				"@id": "https://elpis.violetnetworks.xyz/#org"
+			}
+		},
+		{
+			"@type": "BreadcrumbList",
+			"itemListElement": [
+				{
+					"@type": "ListItem",
+					"position": 1,
+					"name": "ΕΛΠΙΣ DNS",
+					"item": "https://elpis.violetnetworks.xyz/"
+				},
+				{
+					"@type": "ListItem",
+					"position": 2,
+					"name": "Why ΕΛΠΙΣ exists",
+					"item": "https://elpis.violetnetworks.xyz/mission.html"
+				}
+			]
+		}
+	]
+}
+</script>
 </head>
 
 <body>
