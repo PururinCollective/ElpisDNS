@@ -6,7 +6,7 @@
 
 <title>Mission &mdash; ΕΛΠΙΣ DNS</title>
 <link rel="icon" type="image/x-icon" href="favicon.ico">
-<link rel="icon" type="image/svg+xml" href="img/elpis-mark.svg?hash=ebd577cf">
+<link rel="icon" type="image/svg+xml" href="img/elpis-mark.svg?hash=edbc1f49">
 
 <!-- Paint the correct theme before the first frame, no white flash -->
 <script>
@@ -29,8 +29,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-<link href="style-main.css?hash=2338f332" rel="stylesheet">
-<link href="style-mobile.css?hash=dcae0317" rel="stylesheet">
+<link href="style-main.css?hash=086e36d5" rel="stylesheet">
+<link href="style-mobile.css?hash=37f4fe49" rel="stylesheet">
 
 <meta name="description" content="Why ΕΛΠΙΣ DNS exists: what it blocks, what it refuses to keep, why it runs its own recursion, and how to check every word of it.">
 
@@ -52,7 +52,7 @@
 	<div class="container topbar-inner">
 
 		<a class="topbar-brand" href="index.html">
-			<img src="img/elpis-mark.svg?hash=ebd577cf" alt="" class="topbar-mark">
+			<img src="img/elpis-mark.svg?hash=edbc1f49" alt="" class="topbar-mark">
 			<span class="topbar-name">ΕΛΠΙΣ <span class="accent">DNS</span></span>
 		</a>
 
@@ -163,6 +163,7 @@
 	<div class="doc-jump">
 		<a href="#blacklist"><i class="bi bi-slash-circle"></i> The Blacklist</a>
 		<a href="#middlemen"><i class="bi bi-diagram-3"></i> No Middlemen</a>
+		<a href="#resolver"><i class="bi bi-cpu"></i> Our own resolver</a>
 		<a href="#recursors"><i class="bi bi-hdd-network"></i> Recursive resolvers</a>
 		<a href="#bootstrap"><i class="bi bi-signpost-split"></i> Bootstrap DNS</a>
 	</div>
@@ -357,7 +358,8 @@
 					A tampered answer fails instead of arriving with a shrug. Ask for a
 					domain whose chain is broken &mdash; wrong signature, expired, missing
 					&mdash; and you get nothing at all, which is the only honest reply.
-					ECDSA P-256, P-384 and Ed25519.
+					RSA, ECDSA P-256 and P-384, Ed25519 &mdash; and
+					<a href="#resolver">ML-DSA-44</a>, which almost nobody checks yet.
 				</div>
 			</div>
 
@@ -384,6 +386,140 @@
 		</div>
 	</section>
 
+	<!-- The resolver itself -->
+	<section id="resolver" class="mt-5 pt-4">
+		<div class="section-heading">
+			Our own resolver
+		</div>
+		<div class="subtitle">
+			Answering the question yourself means running something that can. So we
+			wrote one. <b>ΕΛΠΙΣ Resolver</b> is a recursive resolver in portable
+			C99 &mdash; the crypto, the event loop and the wire format all in one
+			tree, no dependencies, one static binary you copy to a machine and run.
+			It is <a href="https://github.com/PururinCollective/elpis-resolver" target="_blank" rel="noopener">open source</a>,
+			because a resolver you cannot read is a promise you cannot check.
+			<br /><br />
+			It is also the <b>second resolver in the world to validate ML-DSA-44</b>,
+			the post-quantum DNSSEC signature from FIPS&nbsp;204, after Cloudflare.
+			Not because a quantum computer is at your door this evening &mdash;
+			because the signatures collected today are the ones somebody intends to
+			forge later, and a resolver that waits for the standards body to finish
+			is a resolver that arrives after the fact.
+		</div>
+
+		<div class="subtitle mt-4">
+			It does not face you directly, and it is not trying to. AdGuard Home
+			keeps the encrypted transports, the block lists and the per-client
+			rules; Elpis sits behind it and does the part nobody sees &mdash;
+			recursion from the root, caching, and every signature on the way.
+		</div>
+
+		<div class="code-block"><pre class="diagram">
+                        ┌────────────────┐
+                    ┌───┤ ΕΛΠΙΣ Resolver │  2402:4e20:b00b::1001
+                    │   └────────────────┘
+┌─────────┐         │   ┌────────────────┐
+│ AdGuard ├─────────┼───┤ ΕΛΠΙΣ Resolver │  2402:4e20:b00b::1111
+└─────────┘         │   └────────────────┘
+                    │   ┌────────────────┐
+                    └───┤ ΕΛΠΙΣ Resolver │  151.158.198.49:5304
+                        └────────────────┘
+
+ public face,            recursion, caching, DNSSEC,
+ DoH / DoT / DoQ,        straight to the root and TLD servers
+ filtering, logging
+</pre></div>
+
+		<div class="doc-note mt-3">
+			<i class="bi bi-info-circle"></i>
+			<div>
+				<b>That is the shape, not the scoreboard.</b> The two
+				<code class="inline-code">b00b</code> recursors below still answer
+				from PowerDNS while we convert them one at a time; everything else is
+				Elpis already. A resolver swap nobody notices is the only kind worth
+				doing.
+			</div>
+		</div>
+
+		<div class="rules rules-3 mt-4">
+
+			<div class="rule">
+				<div class="rule-index">ML-DSA-44</div>
+				<div class="rule-title">Second in the world</div>
+				<div class="rule-text">
+					FIPS&nbsp;204 verification written from the specification, with the
+					draft's worked example &mdash; key tag, DS digest and a real RRSIG
+					&mdash; checked on every single build. 65 and 87 are in there too.
+				</div>
+			</div>
+
+			<div class="rule">
+				<div class="rule-index">SIMD</div>
+				<div class="rule-title">Machine speed, not generic speed</div>
+				<div class="rule-text">
+					Hand-written AVX2, SSE2 and NEON kernels for the hot paths,
+					chosen at startup from what the CPU actually reports. The crypto
+					runs faster than a portable C compiler would ever manage on its own.
+				</div>
+			</div>
+
+			<div class="rule">
+				<div class="rule-index">C99</div>
+				<div class="rule-title">Portable on purpose</div>
+				<div class="rule-text">
+					Strict C99 and POSIX.1-2008. epoll on Linux, kqueue on the BSDs
+					and macOS, poll everywhere else. One static binary, no shared
+					libraries, nothing to install beside it but its config.
+				</div>
+			</div>
+
+			<div class="rule">
+				<div class="rule-index">NO UPSTREAM</div>
+				<div class="rule-title">Root, TLD, authoritative</div>
+				<div class="rule-text">
+					It resolves rather than forwards, so there is no second custodian
+					to trust and none to audit. The chain ends at the servers that
+					actually hold the answer.
+				</div>
+			</div>
+
+			<div class="rule">
+				<div class="rule-index">TESTED</div>
+				<div class="rule-title">Every vector path, byte for byte</div>
+				<div class="rule-text">
+					The suite checks each SIMD kernel against the scalar one and
+					needs no network to do it, so the only difference between the
+					fast path and the plain one is how long it took.
+				</div>
+			</div>
+
+			<div class="rule">
+				<div class="rule-index">YOURS TOO</div>
+				<div class="rule-title">Build it for your own CPU</div>
+				<div class="rule-text">
+					<code class="inline-code">make static</code> and it is done; point
+					<code class="inline-code">-march</code> at your own processor for the
+					last few percent. Put it behind your own AdGuard Home and stop
+					needing us at all.
+				</div>
+			</div>
+		</div>
+
+		<div class="cta mt-4">
+			<div class="cta-body">
+				<div class="cta-title">Read it before you trust it</div>
+				<div class="cta-text">
+					The source, the DNSSEC notes, the cache sizing and the reasons the
+					hot paths look the way they do &mdash; all of it is in the open,
+					including the parts that are deliberately missing.
+				</div>
+			</div>
+			<a class="btn btn-elpis" href="https://github.com/PururinCollective/elpis-resolver" target="_blank" rel="noopener">
+				<i class="bi bi-github"></i> ΕΛΠΙΣ Resolver
+			</a>
+		</div>
+	</section>
+
 	<!-- Recursive resolvers - IPv6 -->
 	<section id="recursors" class="mt-5 pt-4">
 		<div class="section-heading">
@@ -403,6 +539,10 @@
 			handing every query it makes to Google or Cloudflare on the way out.
 			They work in the <b>bootstrap</b> field too &mdash; the one that has to
 			resolve an encrypted endpoint's hostname before the encryption can begin.
+			<br /><br />
+			These are <a href="#resolver">ΕΛΠΙΣ Resolver</a> answering, and anyone is
+			welcome on them. IPv6 is preferred and it is not sentiment: the v6 path
+			goes straight out of our AS without a translator in the middle of it.
 		</div>
 
 		<div class="doc-note mt-3">
@@ -413,21 +553,17 @@
 				<a href="index.html">front page</a> &mdash; the same resolvers with the
 				filtering in front of them. Wiring one up as an upstream is on the
 				<a href="setup.html#adguard">setup page</a>.
+				The two <code class="inline-code">b00b</code> addresses still answer
+				from PowerDNS until their conversion comes round; they resolve exactly
+				the same names in the meantime.
 			</div>
 		</div>
 
 		<div class="address-grid mt-3">
 			<div class="copy-row">
-				<code>2402:4e20:b00b::1111</code>
+				<code>2402:4e20::1001</code>
 				<button class="btn btn-elpis-ghost btn-sm" type="button"
-					data-copy="2402:4e20:b00b::1111">
-					<i class="bi bi-clipboard"></i> Copy
-				</button>
-			</div>
-			<div class="copy-row">
-				<code>2402:4e20:b00b::1001</code>
-				<button class="btn btn-elpis-ghost btn-sm" type="button"
-					data-copy="2402:4e20:b00b::1001">
+					data-copy="2402:4e20::1001">
 					<i class="bi bi-clipboard"></i> Copy
 				</button>
 			</div>
@@ -439,9 +575,46 @@
 				</button>
 			</div>
 			<div class="copy-row">
-				<code>2402:4e20::1001</code>
+				<code>2402:4e20::babe</code>
 				<button class="btn btn-elpis-ghost btn-sm" type="button"
-					data-copy="2402:4e20::1001">
+					data-copy="2402:4e20::babe">
+					<i class="bi bi-clipboard"></i> Copy
+				</button>
+			</div>
+			<div class="copy-row">
+				<code>2402:4e20::cafe</code>
+				<button class="btn btn-elpis-ghost btn-sm" type="button"
+					data-copy="2402:4e20::cafe">
+					<i class="bi bi-clipboard"></i> Copy
+				</button>
+			</div>
+			<div class="copy-row">
+				<code>2402:4e20:bab1::1001</code>
+				<button class="btn btn-elpis-ghost btn-sm" type="button"
+					data-copy="2402:4e20:bab1::1001">
+					<i class="bi bi-clipboard"></i> Copy
+				</button>
+			</div>
+			<div class="copy-row">
+				<code>2402:4e20:bab1::1111</code>
+				<button class="btn btn-elpis-ghost btn-sm" type="button"
+					data-copy="2402:4e20:bab1::1111">
+					<i class="bi bi-clipboard"></i> Copy
+				</button>
+			</div>
+			<div class="copy-row">
+				<code>2402:4e20:b00b::1111</code>
+				<span class="bl-note">PowerDNS, for now</span>
+				<button class="btn btn-elpis-ghost btn-sm" type="button"
+					data-copy="2402:4e20:b00b::1111">
+					<i class="bi bi-clipboard"></i> Copy
+				</button>
+			</div>
+			<div class="copy-row">
+				<code>2402:4e20:b00b::1001</code>
+				<span class="bl-note">PowerDNS, for now</span>
+				<button class="btn btn-elpis-ghost btn-sm" type="button"
+					data-copy="2402:4e20:b00b::1001">
 					<i class="bi bi-clipboard"></i> Copy
 				</button>
 			</div>
@@ -471,7 +644,7 @@
 		<div class="subtitle">
 			A chicken and egg problem: to reach an encrypted resolver by name, something has
 			to resolve that name first. These plain resolvers exist for that single moment,
-			and for nothing else. Most clients call the field <i>bootstrap</i>. The four
+			and for nothing else. Most clients call the field <i>bootstrap</i>. The
 			recursors above do the job equally well if the box has IPv6; the addresses here
 			are what you need when it does not.
 		</div>

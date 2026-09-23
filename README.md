@@ -19,10 +19,14 @@ Aligned with the vision of [EFF Internet Freedom and Privacy](https://www.eff.or
 - **[Why ΕΛΠΙΣ](https://elpis.violetnetworks.xyz/mission.html)** &mdash; what we block, what we refuse to keep, and how to check it
 - **[Setup guide](https://elpis.violetnetworks.xyz/setup.html)** &mdash; Android, Windows, iOS, Firefox, Chrome, MikroTik, OpenWrt, AdGuard Home
 - **[Add your resolver](CONTRIBUTING.md)** &mdash; one JSON block, one pull request
+- **[The resolver we wrote](https://github.com/PururinCollective/elpis-resolver)** &mdash; C99, SIMD, ML-DSA-44, one static binary
 
 ## What it is built on
 
 - Privacy first: encrypted transport, no query logging, no profiling
+- [ΕΛΠΙΣ Resolver](https://github.com/PururinCollective/elpis-resolver), our own recursive
+  resolver &mdash; portable C99 with SIMD kernels, no dependencies, and the second resolver
+  in the world to validate ML-DSA-44 post-quantum DNSSEC after Cloudflare
 - An `sdns://` DNS stamp generated for every endpoint, for dnscrypt-proxy and friends
 - Ads, trackers, malware and phishing filtered by default
 - A Family profile with adult content blocked and safe search enforced

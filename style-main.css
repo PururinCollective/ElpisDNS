@@ -250,7 +250,7 @@ code,
 	max-width:1320px;
 	padding:0 12px;
 
-	background:url("img/hero-map.svg?hash=925ef3a0") no-repeat right center;
+	background:url("img/hero-map.svg?hash=199a6365") no-repeat right center;
 	background-origin:content-box;
 	background-size:auto 100%;
 
@@ -267,7 +267,7 @@ code,
 /* SMIL cannot be switched off from CSS, so serve the still frame instead. */
 @media (prefers-reduced-motion: reduce){
 	.hero-banner::after{
-		background-image:url("img/hero-map-static.svg?hash=423c33e5");
+		background-image:url("img/hero-map-static.svg?hash=06f4e8ce");
 	}
 }
 
@@ -1291,6 +1291,11 @@ footer .border-top{
 	color:var(--text);
 
 	white-space:pre;
+}
+
+/* Box drawing art needs the lines to touch, which 1.7 does not do. */
+.code-block pre.diagram{
+	line-height:1.25;
 }
 
 .copy-code{

@@ -36,7 +36,7 @@ perditus✝paradisus
 
 <title>ΕΛΠΙΣ DNS &mdash; Resolve freely. Answer to no one.</title>
 <link rel="icon" type="image/x-icon" href="favicon.ico">
-<link rel="icon" type="image/svg+xml" href="img/elpis-mark.svg?hash=ebd577cf">
+<link rel="icon" type="image/svg+xml" href="img/elpis-mark.svg?hash=edbc1f49">
 
 <!-- Paint the correct theme before the first frame, no white flash -->
 <script>
@@ -59,8 +59,8 @@ perditus✝paradisus
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-<link href="style-main.css?hash=2338f332" rel="stylesheet">
-<link href="style-mobile.css?hash=dcae0317" rel="stylesheet">
+<link href="style-main.css?hash=086e36d5" rel="stylesheet">
+<link href="style-mobile.css?hash=37f4fe49" rel="stylesheet">
 
 <meta name="description" content="Encrypted DoH and DoT resolvers run by the community. No censorship, no surveillance, no ledger of your curiosity. Pick a region, pick a transport, take the endpoint.">
 
@@ -89,7 +89,7 @@ perditus✝paradisus
 	<div class="container topbar-inner">
 
 		<a class="topbar-brand" href="index.html">
-			<img src="img/elpis-mark.svg?hash=ebd577cf" alt="" class="topbar-mark">
+			<img src="img/elpis-mark.svg?hash=edbc1f49" alt="" class="topbar-mark">
 			<span class="topbar-name">ΕΛΠΙΣ <span class="accent">DNS</span></span>
 		</a>
 
@@ -336,6 +336,69 @@ perditus✝paradisus
 		</a>
 	</div>
 
+	<!-- The resolver behind the endpoints -->
+	<div class="section-heading mt-5">
+		And we wrote the resolver
+	</div>
+	<div class="subtitle mb-4">
+		The endpoints we operate do not hand the real work to somebody else's
+		software. Behind them sits <b>ΕΛΠΙΣ Resolver</b> &mdash; ours, written from
+		nothing in portable C99, no dependencies, one static binary, open source
+		down to the crypto. It is the <b>second resolver in the world to validate
+		ML-DSA-44</b>, the post-quantum DNSSEC signature, after Cloudflare. How it
+		fits behind the filtering is on the
+		<a href="mission.html#resolver">mission page</a>; the
+		source is on GitHub, and running your own is encouraged rather than merely
+		permitted.
+	</div>
+
+	<div class="rules mb-4">
+
+		<div class="rule">
+			<div class="rule-index">ML-DSA-44</div>
+			<div class="rule-title">Second in the world</div>
+			<div class="rule-text">
+				The post-quantum signature from FIPS&nbsp;204, checked here and at
+				Cloudflare and almost nowhere else. Signatures gathered today are
+				what somebody forges later; this is the answer given early.
+			</div>
+		</div>
+
+		<div class="rule">
+			<div class="rule-index">C99 + SIMD</div>
+			<div class="rule-title">Faster than generic</div>
+			<div class="rule-text">
+				Hand-written AVX2, SSE2 and NEON kernels picked at startup from what
+				the processor reports, so the crypto and the cache lookups run at the
+				speed of the machine rather than the speed of portable C.
+			</div>
+		</div>
+
+		<div class="rule">
+			<div class="rule-index">OPEN &amp; PORTABLE</div>
+			<div class="rule-title">Take it and go</div>
+			<div class="rule-text">
+				One static binary, no shared libraries, Linux, the BSDs and macOS.
+				Build it for your own CPU, put it behind your own AdGuard Home, and
+				stop needing us at all.
+			</div>
+		</div>
+	</div>
+
+	<div class="cta">
+		<div class="cta-body">
+			<div class="cta-title">Read it before you trust it</div>
+			<div class="cta-text">
+				The source, the DNSSEC notes and the reasons the hot paths look the
+				way they do &mdash; including the parts that are deliberately missing.
+				A resolver you cannot read is a promise you cannot check.
+			</div>
+		</div>
+		<a class="btn btn-elpis" href="https://github.com/PururinCollective/elpis-resolver" target="_blank" rel="noopener">
+			<i class="bi bi-github"></i> ΕΛΠΙΣ Resolver
+		</a>
+	</div>
+
 	<!-- Gates into the mission page -->
 	<div class="section-heading mt-5">
 		Why this exists
@@ -361,8 +424,9 @@ perditus✝paradisus
 			<i class="bi bi-diagram-3 gate-icon"></i>
 			<div class="gate-title">No Middlemen</div>
 			<div class="gate-text">
-				Our own recursion, straight to the root servers. IPv6 first, EDNS,
-				DNSSEC, ECH, and nobody upstream keeping a ledger.
+				Our own resolver, our own recursion, straight to the root servers.
+				IPv6 first, EDNS, DNSSEC with ML-DSA-44, ECH, and nobody upstream
+				keeping a ledger.
 			</div>
 			<span class="gate-more">How we answer <i class="bi bi-arrow-right-short"></i></span>
 		</a>
@@ -525,7 +589,7 @@ perditus✝paradisus
 <script src="js/app-theme.js?hash=e17c7711"></script>
 <script src="js/app-copy.js?hash=7fdd7e69"></script>
 <script src="js/app-stamp.js?hash=c213e8a8"></script>
-<script src="js/app.js?hash=0b666d99"></script>
+<script src="js/app.js?hash=17460cb4"></script>
 <script src="js/app-quote.js?hash=8ea9c26e"></script>
 <script src="js/app-mikrotik.js?hash=e69718c2"></script>
 
