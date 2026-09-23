@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-<link href="style-main.css?hash=086e36d5" rel="stylesheet">
+<link href="style-main.css?hash=68968e7f" rel="stylesheet">
 <link href="style-mobile.css?hash=37f4fe49" rel="stylesheet">
 
 <meta name="description" content="How to point Android, Windows, iOS, Firefox, Chrome, MikroTik, OpenWrt and AdGuard Home at an encrypted ΕΛΠΙΣ DNS resolver.">
@@ -340,10 +340,10 @@ uci commit dhcp
 			The recursors resolve and nothing else: no block lists, no rewrites. Use
 			these when your own filter is the one making the decisions.
 		</div>
-		<div class="code-block"><pre>2402:4e20:b00b::1111
-2402:4e20:b00b::1001
+		<div class="code-block"><pre>2402:4e20::1001
 2402:4e20::1111
-2402:4e20::1001</pre></div>
+2402:4e20::babe
+2402:4e20::cafe</pre></div>
 
 		<ol class="doc-steps" start="2" style="--start:1">
 			<li>Set <b>Load balancing</b> to <b>Parallel requests</b> if you listed more than one, click <b>Test upstreams</b>, then <b>Apply</b>.</li>
@@ -353,9 +353,12 @@ uci commit dhcp
 		<div class="doc-note">
 			<i class="bi bi-info-circle"></i>
 			<div>
-				The raw recursors are IPv6 only. A box with no native v6 should take the
-				encrypted route instead &mdash; most entries in the table on the front
-				page answer over IPv4 as well.
+				The raw recursors prefer IPv6, and there are more of them than the four
+				above &mdash; the full list is on the
+				<a href="mission.html#recursors">mission page</a>. A box with no native
+				v6 can use <code class="inline-code">151.158.198.49</code> on ports
+				<code class="inline-code">5301</code> to <code class="inline-code">5306</code>,
+				kept off port 53 on purpose, or take the encrypted route instead.
 			</div>
 		</div>
 	</section>

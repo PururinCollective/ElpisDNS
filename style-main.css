@@ -1293,9 +1293,75 @@ footer .border-top{
 	white-space:pre;
 }
 
-/* Box drawing art needs the lines to touch, which 1.7 does not do. */
-.code-block pre.diagram{
-	line-height:1.25;
+/* ---------- diagrams ---------- */
+
+/*
+	Drawn as SVG rather than box drawing characters. ASCII art only lines
+	up in the monospace font it was drawn for, and every phone substitutes
+	a different one; a rectangle is a rectangle everywhere.
+
+	The viewBox is sized in something close to real pixels and the figure
+	is capped just above it, so the labels stay readable at both ends:
+	barely scaled up on a desktop, barely scaled down on a phone.
+*/
+
+.diagram{
+	background:var(--bg-alt);
+	border:1px solid var(--line);
+	border-radius:var(--radius);
+
+	max-width:460px;
+	margin:12px auto 18px;
+	padding:18px;
+}
+
+.diagram svg{
+	display:block;
+	width:100%;
+	height:auto;
+}
+
+.dg-box{
+	fill:var(--surface);
+	stroke:var(--line-strong);
+	stroke-width:1;
+}
+
+/* The same accent edge the cards and the call to action carry. */
+.dg-edge{
+	fill:var(--accent);
+}
+
+.dg-wire{
+	fill:none;
+	stroke:var(--line-strong);
+	stroke-width:1.5;
+}
+
+.dg-name{
+	fill:var(--text);
+	font-family:var(--font-body);
+	font-size:13px;
+	font-weight:600;
+}
+
+.dg-sub{
+	fill:var(--text-faint);
+	font-family:var(--font-body);
+	font-size:9.5px;
+	letter-spacing:.4px;
+}
+
+.dg-addr{
+	fill:var(--accent);
+	font-family:var(--font-mono);
+	font-size:11.5px;
+}
+
+.dg-cap{
+	fill:var(--text-soft);
+	font-family:var(--font-body);
+	font-size:10.5px;
 }
 
 .copy-code{

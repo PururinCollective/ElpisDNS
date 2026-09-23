@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-<link href="style-main.css?hash=086e36d5" rel="stylesheet">
+<link href="style-main.css?hash=68968e7f" rel="stylesheet">
 <link href="style-mobile.css?hash=37f4fe49" rel="stylesheet">
 
 <meta name="description" content="Why ΕΛΠΙΣ DNS exists: what it blocks, what it refuses to keep, why it runs its own recursion, and how to check every word of it.">
@@ -165,7 +165,6 @@
 		<a href="#middlemen"><i class="bi bi-diagram-3"></i> No Middlemen</a>
 		<a href="#resolver"><i class="bi bi-cpu"></i> Our own resolver</a>
 		<a href="#recursors"><i class="bi bi-hdd-network"></i> Recursive resolvers</a>
-		<a href="#bootstrap"><i class="bi bi-signpost-split"></i> Bootstrap DNS</a>
 	</div>
 
 	<!-- The Blacklist -->
@@ -412,32 +411,61 @@
 			keeps the encrypted transports, the block lists and the per-client
 			rules; Elpis sits behind it and does the part nobody sees &mdash;
 			recursion from the root, caching, and every signature on the way.
+			<br /><br />
+			There is more than one of them on purpose. Give AdGuard the whole list
+			and it asks them in parallel, keeps whichever answer arrives first, and
+			carries on without noticing when one of them goes away for an upgrade.
+			Redundancy and latency turn out to be the same setting.
 		</div>
 
-		<div class="code-block"><pre class="diagram">
-                        ┌────────────────┐
-                    ┌───┤ ΕΛΠΙΣ Resolver │  2402:4e20:b00b::1001
-                    │   └────────────────┘
-┌─────────┐         │   ┌────────────────┐
-│ AdGuard ├─────────┼───┤ ΕΛΠΙΣ Resolver │  2402:4e20:b00b::1111
-└─────────┘         │   └────────────────┘
-                    │   ┌────────────────┐
-                    └───┤ ΕΛΠΙΣ Resolver │  151.158.198.49:5304
-                        └────────────────┘
+		<figure class="diagram">
+			<svg viewBox="0 0 360 284" role="img"
+				aria-label="AdGuard Home faces the network; behind it, four ΕΛΠΙΣ Resolver instances at 2402:4e20::1001, 2402:4e20::1111, 2402:4e20::babe and 151.158.198.49 port 5304.">
 
- public face,            recursion, caching, DNSSEC,
- DoH / DoT / DoQ,        straight to the root and TLD servers
- filtering, logging
-</pre></div>
+				<!-- the public face -->
+				<rect class="dg-box" x="2" y="100" width="104" height="48" rx="2"/>
+				<text class="dg-name" x="54" y="120" text-anchor="middle">AdGuard</text>
+				<text class="dg-sub" x="54" y="135" text-anchor="middle">DoH · DoT · DoQ</text>
+
+				<!-- one upstream list, spread across all four -->
+				<path class="dg-wire" d="M106 124 H125 M125 25 V223 M125 25 H150 M125 91 H150 M125 157 H150 M125 223 H150"/>
+
+				<!-- the recursors -->
+				<rect class="dg-box" x="150" y="0" width="200" height="50" rx="2"/>
+				<rect class="dg-edge" x="150" y="0" width="3" height="50" rx="1"/>
+				<text class="dg-name" x="166" y="22">ΕΛΠΙΣ Resolver</text>
+				<text class="dg-addr" x="166" y="39">2402:4e20::1001</text>
+
+				<rect class="dg-box" x="150" y="66" width="200" height="50" rx="2"/>
+				<rect class="dg-edge" x="150" y="66" width="3" height="50" rx="1"/>
+				<text class="dg-name" x="166" y="88">ΕΛΠΙΣ Resolver</text>
+				<text class="dg-addr" x="166" y="105">2402:4e20::1111</text>
+
+				<rect class="dg-box" x="150" y="132" width="200" height="50" rx="2"/>
+				<rect class="dg-edge" x="150" y="132" width="3" height="50" rx="1"/>
+				<text class="dg-name" x="166" y="154">ΕΛΠΙΣ Resolver</text>
+				<text class="dg-addr" x="166" y="171">2402:4e20::babe</text>
+
+				<rect class="dg-box" x="150" y="198" width="200" height="50" rx="2"/>
+				<rect class="dg-edge" x="150" y="198" width="3" height="50" rx="1"/>
+				<text class="dg-name" x="166" y="220">ΕΛΠΙΣ Resolver</text>
+				<text class="dg-addr" x="166" y="237">151.158.198.49:5304</text>
+
+				<text class="dg-cap" x="2" y="268">public face,</text>
+				<text class="dg-cap" x="2" y="280">filtering, logging</text>
+
+				<text class="dg-cap" x="150" y="268">recursion, caching, DNSSEC,</text>
+				<text class="dg-cap" x="150" y="280">straight to the root and TLD servers</text>
+			</svg>
+		</figure>
 
 		<div class="doc-note mt-3">
 			<i class="bi bi-info-circle"></i>
 			<div>
-				<b>That is the shape, not the scoreboard.</b> The two
-				<code class="inline-code">b00b</code> recursors below still answer
-				from PowerDNS while we convert them one at a time; everything else is
-				Elpis already. A resolver swap nobody notices is the only kind worth
-				doing.
+				<b>The <code class="inline-code">b00b</code> pair is not in that
+				picture yet.</b> Those two still answer from PowerDNS while we convert
+				them one at a time; everything else below is Elpis already. A resolver
+				swap nobody notices is the only kind worth doing.
 			</div>
 		</div>
 
@@ -523,7 +551,7 @@
 	<!-- Recursive resolvers - IPv6 -->
 	<section id="recursors" class="mt-5 pt-4">
 		<div class="section-heading">
-			Recursive resolvers &mdash; IPv6
+			Recursive resolvers
 		</div>
 		<div class="subtitle">
 			The recursors themselves, on plain port 53, doing exactly one thing:
@@ -539,6 +567,8 @@
 			handing every query it makes to Google or Cloudflare on the way out.
 			They work in the <b>bootstrap</b> field too &mdash; the one that has to
 			resolve an encrypted endpoint's hostname before the encryption can begin.
+			That is the whole of our bootstrap advice: the recursor resolves the
+			resolver, and there is no separate set of plain servers to hand out.
 			<br /><br />
 			These are <a href="#resolver">ΕΛΠΙΣ Resolver</a> answering, and anyone is
 			welcome on them. IPv6 is preferred and it is not sentiment: the v6 path
@@ -548,7 +578,7 @@
 		<div class="doc-note mt-3">
 			<i class="bi bi-info-circle"></i>
 			<div>
-				<b>IPv6 only, and unfiltered on purpose.</b> If you want The Blacklist
+				<b>Unfiltered on purpose.</b> If you want The Blacklist
 				doing its work as well, that lives on the encrypted endpoints on the
 				<a href="index.html">front page</a> &mdash; the same resolvers with the
 				filtering in front of them. Wiring one up as an upstream is on the
@@ -557,6 +587,10 @@
 				from PowerDNS until their conversion comes round; they resolve exactly
 				the same names in the meantime.
 			</div>
+		</div>
+
+		<div class="subtitle mt-4">
+			<b>Over IPv6</b> &mdash; the ones to reach for.
 		</div>
 
 		<div class="address-grid mt-3">
@@ -620,6 +654,59 @@
 			</div>
 		</div>
 
+		<div class="subtitle mt-4">
+			<b>Over IPv4</b> &mdash; and deliberately not on port 53. A recursor on
+			port 53 of a public address spends its life being probed by botnets,
+			scanners and people looking for a reflector to point at somebody else.
+			Four digits further up, almost none of that arrives, and every client
+			worth using lets you write the port down.
+		</div>
+
+		<div class="address-grid mt-3">
+			<div class="copy-row">
+				<code>151.158.198.49:5301</code>
+				<button class="btn btn-elpis-ghost btn-sm" type="button"
+					data-copy="151.158.198.49:5301">
+					<i class="bi bi-clipboard"></i> Copy
+				</button>
+			</div>
+			<div class="copy-row">
+				<code>151.158.198.49:5302</code>
+				<button class="btn btn-elpis-ghost btn-sm" type="button"
+					data-copy="151.158.198.49:5302">
+					<i class="bi bi-clipboard"></i> Copy
+				</button>
+			</div>
+			<div class="copy-row">
+				<code>151.158.198.49:5303</code>
+				<button class="btn btn-elpis-ghost btn-sm" type="button"
+					data-copy="151.158.198.49:5303">
+					<i class="bi bi-clipboard"></i> Copy
+				</button>
+			</div>
+			<div class="copy-row">
+				<code>151.158.198.49:5304</code>
+				<button class="btn btn-elpis-ghost btn-sm" type="button"
+					data-copy="151.158.198.49:5304">
+					<i class="bi bi-clipboard"></i> Copy
+				</button>
+			</div>
+			<div class="copy-row">
+				<code>151.158.198.49:5305</code>
+				<button class="btn btn-elpis-ghost btn-sm" type="button"
+					data-copy="151.158.198.49:5305">
+					<i class="bi bi-clipboard"></i> Copy
+				</button>
+			</div>
+			<div class="copy-row">
+				<code>151.158.198.49:5306</code>
+				<button class="btn btn-elpis-ghost btn-sm" type="button"
+					data-copy="151.158.198.49:5306">
+					<i class="bi bi-clipboard"></i> Copy
+				</button>
+			</div>
+		</div>
+
 		<div class="cta mt-4">
 			<div class="cta-body">
 				<div class="cta-title">Then go and check</div>
@@ -633,48 +720,6 @@
 			<a class="btn btn-elpis" href="https://dnscheck.tools/" target="_blank" rel="noopener">
 				<i class="bi bi-clipboard-check"></i> Run dnscheck.tools
 			</a>
-		</div>
-	</section>
-
-	<!-- Bootstrap DNS servers -->
-	<section id="bootstrap" class="mt-5 pt-4">
-		<div class="section-heading">
-			Bootstrap DNS servers
-		</div>
-		<div class="subtitle">
-			A chicken and egg problem: to reach an encrypted resolver by name, something has
-			to resolve that name first. These plain resolvers exist for that single moment,
-			and for nothing else. Most clients call the field <i>bootstrap</i>. The
-			recursors above do the job equally well if the box has IPv6; the addresses here
-			are what you need when it does not.
-		</div>
-		<div class="table-responsive">
-			<table class="table table-hover mt-3">
-				<thead>
-				<tr>
-					<th>AS</th>
-					<th>IPv4</th>
-					<th>IPv6</th>
-				</tr>
-				</thead>
-				<tbody class="table-group-divider">
-				<tr>
-					<td>AS154516</td>
-					<td>151.158.198.49</td>
-					<td>2402:4e20::b00b</td>
-				</tr>
-				<tr>
-					<td>AS4788</td>
-					<td>175.143.78.185</td>
-					<td>-</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td>60.54.118.241</td>
-					<td>-</td>
-				</tr>
-				</tbody>
-			</table>
 		</div>
 	</section>
 
