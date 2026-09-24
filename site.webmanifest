@@ -1,0 +1,17 @@
+{
+	"name": "ΕΛΠΙΣ DNS",
+	"short_name": "ΕΛΠΙΣ",
+	"description": "Free, encrypted DNS answered by our own resolver. Ads and trackers blocked, no query logs.",
+	"lang": "en",
+	"start_url": "/",
+	"scope": "/",
+	"display": "browser",
+	"background_color": "#1b1e24",
+	"theme_color": "#2f9ee0",
+	"icons": [
+		{ "src": "img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+		{ "src": "img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+		{ "src": "img/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+		{ "src": "img/elpis-mark.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+	]
+}

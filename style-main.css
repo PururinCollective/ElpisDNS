@@ -1963,6 +1963,13 @@ a.card:hover h3{
 	font-size:13.5px;
 }
 
+/* a footer that is only the bottom line, as on the 404 page */
+.footer-bottom:first-child{
+	margin-top:0;
+	padding-top:0;
+	border-top:0;
+}
+
 #footer-quote{
 	max-width:640px;
 	margin:0 auto 10px;

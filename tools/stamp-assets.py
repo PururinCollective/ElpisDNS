@@ -7,7 +7,7 @@ new URL and Cloudflare has no choice but to fetch it again.
     <script src="js/app.js?version=3.9">  ->  js/app.js?hash=9b2e77aa
     fetch("dns.json")                     ->  dns.json?hash=44c1ba03
 
-Run it after changing any CSS, JS or JSON and commit the result:
+Run it after changing any CSS, JS, JSON or image and commit the result:
 
     python tools/stamp-assets.py
 
@@ -15,7 +15,7 @@ Other modes:
 
     --check      change nothing, exit 1 if any stamp is stale (for CI)
     --dry-run    print what would change, exit 0
-    --ext        extensions to stamp (default css,js,json,svg)
+    --ext        extensions to stamp (default css,js,json,svg,png,ico)
     --length     hex characters to keep (default 8)
 
 Notes
@@ -48,7 +48,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 
 DEFAULT_SCAN = ("*.html", "js/*.js", "*.css")
-DEFAULT_EXT = "css,js,json,svg"
+# png and ico too: browsers and Cloudflare hold on to a favicon longer than
+# anything else, so a new one never shows up without a new URL.
+DEFAULT_EXT = "css,js,json,svg,png,ico"
 DEFAULT_LENGTH = 8
 MAX_PASSES = 10
 

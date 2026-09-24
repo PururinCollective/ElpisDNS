@@ -1,46 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<!--
+	Read by Google, Bing, Yandex, Baidu, Naver and the rest; robots.txt
+	points every crawler here. Each page lists its share card as an image,
+	which is what image search shows for it.
+
+	Bump <lastmod> when a page changes, then run tools/indexnow.py after the
+	deploy so Bing, Yandex and friends come back straight away.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
 	<url>
 		<loc>https://elpis.violetnetworks.xyz/</loc>
-		<lastmod>2026-09-24</lastmod>
+		<lastmod>2026-09-25</lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>1.0</priority>
+		<image:image>
+			<image:loc>https://elpis.violetnetworks.xyz/img/og-image.jpg</image:loc>
+		</image:image>
 	</url>
 
 	<url>
 		<loc>https://elpis.violetnetworks.xyz/resolver.html</loc>
-		<lastmod>2026-09-24</lastmod>
+		<lastmod>2026-09-25</lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>0.9</priority>
+		<image:image>
+			<image:loc>https://elpis.violetnetworks.xyz/img/og-resolver.png</image:loc>
+		</image:image>
 	</url>
 
 	<url>
 		<loc>https://elpis.violetnetworks.xyz/ml-dsa-44.html</loc>
-		<lastmod>2026-09-24</lastmod>
+		<lastmod>2026-09-25</lastmod>
 		<changefreq>monthly</changefreq>
 		<priority>0.8</priority>
+		<image:image>
+			<image:loc>https://elpis.violetnetworks.xyz/img/og-ml-dsa-44.png</image:loc>
+		</image:image>
 	</url>
 
 	<url>
 		<loc>https://elpis.violetnetworks.xyz/self-host.html</loc>
-		<lastmod>2026-09-24</lastmod>
+		<lastmod>2026-09-25</lastmod>
 		<changefreq>monthly</changefreq>
 		<priority>0.8</priority>
+		<image:image>
+			<image:loc>https://elpis.violetnetworks.xyz/img/og-self-host.png</image:loc>
+		</image:image>
 	</url>
 
 	<url>
 		<loc>https://elpis.violetnetworks.xyz/mission.html</loc>
-		<lastmod>2026-09-24</lastmod>
+		<lastmod>2026-09-25</lastmod>
 		<changefreq>monthly</changefreq>
 		<priority>0.8</priority>
+		<image:image>
+			<image:loc>https://elpis.violetnetworks.xyz/img/og-mission.png</image:loc>
+		</image:image>
 	</url>
 
 	<url>
 		<loc>https://elpis.violetnetworks.xyz/setup.html</loc>
-		<lastmod>2026-09-24</lastmod>
+		<lastmod>2026-09-25</lastmod>
 		<changefreq>monthly</changefreq>
 		<priority>0.8</priority>
+		<image:image>
+			<image:loc>https://elpis.violetnetworks.xyz/img/og-setup.png</image:loc>
+		</image:image>
 	</url>
 
 </urlset>

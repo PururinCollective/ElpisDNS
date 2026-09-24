@@ -94,8 +94,11 @@ fetched over HTTP.
 | `js/app-setup.js` | Setup page helpers, and copy buttons on code blocks |
 | `img/hero-map.svg` | Animated night map, generated. Not shown by the current design |
 | `tools/make-hero-map.py` | Regenerates that map. Only needed if you change it |
-| `img/og-ml-dsa-44.png` | The share card for `ml-dsa-44.html`, generated |
-| `tools/make-og-mldsa.py` | Redraws that card. Needs Pillow and Noto Sans |
+| `img/og-*.png`, `img/icon-*.png`, `favicon.ico`, `img/apple-touch-icon.png` | Share cards for each page, the favicon and app icons, generated |
+| `tools/make-brand-images.py` | Redraws them. Needs Pillow and Noto Sans |
+| `tools/indexnow.py` | Tells Bing, Yandex and friends which pages changed. Run after a deploy |
+| `site.webmanifest` | App name, colours and icons for browsers and search results |
+| `404.html` | Page-not-found, served by the host for missing paths |
 | `tools/stamp-assets.py` | Re-stamps `?hash=` cache busters after any asset change |
 
 The colours are the ones the ΕΛΠΙΣ Resolver status page uses &mdash; steel grey
@@ -108,6 +111,32 @@ page, the setup page and every AdGuard Home and Pi-hole list follow.
 The site follows your operating system's light or dark preference out of the box;
 the icon in the top bar cycles system, light and dark, and the choice is remembered.
 
+### Search engines and link previews
+
+Every page carries the same set, so a link to any of them previews properly
+and indexes cleanly:
+
+- **Search:** title, description, canonical URL and robots rules. Structured
+  data (Organization, WebSite, WebPage and breadcrumbs, plus the resolver's
+  SoftwareApplication and the ML-DSA page's TechArticle and FAQ) is read by
+  Google, Bing and Yandex alike.
+- **Link previews:** Open Graph for Facebook, LinkedIn, Discord, Telegram,
+  WhatsApp and iMessage; Twitter card tags for X; and `twitter:label` /
+  `twitter:data` pairs, which Slack prints under the preview.
+- **Share cards:** the front page uses the illustration, `img/og-image.jpg`.
+  Every other page has its own 1200x630 card, drawn by
+  `python tools/make-brand-images.py`, which also draws the manifest icons.
+  Change a card's wording in `CARDS` at the top of that script.
+- **`sitemap.xml`** lists every page with its card, and `robots.txt` points
+  to it. Bump `<lastmod>` when a page changes.
+- **IndexNow:** after a deploy, `python tools/indexnow.py` tells Bing (which
+  Yahoo and DuckDuckGo draw on), Yandex, Naver, Seznam and Yep straight
+  away. Google does not take part and reads the sitemap instead.
+- **Ownership:** the head of `index.html` has a commented block for the
+  Google, Bing, Yandex, Baidu and Naver verification codes. A DNS TXT record
+  does the same job for the whole domain.
+- **`404.html`** is served for missing paths and asks not to be indexed.
+
 ### Cache busting
 
 Asset links carry a content hash rather than a hand-maintained version number:
@@ -116,7 +145,7 @@ Asset links carry a content hash rather than a hand-maintained version number:
 python tools/stamp-assets.py
 ```
 
-Every local `.css`, `.js`, `.json` and `.svg` reference becomes
+Every local `.css`, `.js`, `.json`, `.svg`, `.png` and `.ico` reference becomes
 `style-main.css?hash=2338f332`, the first eight hex characters of the file's
 SHA-256. Change a file and its URL changes with it, so Cloudflare has to
 fetch the new copy; leave a file alone and the URL is stable, so nobody

@@ -5,9 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <title>ML-DSA-44 post-quantum DNSSEC, validated · ΕΛΠΙΣ Resolver</title>
-<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/x-icon" href="favicon.ico?hash=a28d8ab3">
 <link rel="icon" type="image/svg+xml" href="img/elpis-mark.svg?hash=3bcb26d5">
-<link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png?hash=a241e0aa">
+<link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png?hash=0d1367f1">
+<link rel="manifest" href="site.webmanifest">
+<meta name="application-name" content="ΕΛΠΙΣ DNS">
+<meta name="apple-mobile-web-app-title" content="ΕΛΠΙΣ DNS">
+<meta name="format-detection" content="telephone=no">
 
 <!-- Paint the correct theme before the first frame, no white flash -->
 <script>
@@ -29,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-<link href="style-main.css?hash=305d69f1" rel="stylesheet">
+<link href="style-main.css?hash=32066cf4" rel="stylesheet">
 
 <meta name="description" content="ΕΛΠΙΣ Resolver is the second DNS resolver in the world, after Cloudflare, to validate ML-DSA-44 — the FIPS 204 post-quantum signature — in DNSSEC.">
 <meta name="author" content="ΕΛΠΙΣ DNS">
@@ -64,6 +69,10 @@
 <meta name="twitter:description" content="Post-quantum DNSSEC has started. ΕΛΠΙΣ Resolver checks ML-DSA-44 (FIPS 204) signatures today — second only to Cloudflare, and open source.">
 <meta name="twitter:image" content="https://elpis.violetnetworks.xyz/img/og-ml-dsa-44.png">
 <meta name="twitter:image:alt" content="ML-DSA-44 post-quantum DNSSEC: ΕΛΠΙΣ Resolver, the second resolver in the world to validate it">
+<meta name="twitter:label1" content="Standard">
+<meta name="twitter:data1" content="FIPS 204">
+<meta name="twitter:label2" content="DNSSEC algorithm">
+<meta name="twitter:data2" content="18">
 
 <!-- The stripe Discord paints down the side of the embed -->
 <meta name="theme-color" content="#2f9ee0">
@@ -72,6 +81,69 @@
 {
 	"@context": "https://schema.org",
 	"@graph": [
+		{
+			"@type": "Organization",
+			"@id": "https://elpis.violetnetworks.xyz/#org",
+			"name": "ΕΛΠΙΣ DNS",
+			"alternateName": [
+				"Elpis DNS",
+				"ELPIS DNS"
+			],
+			"url": "https://elpis.violetnetworks.xyz/",
+			"logo": {
+				"@type": "ImageObject",
+				"url": "https://elpis.violetnetworks.xyz/img/icon-512.png",
+				"width": 512,
+				"height": 512
+			},
+			"image": "https://elpis.violetnetworks.xyz/img/og-image.jpg",
+			"sameAs": [
+				"https://github.com/PururinCollective/ElpisDNS",
+				"https://github.com/PururinCollective/elpis-resolver",
+				"https://discord.gg/aw8pt2SWnv",
+				"https://pururin.moe/",
+				"https://openpon.org/"
+			]
+		},
+		{
+			"@type": "WebSite",
+			"@id": "https://elpis.violetnetworks.xyz/#website",
+			"url": "https://elpis.violetnetworks.xyz/",
+			"name": "ΕΛΠΙΣ DNS",
+			"alternateName": [
+				"Elpis DNS",
+				"ELPIS DNS"
+			],
+			"description": "Free, encrypted DNS over HTTPS and TLS: filtered, with no query logging, answered by our own recursive resolver.",
+			"inLanguage": "en",
+			"publisher": {
+				"@id": "https://elpis.violetnetworks.xyz/#org"
+			}
+		},
+		{
+			"@type": "WebPage",
+			"@id": "https://elpis.violetnetworks.xyz/ml-dsa-44.html#webpage",
+			"url": "https://elpis.violetnetworks.xyz/ml-dsa-44.html",
+			"name": "ML-DSA-44 post-quantum DNSSEC, validated · ΕΛΠΙΣ Resolver",
+			"description": "ΕΛΠΙΣ Resolver is the second DNS resolver in the world, after Cloudflare, to validate ML-DSA-44 — the FIPS 204 post-quantum signature — in DNSSEC.",
+			"inLanguage": "en",
+			"isPartOf": {
+				"@id": "https://elpis.violetnetworks.xyz/#website"
+			},
+			"primaryImageOfPage": {
+				"@type": "ImageObject",
+				"url": "https://elpis.violetnetworks.xyz/img/og-ml-dsa-44.png",
+				"width": 1200,
+				"height": 630
+			},
+			"dateModified": "2026-09-25",
+			"mainEntity": {
+				"@id": "https://elpis.violetnetworks.xyz/ml-dsa-44.html#article"
+			},
+			"breadcrumb": {
+				"@id": "https://elpis.violetnetworks.xyz/ml-dsa-44.html#breadcrumb"
+			}
+		},
 		{
 			"@type": "TechArticle",
 			"@id": "https://elpis.violetnetworks.xyz/ml-dsa-44.html#article",
@@ -113,14 +185,10 @@
 				"@id": "https://elpis.violetnetworks.xyz/#org"
 			},
 			"publisher": {
-				"@type": "Organization",
-				"@id": "https://elpis.violetnetworks.xyz/#org",
-				"name": "ΕΛΠΙΣ DNS",
-				"url": "https://elpis.violetnetworks.xyz/",
-				"logo": {
-					"@type": "ImageObject",
-					"url": "https://elpis.violetnetworks.xyz/img/elpis-logo.svg"
-				}
+				"@id": "https://elpis.violetnetworks.xyz/#org"
+			},
+			"isPartOf": {
+				"@id": "https://elpis.violetnetworks.xyz/ml-dsa-44.html#webpage"
 			}
 		},
 		{
@@ -144,7 +212,8 @@
 					"name": "ML-DSA-44",
 					"item": "https://elpis.violetnetworks.xyz/ml-dsa-44.html"
 				}
-			]
+			],
+			"@id": "https://elpis.violetnetworks.xyz/ml-dsa-44.html#breadcrumb"
 		},
 		{
 			"@type": "FAQPage",
@@ -584,7 +653,7 @@ mldsa87-algorithm: 26    # placeholder</pre></div>
 			</div>
 			<a class="sponsor" href="https://perfect.my/" target="_blank" rel="noopener">
 				<span>Proudly sponsored by</span>
-				<img src="img/perfect.png" alt="Perfect Network, AS154516" width="851" height="315" loading="lazy" decoding="async">
+				<img src="img/perfect.png?hash=9e6d7755" alt="Perfect Network, AS154516" width="851" height="315" loading="lazy" decoding="async">
 			</a>
 		</div>
 

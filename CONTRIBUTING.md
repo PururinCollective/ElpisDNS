@@ -133,7 +133,8 @@ plan to run it. That is the whole ritual.
 | `js/app-setup.js` | Setup page helpers |
 | `img/hero-map.svg` | The animated map. Generated, and not shown by the current design |
 | `tools/make-hero-map.py` | Regenerates the map and its reduced-motion still |
-| `tools/make-og-mldsa.py` | Redraws `img/og-ml-dsa-44.png`, the share card for the ML-DSA page |
+| `tools/make-brand-images.py` | Redraws the per-page share cards (`img/og-*.png`), the favicon and the app icons |
+| `tools/indexnow.py` | Pings Bing, Yandex and friends with changed pages. Run after a deploy |
 | `tools/stamp-assets.py` | Re-stamps `?hash=` cache busters. Run after changing CSS, JS or JSON |
 
 House style: tabs for indentation, blank line between logical steps, no
