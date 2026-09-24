@@ -80,6 +80,7 @@ fetched over HTTP.
 | `index.html` | Front page and selector markup |
 | `resolver.html` | ΕΛΠΙΣ Resolver: the server table and the AdGuard Home / Pi-hole upstream lists |
 | `self-host.html` | Running your own resolver, from a home lab to ISP hardware |
+| `ml-dsa-44.html` | Post-quantum DNSSEC: ML-DSA-44, and why we are second in the world to validate it |
 | `setup.html` | Setup guide |
 | `mission.html` | Why ΕΛΠΙΣ exists: promises, block lists, how a lookup travels |
 | `style-main.css` | Colour tokens, light and dark themes, all components and the narrow layout |
@@ -93,6 +94,8 @@ fetched over HTTP.
 | `js/app-setup.js` | Setup page helpers, and copy buttons on code blocks |
 | `img/hero-map.svg` | Animated night map, generated. Not shown by the current design |
 | `tools/make-hero-map.py` | Regenerates that map. Only needed if you change it |
+| `img/og-ml-dsa-44.png` | The share card for `ml-dsa-44.html`, generated |
+| `tools/make-og-mldsa.py` | Redraws that card. Needs Pillow and Noto Sans |
 | `tools/stamp-assets.py` | Re-stamps `?hash=` cache busters after any asset change |
 
 The colours are the ones the ΕΛΠΙΣ Resolver status page uses &mdash; steel grey

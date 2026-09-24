@@ -118,6 +118,7 @@ plan to run it. That is the whole ritual.
 | `index.html` | The front page and the selector markup |
 | `resolver.html` | ΕΛΠΙΣ Resolver: server table and upstream lists |
 | `self-host.html` | Running your own ΕΛΠΙΣ Resolver |
+| `ml-dsa-44.html` | Post-quantum DNSSEC and ML-DSA-44 |
 | `setup.html` | The setup guide, linked from the top bar |
 | `mission.html` | Why ΕΛΠΙΣ exists: promises, block lists, how a lookup travels |
 | `resolvers.json` | Public ΕΛΠΙΣ Resolver addresses. Edit this, not the HTML |
@@ -132,6 +133,7 @@ plan to run it. That is the whole ritual.
 | `js/app-setup.js` | Setup page helpers |
 | `img/hero-map.svg` | The animated map. Generated, and not shown by the current design |
 | `tools/make-hero-map.py` | Regenerates the map and its reduced-motion still |
+| `tools/make-og-mldsa.py` | Redraws `img/og-ml-dsa-44.png`, the share card for the ML-DSA page |
 | `tools/stamp-assets.py` | Re-stamps `?hash=` cache busters. Run after changing CSS, JS or JSON |
 
 House style: tabs for indentation, blank line between logical steps, no

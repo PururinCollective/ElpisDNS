@@ -206,6 +206,18 @@ code,
 	color:var(--text-soft);
 }
 
+.sr-only{
+	position:absolute;
+	width:1px;
+	height:1px;
+	margin:-1px;
+	padding:0;
+	overflow:hidden;
+	clip:rect(0 0 0 0);
+	white-space:nowrap;
+	border:0;
+}
+
 /* ---------- top bar ---------- */
 
 .topbar{
@@ -995,6 +1007,150 @@ a.card:hover h3{
 	font-size:14px;
 	line-height:1.5;
 	margin-top:2px;
+}
+
+/* ---------- stat strip ---------- */
+
+/* Hairlines between the cells are the gap showing the line colour through. */
+.stats{
+	display:grid;
+	grid-template-columns:repeat(4,minmax(0,1fr));
+	gap:1px;
+
+	margin-top:32px;
+
+	background:var(--line);
+	border:1px solid var(--line);
+	border-radius:var(--radius);
+	overflow:hidden;
+}
+
+.stat{
+	background:var(--surface);
+	padding:16px 20px;
+}
+
+.stat b{
+	display:block;
+	font-size:24px;
+	font-weight:700;
+	letter-spacing:-.01em;
+	font-variant-numeric:tabular-nums;
+}
+
+.stat span{
+	color:var(--text-faint);
+	font-size:13.5px;
+}
+
+.stat-accent b{
+	color:var(--accent);
+}
+
+/* ---------- simple table ---------- */
+
+.table-scroll{
+	overflow-x:auto;
+}
+
+.simple-table{
+	width:100%;
+	border-collapse:collapse;
+	font-size:14.5px;
+}
+
+.simple-table th{
+	text-align:left;
+	padding:11px 16px;
+
+	background:var(--surface-alt);
+	border-bottom:1px solid var(--line);
+
+	color:var(--text-faint);
+	font-size:12px;
+	font-weight:600;
+	letter-spacing:.08em;
+	text-transform:uppercase;
+	white-space:nowrap;
+}
+
+.simple-table td{
+	padding:11px 16px;
+	border-bottom:1px solid var(--line);
+	white-space:nowrap;
+}
+
+.simple-table td.num,
+.simple-table th.num{
+	text-align:right;
+	font-variant-numeric:tabular-nums;
+}
+
+.simple-table tr:last-child td{
+	border-bottom:0;
+}
+
+.simple-table tr.is-pq td{
+	background:var(--accent-soft);
+}
+
+.simple-table tr.is-pq td:first-child{
+	color:var(--text-strong);
+	font-weight:600;
+}
+
+/* ---------- questions ---------- */
+
+.faq{
+	display:grid;
+	gap:8px;
+}
+
+.faq details{
+	background:var(--surface);
+	border:1px solid var(--line);
+	border-radius:var(--radius);
+}
+
+.faq summary{
+	display:flex;
+	align-items:center;
+	gap:12px;
+
+	padding:14px 18px;
+
+	color:var(--text-strong);
+	font-weight:600;
+	cursor:pointer;
+	list-style:none;
+}
+
+.faq summary::-webkit-details-marker{
+	display:none;
+}
+
+.faq summary::after{
+	content:"\F282";
+	font-family:"bootstrap-icons";
+	margin-left:auto;
+	color:var(--text-faint);
+	font-size:12px;
+	font-weight:400;
+	transition:transform var(--speed);
+}
+
+.faq details[open] summary::after{
+	transform:rotate(180deg);
+}
+
+.faq summary:hover{
+	color:var(--accent);
+}
+
+.faq details > p{
+	padding:0 18px 16px;
+	margin:0;
+	color:var(--text-soft);
 }
 
 /* ---------- call to action ---------- */
@@ -2020,6 +2176,18 @@ a.card:hover h3{
 	.chain{
 		grid-template-columns:minmax(0,1fr);
 		gap:22px;
+	}
+
+	.stats{
+		grid-template-columns:repeat(2,minmax(0,1fr));
+	}
+
+	.stat{
+		padding:14px 16px;
+	}
+
+	.stat b{
+		font-size:21px;
 	}
 
 	.chain li:nth-child(2)::after{

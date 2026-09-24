@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-<link href="style-main.css?hash=4bf88226" rel="stylesheet">
+<link href="style-main.css?hash=305d69f1" rel="stylesheet">
 
 <meta name="description" content="Why Elpis DNS exists: no logs, no middlemen, and only ads, trackers and malware blocked. The filter lists we use, how a lookup travels, and how to check us.">
 <link rel="canonical" href="https://elpis.violetnetworks.xyz/mission.html">
@@ -228,7 +228,7 @@
 
 			<div class="tech">
 				<span class="pill pill-accent">DNSSEC validated</span>
-				<span class="pill pill-accent">ML-DSA-44</span>
+				<a class="pill pill-accent" href="ml-dsa-44.html">ML-DSA-44</a>
 				<span class="pill pill-accent">QNAME minimisation</span>
 				<span class="pill pill-accent">IPv6 first</span>
 				<span class="pill pill-accent">HTTPS &amp; SVCB records for ECH</span>
@@ -374,8 +374,9 @@
 					To answer questions ourselves, we needed software that could. So we
 					wrote it: a recursive resolver in portable C99, open source down to the
 					cryptography. It's the second resolver in the world to check
-					post-quantum ML-DSA-44 signatures, after Cloudflare &mdash; because the
-					signatures collected today are the ones someone will try to forge later.
+					post-quantum <a href="ml-dsa-44.html">ML-DSA-44</a> signatures, after
+					Cloudflare &mdash; because resolvers have to understand a new signature
+					before any domain can switch to it.
 				</p>
 				<div class="actions">
 					<a class="btn btn-primary" href="resolver.html">About the resolver</a>
@@ -468,6 +469,7 @@
 				<ul>
 					<li><a href="mission.html">Our mission</a></li>
 					<li><a href="resolver.html">ΕΛΠΙΣ Resolver</a></li>
+					<li><a href="ml-dsa-44.html">ML-DSA-44</a></li>
 					<li><a href="self-host.html">Run your own</a></li>
 				</ul>
 			</div>
