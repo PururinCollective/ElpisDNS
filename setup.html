@@ -4,9 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>Set up ΕΛΠΙΣ DNS — Android, Windows, iOS, routers</title>
+<title>Set up ΕΛΠΙΣ DNS — Android, Windows, iOS, routers, AdGuard Home</title>
 <link rel="icon" type="image/x-icon" href="favicon.ico">
-<link rel="icon" type="image/svg+xml" href="img/elpis-mark.svg?hash=edbc1f49">
+<link rel="icon" type="image/svg+xml" href="img/elpis-mark.svg?hash=3bcb26d5">
 <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
 
 <!-- Paint the correct theme before the first frame, no white flash -->
@@ -19,22 +19,19 @@
 			 window.matchMedia("(prefers-color-scheme: dark)").matches);
 		document.documentElement.dataset.theme = dark ? "dark" : "light";
 		document.documentElement.dataset.themeChoice = choice;
-		document.documentElement.setAttribute("data-bs-theme", dark ? "dark" : "light");
 	})();
 </script>
 
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-<link href="style-main.css?hash=68968e7f" rel="stylesheet">
-<link href="style-mobile.css?hash=37f4fe49" rel="stylesheet">
+<link href="style-main.css?hash=4bf88226" rel="stylesheet">
 
-<meta name="description" content="Point Android, Windows 11, iOS, Firefox, MikroTik, OpenWrt or AdGuard Home at an encrypted Elpis DNS resolver. One endpoint, every platform, step by step.">
+<meta name="description" content="Set up Elpis DNS on Android, Windows 11, iOS, macOS, Firefox, Chrome, MikroTik and OpenWrt — or use ΕΛΠΙΣ Resolver as the upstream for your AdGuard Home or Pi-hole.">
 <link rel="canonical" href="https://elpis.violetnetworks.xyz/setup.html">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
@@ -44,60 +41,29 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://elpis.violetnetworks.xyz/setup.html">
 <meta property="og:title" content="How to set up ΕΛΠΙΣ DNS">
-<meta property="og:description" content="Android, Windows, iOS, Firefox, Chrome, MikroTik, OpenWrt, AdGuard Home — every one of them takes the same endpoint, and every one of them hides the setting somewhere different.">
+<meta property="og:description" content="Step-by-step for Android, Windows, iOS, browsers and routers — plus ΕΛΠΙΣ Resolver as the upstream for AdGuard Home and Pi-hole.">
 <meta property="og:image" content="https://elpis.violetnetworks.xyz/img/og-image.jpg">
 <meta property="og:image:secure_url" content="https://elpis.violetnetworks.xyz/img/og-image.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="ΕΛΠΙΣ DNS — Resolve freely. Answer to no one.">
+<meta property="og:image:alt" content="ΕΛΠΙΣ DNS — private DNS, answered by our own resolver">
 
 <!-- X / Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://elpis.violetnetworks.xyz/setup.html">
 <meta name="twitter:title" content="How to set up ΕΛΠΙΣ DNS">
-<meta name="twitter:description" content="Android, Windows, iOS, Firefox, Chrome, MikroTik, OpenWrt, AdGuard Home — every one of them takes the same endpoint, and every one of them hides the setting somewhere different.">
+<meta name="twitter:description" content="Step-by-step for Android, Windows, iOS, browsers and routers — plus ΕΛΠΙΣ Resolver as the upstream for AdGuard Home and Pi-hole.">
 <meta name="twitter:image" content="https://elpis.violetnetworks.xyz/img/og-image.jpg">
-<meta name="twitter:image:alt" content="ΕΛΠΙΣ DNS — Resolve freely. Answer to no one.">
+<meta name="twitter:image:alt" content="ΕΛΠΙΣ DNS — private DNS, answered by our own resolver">
 
 <!-- The stripe Discord paints down the side of the embed -->
-<meta name="theme-color" content="#f24f2f">
+<meta name="theme-color" content="#2f9ee0">
 
 <script type="application/ld+json">
 {
 	"@context": "https://schema.org",
 	"@graph": [
-		{
-			"@type": "WebSite",
-			"@id": "https://elpis.violetnetworks.xyz/#website",
-			"url": "https://elpis.violetnetworks.xyz/",
-			"name": "ΕΛΠΙΣ DNS",
-			"alternateName": [
-				"Elpis DNS",
-				"ELPIS DNS"
-			],
-			"description": "Community-run encrypted DNS resolvers: DNS over HTTPS and DNS over TLS, filtered, with no query logging.",
-			"inLanguage": "en",
-			"publisher": {
-				"@id": "https://elpis.violetnetworks.xyz/#org"
-			}
-		},
-		{
-			"@type": "Organization",
-			"@id": "https://elpis.violetnetworks.xyz/#org",
-			"name": "ΕΛΠΙΣ DNS",
-			"alternateName": "Elpis DNS",
-			"url": "https://elpis.violetnetworks.xyz/",
-			"logo": "https://elpis.violetnetworks.xyz/img/elpis-logo.svg",
-			"image": "https://elpis.violetnetworks.xyz/img/og-image.jpg",
-			"sameAs": [
-				"https://github.com/PururinCollective/ElpisDNS",
-				"https://github.com/PururinCollective/elpis-resolver",
-				"https://discord.gg/aw8pt2SWnv",
-				"https://pururin.moe/",
-				"https://openpon.org/"
-			]
-		},
 		{
 			"@type": "BreadcrumbList",
 			"itemListElement": [
@@ -122,418 +88,427 @@
 
 <body>
 
-<!-- Top bar -->
-<nav class="topbar">
-	<div class="container topbar-inner">
+<a class="skip" href="#main">Skip to content</a>
 
-		<a class="topbar-brand" href="index.html">
-			<img src="img/elpis-mark.svg?hash=edbc1f49" alt="" class="topbar-mark">
-			<span class="topbar-name">ΕΛΠΙΣ <span class="accent">DNS</span></span>
+<!-- Top bar -->
+<header class="topbar">
+	<div class="wrap topbar-inner">
+
+		<a class="brand" href="index.html">
+			<img src="img/elpis-mark.svg?hash=3bcb26d5" alt="" class="brand-mark" width="28" height="28">
+			<span class="brand-name">ΕΛΠΙΣ <span>DNS</span></span>
 		</a>
 
+		<nav class="nav" aria-label="Main">
+			<a href="setup.html" aria-current="page">Setup</a>
+			<a href="resolver.html">Resolver</a>
+			<a href="self-host.html">Self-host</a>
+			<a href="mission.html">Mission</a>
+		</nav>
+
 		<div class="topbar-actions">
-
-			<a class="topbar-link" href="index.html">
-				<i class="bi bi-arrow-left-short"></i>
-				<span>Back to the table</span>
-			</a>
-
-			<a class="topbar-link" href="https://github.com/PururinCollective/ElpisDNS" target="_blank" rel="noopener">
+			<a class="icon-btn" href="https://github.com/PururinCollective/ElpisDNS" target="_blank" rel="noopener" title="Source on GitHub" aria-label="Source on GitHub">
 				<i class="bi bi-github"></i>
-				<span>Source</span>
 			</a>
-
-			<button class="theme-btn" id="theme-btn" type="button" title="Theme" aria-label="Theme">
+			<button class="icon-btn" id="theme-btn" type="button" title="Theme" aria-label="Theme">
 				<i class="bi bi-circle-half"></i>
 			</button>
 		</div>
 	</div>
-</nav>
+</header>
 
-<div class="container">
+<main id="main">
 
-	<div class="page-head">
-		<div class="page-kicker">The instructions</div>
-		<div class="page-title">Loading the gun</div>
-		<div class="page-lead">
-			Owning the endpoint is the easy part. Every operating system, browser and router
-			hides the setting somewhere slightly different, usually behind a word nobody
-			uses in conversation. Below is where each of them keeps it.
-			<br /><br />
-			Two things travel with you through all of it: the <b>endpoint</b>, which is the
-			full URL, and the <b>hostname</b>, which is the same thing with the ceremony
-			removed. Some fields want one, some want the other.
+	<section class="page-head">
+		<div class="wrap">
+			<div class="eyebrow">Setup guides</div>
+			<h1>Set up ΕΛΠΙΣ DNS</h1>
+			<p class="lead">
+				Pick your device below. Every example already uses the address you chose
+				on the <a href="index.html#get">home page</a>, so you can copy and paste.
+			</p>
 		</div>
-	</div>
+	</section>
 
-	<!-- What you picked -->
-	<div class="doc-section">
-		<div class="doc-title">
-			<i class="bi bi-crosshair"></i> What you are holding
-		</div>
-		<div class="doc-text">
-			Taken from your last choice on the front page. Pick a different one there and
-			this page follows.
-		</div>
+	<section class="section">
+		<div class="wrap">
 
-		<div class="doc-text">
-			<b>DoH endpoint</b> &mdash; <span class="picked" data-picked="https">https://b.hitoha.moe/dns-query</span><br />
-			<b>DoT address</b> &mdash; <span class="picked" data-picked="tls">tls://b.hitoha.moe</span><br />
-			<b>Hostname</b> &mdash; <span class="picked" data-picked="host">b.hitoha.moe</span><br />
-			<b>DNS stamp</b> &mdash; <span class="picked" data-picked="stamp">sdns://AgMAAAAAAAAAAAAMYi5oaXRvaGEubW9lCi9kbnMtcXVlcnk</span>
-		</div>
-
-		<div class="doc-text">
-			The stamp is the whole endpoint in one string &mdash; protocol, host, path
-			and what the resolver promises. Anything built on dnscrypt-proxy takes it
-			directly, which saves filling in four fields by hand.
-		</div>
-
-		<div class="doc-note">
-			<i class="bi bi-exclamation-diamond"></i>
-			<div>
-				Change one thing at a time and keep a way back. A router with a broken
-				resolver looks exactly like a router with no internet, and the person
-				troubleshooting it at 3am will be you.
+			<!-- What you picked -->
+			<div class="doc-section">
+				<h2 class="doc-title"><i class="bi bi-bookmark-check"></i> Your address</h2>
+				<p class="doc-text">
+					Some settings want the full address, others just the hostname. Here are
+					both. <a href="index.html#get">Pick a different one</a> and this page follows.
+				</p>
+				<dl class="picked-list">
+					<dt>DoH address</dt>
+					<dd><span class="picked" data-picked="https">https://b.hitoha.moe/dns-query</span></dd>
+					<dt>DoT address</dt>
+					<dd><span class="picked" data-picked="tls">tls://b.hitoha.moe</span></dd>
+					<dt>Hostname</dt>
+					<dd><span class="picked" data-picked="host">b.hitoha.moe</span></dd>
+					<dt>DNS stamp</dt>
+					<dd><span class="picked" data-picked="stamp">sdns://AgMAAAAAAAAAAAAMYi5oaXRvaGEubW9lCi9kbnMtcXVlcnk</span></dd>
+				</dl>
+				<div class="note">
+					<i class="bi bi-lightbulb"></i>
+					<div>
+						Change one thing at a time and keep a way back. A broken DNS setting
+						looks exactly like "no internet".
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
 
-	<!-- Jump list -->
-	<div class="doc-jump">
-		<a href="#android"><i class="bi bi-android2"></i> Android</a>
-		<a href="#windows"><i class="bi bi-windows"></i> Windows 11</a>
-		<a href="#apple"><i class="bi bi-apple"></i> iOS &amp; macOS</a>
-		<a href="#firefox"><i class="bi bi-browser-firefox"></i> Firefox</a>
-		<a href="#chrome"><i class="bi bi-browser-chrome"></i> Chrome &amp; Edge</a>
-		<a href="#mikrotik"><i class="bi bi-router"></i> MikroTik</a>
-		<a href="#openwrt"><i class="bi bi-hdd-network"></i> OpenWrt</a>
-		<a href="#adguard"><i class="bi bi-shield-check"></i> AdGuard Home</a>
-		<a href="#verify"><i class="bi bi-clipboard-check"></i> Verify</a>
-	</div>
+			<!-- Jump list -->
+			<nav class="doc-jump" aria-label="Devices">
+				<a href="#android"><i class="bi bi-android2"></i> Android</a>
+				<a href="#windows"><i class="bi bi-windows"></i> Windows 11</a>
+				<a href="#apple"><i class="bi bi-apple"></i> iOS &amp; macOS</a>
+				<a href="#firefox"><i class="bi bi-browser-firefox"></i> Firefox</a>
+				<a href="#chrome"><i class="bi bi-browser-chrome"></i> Chrome &amp; Edge</a>
+				<a href="#mikrotik"><i class="bi bi-router"></i> MikroTik</a>
+				<a href="#openwrt"><i class="bi bi-hdd-network"></i> OpenWrt</a>
+				<a href="#adguard"><i class="bi bi-shield-check"></i> AdGuard Home &amp; Pi-hole</a>
+				<a href="#verify"><i class="bi bi-clipboard-check"></i> Check it works</a>
+			</nav>
 
-	<!-- Android -->
-	<section class="doc-section" id="android">
-		<div class="doc-title">
-			<i class="bi bi-android2"></i> Android 9 and newer
-			<span class="doc-tag">DoT</span>
-		</div>
-		<div class="doc-text">
-			The cleanest install of the lot. Android calls DNS over TLS
-			<b>Private DNS</b>, it applies system wide, and it survives switching
-			between mobile data and Wi-Fi.
-		</div>
-		<ol class="doc-steps">
-			<li>Open <b>Settings</b> &rarr; <b>Network &amp; internet</b> &rarr; <b>Private DNS</b>. On Samsung it lives under <b>Connections</b> &rarr; <b>More connection settings</b>.</li>
-			<li>Choose <b>Private DNS provider hostname</b>.</li>
-			<li>Enter the hostname only &mdash; no <code>https://</code>, no <code>tls://</code>, no trailing slash:</li>
-		</ol>
-		<div class="code-block"><pre data-picked="host">b.hitoha.moe</pre></div>
-		<ol class="doc-steps" start="4" style="--start:3">
-			<li>Tap <b>Save</b>. If the field turns red, the hostname is wrong or the network is blocking port 853 &mdash; try the <b>Android</b> button on the front page to copy it exactly.</li>
-		</ol>
-	</section>
+			<!-- Android -->
+			<section class="doc-section" id="android">
+				<h2 class="doc-title">
+					<i class="bi bi-android2"></i> Android 9 and newer
+					<span class="doc-tag">DoT</span>
+				</h2>
+				<p class="doc-text">
+					The easiest one. Android calls it <b>Private DNS</b>: it covers every app,
+					on Wi-Fi and mobile data alike.
+				</p>
+				<ol class="doc-steps">
+					<li>Open <b>Settings</b> &rarr; <b>Network &amp; internet</b> &rarr; <b>Private DNS</b>. On Samsung: <b>Connections</b> &rarr; <b>More connection settings</b>.</li>
+					<li>Choose <b>Private DNS provider hostname</b>.</li>
+					<li>Enter the hostname only &mdash; no <code>https://</code>, no <code>tls://</code>:</li>
+				</ol>
+				<div class="code-block"><pre data-picked="host">b.hitoha.moe</pre></div>
+				<ol class="doc-steps" style="--start:3">
+					<li>Tap <b>Save</b>. If it won't connect, the network may be blocking port 853 &mdash; try another network.</li>
+				</ol>
+			</section>
 
-	<!-- Windows -->
-	<section class="doc-section" id="windows">
-		<div class="doc-title">
-			<i class="bi bi-windows"></i> Windows 11
-			<span class="doc-tag">DoH</span>
-		</div>
-		<div class="doc-text">
-			Windows wants an IP address <i>and</i> a template, because it refuses to
-			trust a name it has not resolved yet. Find the address first.
-		</div>
-		<div class="code-block"><pre>nslookup <span data-picked="host">b.hitoha.moe</span></pre></div>
-		<ol class="doc-steps">
-			<li><b>Settings</b> &rarr; <b>Network &amp; internet</b> &rarr; your adapter (Wi-Fi or Ethernet) &rarr; <b>Hardware properties</b>.</li>
-			<li>Next to <b>DNS server assignment</b>, click <b>Edit</b> and switch to <b>Manual</b>.</li>
-			<li>Turn on <b>IPv4</b>, and paste the address <code>nslookup</code> returned into <b>Preferred DNS</b>.</li>
-			<li>Set <b>DNS over HTTPS</b> to <b>On (manual template)</b> and enter the endpoint:</li>
-		</ol>
-		<div class="code-block"><pre data-picked="https">https://b.hitoha.moe/dns-query</pre></div>
-		<ol class="doc-steps" start="5" style="--start:4">
-			<li>Leave <b>Fallback to plaintext</b> off. A fallback is a door you left unlocked out of politeness.</li>
-			<li>Save, then repeat for IPv6 if the resolver you picked serves it.</li>
-		</ol>
-		<div class="doc-note">
-			<i class="bi bi-info-circle"></i>
-			<div>
-				Windows 10 has no interface for this. Use a client such as
-				AdGuard Home, YogaDNS or dnscrypt-proxy, or set it on the router
-				and let every device inherit it.
-			</div>
-		</div>
-	</section>
+			<!-- Windows -->
+			<section class="doc-section" id="windows">
+				<h2 class="doc-title">
+					<i class="bi bi-windows"></i> Windows 11
+					<span class="doc-tag">DoH</span>
+				</h2>
+				<p class="doc-text">
+					Windows wants an IP address <i>and</i> the DoH address. Find the IP first:
+				</p>
+				<div class="code-block"><pre>nslookup <span data-picked="host">b.hitoha.moe</span></pre></div>
+				<ol class="doc-steps">
+					<li><b>Settings</b> &rarr; <b>Network &amp; internet</b> &rarr; your Wi-Fi or Ethernet &rarr; <b>Hardware properties</b>.</li>
+					<li>Next to <b>DNS server assignment</b>, click <b>Edit</b> and choose <b>Manual</b>.</li>
+					<li>Turn on <b>IPv4</b> and paste the IP from <code>nslookup</code> into <b>Preferred DNS</b>.</li>
+					<li>Set <b>DNS over HTTPS</b> to <b>On (manual template)</b> and paste:</li>
+				</ol>
+				<div class="code-block"><pre data-picked="https">https://b.hitoha.moe/dns-query</pre></div>
+				<ol class="doc-steps" style="--start:4">
+					<li>Leave <b>Fallback to plaintext</b> off, then save. Repeat for IPv6 if your address supports it.</li>
+				</ol>
+				<div class="note">
+					<i class="bi bi-info-circle"></i>
+					<div>
+						Windows 10 has no setting for this. Use an app like YogaDNS or
+						dnscrypt-proxy, or set it on your router so every device gets it.
+					</div>
+				</div>
+			</section>
 
-	<!-- Apple -->
-	<section class="doc-section" id="apple">
-		<div class="doc-title">
-			<i class="bi bi-apple"></i> iOS, iPadOS and macOS
-			<span class="doc-tag">DoH / DoT</span>
-		</div>
-		<div class="doc-text">
-			Apple has supported encrypted DNS since iOS 14 and macOS 11, but only
-			through a configuration profile or an app that installs one. There is no
-			text box in Settings.
-		</div>
-		<ol class="doc-steps">
-			<li>Install a DNS client from the App Store &mdash; AdGuard, DNSecure or DNSCloak all accept a custom server.</li>
-			<li>Add a custom resolver and paste the endpoint:</li>
-		</ol>
-		<div class="code-block"><pre data-picked="https">https://b.hitoha.moe/dns-query</pre></div>
-		<ol class="doc-steps" start="3" style="--start:2">
-			<li>Enable it, then confirm under <b>Settings</b> &rarr; <b>General</b> &rarr; <b>VPN &amp; Device Management</b> &rarr; <b>DNS</b> that your profile is the active one.</li>
-			<li>On macOS the same profile works: double click the <code>.mobileconfig</code> and approve it in <b>System Settings</b> &rarr; <b>Privacy &amp; Security</b> &rarr; <b>Profiles</b>.</li>
-		</ol>
-	</section>
+			<!-- Apple -->
+			<section class="doc-section" id="apple">
+				<h2 class="doc-title">
+					<i class="bi bi-apple"></i> iOS, iPadOS and macOS
+					<span class="doc-tag">DoH / DoT</span>
+				</h2>
+				<p class="doc-text">
+					Apple supports encrypted DNS, but only through an app or a configuration
+					profile &mdash; there's no text box in Settings.
+				</p>
+				<ol class="doc-steps">
+					<li>Install a DNS app from the App Store: AdGuard, DNSecure or DNSCloak all take a custom server.</li>
+					<li>Add a custom server and paste:</li>
+				</ol>
+				<div class="code-block"><pre data-picked="https">https://b.hitoha.moe/dns-query</pre></div>
+				<ol class="doc-steps" style="--start:2">
+					<li>Turn it on, then check <b>Settings</b> &rarr; <b>General</b> &rarr; <b>VPN &amp; Device Management</b> &rarr; <b>DNS</b> shows it as active.</li>
+					<li>On a Mac, open the <code>.mobileconfig</code> profile and approve it in <b>System Settings</b> &rarr; <b>Privacy &amp; Security</b> &rarr; <b>Profiles</b>.</li>
+				</ol>
+			</section>
 
-	<!-- Firefox -->
-	<section class="doc-section" id="firefox">
-		<div class="doc-title">
-			<i class="bi bi-browser-firefox"></i> Firefox
-			<span class="doc-tag">DoH</span>
-		</div>
-		<div class="doc-text">
-			Browser level encryption covers the browser and nothing else. Everything
-			outside it keeps asking whoever the system was told to ask.
-		</div>
-		<ol class="doc-steps">
-			<li><b>Settings</b> &rarr; <b>Privacy &amp; Security</b> &rarr; scroll to <b>DNS over HTTPS</b>.</li>
-			<li>Select <b>Max Protection</b>.</li>
-			<li>Open the provider list, choose <b>Custom</b>, and paste:</li>
-		</ol>
-		<div class="code-block"><pre data-picked="https">https://b.hitoha.moe/dns-query</pre></div>
-		<ol class="doc-steps" start="4" style="--start:3">
-			<li>Confirm on <code>about:networking#dns</code> &mdash; the <b>TRR</b> column should read true for new lookups.</li>
-		</ol>
-	</section>
+			<!-- Firefox -->
+			<section class="doc-section" id="firefox">
+				<h2 class="doc-title">
+					<i class="bi bi-browser-firefox"></i> Firefox
+					<span class="doc-tag">DoH</span>
+				</h2>
+				<p class="doc-text">
+					This covers Firefox only. Other apps on the device keep using the system
+					setting.
+				</p>
+				<ol class="doc-steps">
+					<li><b>Settings</b> &rarr; <b>Privacy &amp; Security</b> &rarr; scroll to <b>DNS over HTTPS</b>.</li>
+					<li>Choose <b>Max Protection</b>, pick <b>Custom</b> as the provider, and paste:</li>
+				</ol>
+				<div class="code-block"><pre data-picked="https">https://b.hitoha.moe/dns-query</pre></div>
+				<ol class="doc-steps" style="--start:2">
+					<li>Check <code>about:networking#dns</code> &mdash; the <b>TRR</b> column should say true.</li>
+				</ol>
+			</section>
 
-	<!-- Chrome -->
-	<section class="doc-section" id="chrome">
-		<div class="doc-title">
-			<i class="bi bi-browser-chrome"></i> Chrome, Edge, Brave, Vivaldi
-			<span class="doc-tag">DoH</span>
-		</div>
-		<ol class="doc-steps">
-			<li>Open <code>chrome://settings/security</code> &mdash; on Edge it is <code>edge://settings/privacy</code>.</li>
-			<li>Turn on <b>Use secure DNS</b>.</li>
-			<li>Choose <b>Custom</b> and paste the endpoint:</li>
-		</ol>
-		<div class="code-block"><pre data-picked="https">https://b.hitoha.moe/dns-query</pre></div>
-		<ol class="doc-steps" start="4" style="--start:3">
-			<li>Check it on <code>chrome://net-internals/#dns</code> if you want to see the queries leave.</li>
-		</ol>
-	</section>
+			<!-- Chrome -->
+			<section class="doc-section" id="chrome">
+				<h2 class="doc-title">
+					<i class="bi bi-browser-chrome"></i> Chrome, Edge, Brave, Vivaldi
+					<span class="doc-tag">DoH</span>
+				</h2>
+				<ol class="doc-steps">
+					<li>Open <code>chrome://settings/security</code> (Edge: <code>edge://settings/privacy</code>).</li>
+					<li>Turn on <b>Use secure DNS</b>, choose <b>Custom</b>, and paste:</li>
+				</ol>
+				<div class="code-block"><pre data-picked="https">https://b.hitoha.moe/dns-query</pre></div>
+			</section>
 
-	<!-- MikroTik -->
-	<section class="doc-section" id="mikrotik">
-		<div class="doc-title">
-			<i class="bi bi-router"></i> MikroTik RouterOS
-			<span class="doc-tag">DoH</span>
-		</div>
-		<div class="doc-text">
-			Do it here and every device in the house is covered, including the ones with
-			no settings screen at all. The front page will hand you a ready made
-			<code>.rsc</code> for the endpoint you picked &mdash; the long way is below.
-		</div>
+			<!-- MikroTik -->
+			<section class="doc-section" id="mikrotik">
+				<h2 class="doc-title">
+					<i class="bi bi-router"></i> MikroTik RouterOS
+					<span class="doc-tag">DoH</span>
+				</h2>
+				<p class="doc-text">
+					Set it on the router and every device at home is covered &mdash; even the
+					ones with no settings screen. The <b>MikroTik</b> button on the home page
+					downloads a ready-made script; the manual way is below.
+				</p>
 
-		<div class="doc-text"><b>1. Give the router something to bootstrap with</b></div>
-		<div class="code-block"><pre>/ip dns
+				<h3 class="doc-sub">1. Give the router a DNS server to start with</h3>
+				<div class="code-block"><pre>/ip dns
 set servers=1.0.0.1,1.1.1.1 allow-remote-requests=yes</pre></div>
 
-		<div class="doc-text"><b>2. Import a certificate store, or DoH will refuse to verify</b></div>
-		<div class="code-block"><pre>/tool fetch url="https://curl.se/ca/cacert.pem"
+				<h3 class="doc-sub">2. Import certificates so DoH can verify</h3>
+				<div class="code-block"><pre>/tool fetch url="https://curl.se/ca/cacert.pem"
 /certificate import file-name=cacert.pem passphrase=""</pre></div>
 
-		<div class="doc-text"><b>3. Pin the resolver address, then switch DoH on</b></div>
-		<div class="code-block"><pre>/ip dns static
+				<h3 class="doc-sub">3. Pin the address, then switch DoH on</h3>
+				<div class="code-block"><pre>/ip dns static
 add name="<span data-picked="host">b.hitoha.moe</span>" type=A address=151.158.198.53
 
 /ip dns
 set use-doh-server="<span data-picked="https">https://b.hitoha.moe/dns-query</span>" verify-doh-cert=yes</pre></div>
 
-		<div class="doc-note">
-			<i class="bi bi-lightning-charge"></i>
-			<div>
-				Replace the static address with whatever <code>nslookup</code> returns for your
-				chosen host, or press <b>.rsc</b> on the front page and let the site resolve
-				it for you. Without that static entry the router cannot find the resolver it
-				is about to start using, which is a circle it will not escape on its own.
-			</div>
-		</div>
+				<div class="note">
+					<i class="bi bi-lightning-charge"></i>
+					<div>
+						Use the IP that <code>nslookup</code> gives for your hostname. Without
+						that static entry the router can't find the server it's about to rely
+						on.
+					</div>
+				</div>
 
-		<div class="doc-text"><b>RouterOS 7.20 and later &mdash; forwarders</b></div>
-		<div class="code-block"><pre>/ip dns forwarders
+				<h3 class="doc-sub">RouterOS 7.20 and later: forwarders</h3>
+				<div class="code-block"><pre>/ip dns forwarders
 add name=ELPIS doh-servers="<span data-picked="https">https://b.hitoha.moe/dns-query</span>"
 
 /ip dns static
 add name=* forward-to=ELPIS type=FWD</pre></div>
-	</section>
+			</section>
 
-	<!-- OpenWrt -->
-	<section class="doc-section" id="openwrt">
-		<div class="doc-title">
-			<i class="bi bi-hdd-network"></i> OpenWrt
-			<span class="doc-tag">DoH</span>
-		</div>
-		<ol class="doc-steps">
-			<li>Install the proxy and its LuCI page:</li>
-		</ol>
-		<div class="code-block"><pre>opkg update
+			<!-- OpenWrt -->
+			<section class="doc-section" id="openwrt">
+				<h2 class="doc-title">
+					<i class="bi bi-hdd-network"></i> OpenWrt
+					<span class="doc-tag">DoH</span>
+				</h2>
+				<ol class="doc-steps">
+					<li>Install the DoH proxy and its web page:</li>
+				</ol>
+				<div class="code-block"><pre>opkg update
 opkg install https-dns-proxy luci-app-https-dns-proxy</pre></div>
-		<ol class="doc-steps" start="2" style="--start:1">
-			<li>Point the first instance at the endpoint, and drop any providers that shipped by default:</li>
-		</ol>
-		<div class="code-block"><pre>uci set https-dns-proxy.@https-dns-proxy[0].resolver_url='<span data-picked="https">https://b.hitoha.moe/dns-query</span>'
+				<ol class="doc-steps" style="--start:1">
+					<li>Point it at your address:</li>
+				</ol>
+				<div class="code-block"><pre>uci set https-dns-proxy.@https-dns-proxy[0].resolver_url='<span data-picked="https">https://b.hitoha.moe/dns-query</span>'
 uci set https-dns-proxy.@https-dns-proxy[0].bootstrap_dns='1.1.1.1,1.0.0.1'
 uci set https-dns-proxy.@https-dns-proxy[0].listen_addr='127.0.0.1'
 uci set https-dns-proxy.@https-dns-proxy[0].listen_port='5053'
 uci commit https-dns-proxy
 /etc/init.d/https-dns-proxy restart</pre></div>
-		<ol class="doc-steps" start="3" style="--start:2">
-			<li>Tell dnsmasq to forward everything to the proxy and to ignore what the ISP handed out:</li>
-		</ol>
-		<div class="code-block"><pre>uci -q delete dhcp.@dnsmasq[0].server
+				<ol class="doc-steps" style="--start:2">
+					<li>Send all lookups through it, and ignore the ISP's DNS:</li>
+				</ol>
+				<div class="code-block"><pre>uci -q delete dhcp.@dnsmasq[0].server
 uci add_list dhcp.@dnsmasq[0].server='127.0.0.1#5053'
 uci set dhcp.@dnsmasq[0].noresolv='1'
 uci commit dhcp
 /etc/init.d/dnsmasq restart</pre></div>
+			</section>
+
+			<!-- AdGuard Home & Pi-hole -->
+			<section class="doc-section" id="adguard">
+				<h2 class="doc-title">
+					<i class="bi bi-shield-check"></i> AdGuard Home &amp; Pi-hole
+					<span class="doc-tag">Upstream</span>
+				</h2>
+				<p class="doc-text">
+					Already running your own filter? Keep it &mdash; and use
+					<a href="resolver.html">ΕΛΠΙΣ Resolver</a> as its upstream instead of
+					Google or Cloudflare. Your blocklists, logs and rules stay on your
+					hardware; we just do the lookups, straight from the root servers.
+				</p>
+
+				<div data-upstream-builder>
+					<noscript>
+						<p class="doc-text">The list builder needs JavaScript. The addresses are in
+						<a href="resolvers.json?hash=799fe164">resolvers.json</a>.</p>
+					</noscript>
+				</div>
+
+				<h3 class="doc-sub">AdGuard Home</h3>
+				<ol class="doc-steps">
+					<li>Open <b>Settings</b> &rarr; <b>DNS settings</b>, and replace everything in <b>Upstream DNS servers</b> with the list above.</li>
+					<li>Set <b>Upstream mode</b> to <b>Load-balancing</b>. It asks the fastest server and moves on if one stops answering. <b>Parallel requests</b> asks every server at once &mdash; fine with one address family, but with IPv6 + IPv4 each server gets every question twice.</li>
+					<li>Optional: paste the backup list into <b>Fallback DNS servers</b>.</li>
+					<li>Press <b>Test upstreams</b>, then <b>Apply</b>.</li>
+				</ol>
+
+				<h3 class="doc-sub">Pi-hole</h3>
+				<ol class="doc-steps">
+					<li>Switch the list above to <b>Pi-hole</b> &mdash; it writes IPv4 ports the Pi-hole way, like <code>151.158.198.49#5301</code>.</li>
+					<li>Open <b>Settings</b> &rarr; <b>DNS</b>, untick the built-in providers, and paste into <b>Custom DNS servers</b>.</li>
+					<li>Save.</li>
+				</ol>
+
+				<div class="note">
+					<i class="bi bi-funnel"></i>
+					<div>
+						<b>Prefer our filtering too?</b> Use your encrypted address from the
+						home page as the upstream instead &mdash;
+						<code data-picked="https">https://b.hitoha.moe/dns-query</code> &mdash;
+						and add the IPv6 resolver addresses above as <b>Bootstrap DNS servers</b>
+						so AdGuard can find it on a cold start.
+					</div>
+				</div>
+			</section>
+
+			<!-- Verify -->
+			<section class="doc-section" id="verify">
+				<h2 class="doc-title">
+					<i class="bi bi-clipboard-check"></i> Check it works
+				</h2>
+				<ol class="doc-steps">
+					<li>Make sure names still load:</li>
+				</ol>
+				<div class="code-block"><pre>nslookup example.com</pre></div>
+				<ol class="doc-steps" style="--start:1">
+					<li>Check filtering is on &mdash; a known ad domain should come back empty or as <code>0.0.0.0</code>.</li>
+					<li>Run <a href="https://dnscheck.tools/" target="_blank" rel="noopener">dnscheck.tools</a> or <a href="https://dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a>. If your internet provider shows up, something is bypassing the setting.</li>
+				</ol>
+				<div class="note">
+					<i class="bi bi-shield-lock"></i>
+					<div>
+						Encrypted DNS hides <i>which names you look up</i> from everyone between
+						you and us. It isn't a VPN: it doesn't hide the sites you then connect
+						to, and it won't make you anonymous.
+					</div>
+				</div>
+			</section>
+
+			<!-- Trouble -->
+			<section class="doc-section" id="trouble">
+				<h2 class="doc-title">
+					<i class="bi bi-tools"></i> If something's not right
+				</h2>
+				<ol class="doc-steps">
+					<li><b>Nothing loads.</b> Your device can't find our server's name. Add a bootstrap address or a static entry for the hostname.</li>
+					<li><b>Android won't accept the hostname.</b> Port 853 is blocked on that network. Try another network, or use DoH elsewhere.</li>
+					<li><b>Certificate errors on a router.</b> The certificates are missing or the clock is wrong. Import them and fix NTP.</li>
+					<li><b>Works, then stops.</b> Something is intercepting port 53. Turn off plaintext fallback.</li>
+					<li><b>Still stuck?</b> Ask on <a href="https://discord.gg/aw8pt2SWnv" target="_blank" rel="noopener">Discord</a> or open an <a href="https://github.com/PururinCollective/ElpisDNS/issues" target="_blank" rel="noopener">issue on GitHub</a> with your address, your device and the exact error.</li>
+				</ol>
+			</section>
+		</div>
 	</section>
-
-	<!-- AdGuard Home -->
-	<section class="doc-section" id="adguard">
-		<div class="doc-title">
-			<i class="bi bi-shield-check"></i> AdGuard Home &amp; Pi-hole
-			<span class="doc-tag">DoH / DoT</span>
-		</div>
-		<div class="doc-text">
-			ΕΛΠΙΣ is happy to sit upstream of your own filter. You keep the block lists
-			and the logs on your hardware; we answer what is left. There are two ways
-			round, and the difference is who does the filtering.
-		</div>
-
-		<div class="doc-text"><b>Filtered upstream &mdash; encrypted, with our lists</b></div>
-		<ol class="doc-steps">
-			<li>AdGuard Home: <b>Settings</b> &rarr; <b>DNS settings</b> &rarr; <b>Upstream DNS servers</b>, then paste one per line:</li>
-		</ol>
-		<div class="code-block"><pre data-picked="https">https://b.hitoha.moe/dns-query</pre></div>
-
-		<div class="doc-text">
-			<b>Raw upstream &mdash; recursion only, your lists</b><br />
-			The recursors resolve and nothing else: no block lists, no rewrites. Use
-			these when your own filter is the one making the decisions.
-		</div>
-		<div class="code-block"><pre>2402:4e20::1001
-2402:4e20::1111
-2402:4e20::babe
-2402:4e20::cafe</pre></div>
-
-		<ol class="doc-steps" start="2" style="--start:1">
-			<li>Set <b>Load balancing</b> to <b>Parallel requests</b> if you listed more than one, click <b>Test upstreams</b>, then <b>Apply</b>.</li>
-			<li>Fill <b>Bootstrap DNS servers</b> with the same four addresses, so the encrypted hostnames above can be resolved on a cold start.</li>
-			<li>Pi-hole has no encrypted upstream of its own &mdash; either give it the raw recursors directly, or run <code>cloudflared</code> or <code>dnscrypt-proxy</code> beside it and point Pi-hole at <code>127.0.0.1#5053</code>.</li>
-		</ol>
-		<div class="doc-note">
-			<i class="bi bi-info-circle"></i>
-			<div>
-				The raw recursors prefer IPv6, and there are more of them than the four
-				above &mdash; the full list is on the
-				<a href="mission.html#recursors">mission page</a>. A box with no native
-				v6 can use <code class="inline-code">151.158.198.49</code> on ports
-				<code class="inline-code">5301</code> to <code class="inline-code">5306</code>,
-				kept off port 53 on purpose, or take the encrypted route instead.
-			</div>
-		</div>
-	</section>
-
-	<!-- Verify -->
-	<section class="doc-section" id="verify">
-		<div class="doc-title">
-			<i class="bi bi-clipboard-check"></i> Verify, then trust
-			<span class="doc-tag">Always</span>
-		</div>
-		<div class="doc-text">
-			Never take a resolver's word for it, including ours.
-		</div>
-		<ol class="doc-steps">
-			<li>Confirm names still resolve at all:</li>
-		</ol>
-		<div class="code-block"><pre>nslookup example.com</pre></div>
-		<ol class="doc-steps" start="2" style="--start:1">
-			<li>Check that filtering is live &mdash; a known ad domain should come back empty or as <code>0.0.0.0</code>.</li>
-			<li>Run a leak test at <a href="https://dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> or <a href="https://www.dnscheck.tools/" target="_blank" rel="noopener">dnscheck.tools</a>. If your ISP's resolver is still listed, something on the path is intercepting port 53 and the encrypted setting never took.</li>
-			<li>On a browser, <code>about:networking#dns</code> or <code>chrome://net-internals/#dns</code> will tell you the truth faster than any website can.</li>
-		</ol>
-		<div class="doc-note">
-			<i class="bi bi-shield-lock"></i>
-			<div>
-				Encrypted DNS hides <i>which names you ask for</i> from everyone between you and
-				the resolver. It is not a VPN, it does not hide the addresses you then connect
-				to, and it will not make you anonymous. It closes one specific window that has
-				been standing wide open since 1983.
-			</div>
-		</div>
-	</section>
-
-	<!-- Trouble -->
-	<section class="doc-section" id="trouble">
-		<div class="doc-title">
-			<i class="bi bi-tools"></i> When it does not work
-		</div>
-		<ol class="doc-steps">
-			<li><b>Nothing resolves at all.</b> The client cannot reach the resolver's name. Set a bootstrap address, or add a static entry for the hostname.</li>
-			<li><b>Android rejects the hostname.</b> Port 853 is blocked on that network. Use DoH somewhere else in the chain, or another network.</li>
-			<li><b>Certificate errors on a router.</b> The certificate store is missing or the clock is wrong. Import the store, fix NTP, try again.</li>
-			<li><b>It works, then stops at random.</b> Something is intercepting port 53 and losing the race. Force encrypted only and disable plaintext fallback.</li>
-			<li><b>Still stuck.</b> Ask on <a href="https://discord.gg/aw8pt2SWnv" target="_blank" rel="noopener">Discord</a> or open an issue on <a href="https://github.com/PururinCollective/ElpisDNS/issues" target="_blank" rel="noopener">GitHub</a>. Bring the endpoint, the client and the exact error.</li>
-		</ol>
-	</section>
-
-	<div class="cta mt-5 mb-5">
-		<div class="cta-body">
-			<div class="cta-title">Pick a different one</div>
-			<div class="cta-text">
-				Region, filtering profile and transport all change the endpoint.
-				The table is one click away.
-			</div>
-		</div>
-		<a class="btn btn-elpis" href="index.html">
-			<i class="bi bi-crosshair"></i> Back to the table
-		</a>
-	</div>
-</div>
+</main>
 
 <!-- Footer -->
-<footer class="mt-5 pt-5 pb-4 border-top">
-	<div class="container">
-		<div class="footer-title text-center">
-			~ Part of Pururin Collective Project ~
+<footer class="footer">
+	<div class="wrap">
+		<div class="footer-grid">
+			<div class="footer-about">
+				<a class="brand" href="index.html">
+					<img src="img/elpis-mark.svg?hash=3bcb26d5" alt="" class="brand-mark" width="28" height="28">
+					<span class="brand-name">ΕΛΠΙΣ <span>DNS</span></span>
+				</a>
+				<p>
+					Free, encrypted DNS run by the community. No logs, no profiles, nobody
+					in the middle &mdash; built for an open internet, in the spirit of the
+					<a href="https://www.eff.org/" target="_blank" rel="noopener">EFF</a>.
+				</p>
+			</div>
+			<div>
+				<h4>Use it</h4>
+				<ul>
+					<li><a href="index.html#get">Get your DNS address</a></li>
+					<li><a href="setup.html">Setup guides</a></li>
+					<li><a href="resolver.html#upstream">For AdGuard &amp; Pi-hole</a></li>
+				</ul>
+			</div>
+			<div>
+				<h4>Learn</h4>
+				<ul>
+					<li><a href="mission.html">Our mission</a></li>
+					<li><a href="resolver.html">ΕΛΠΙΣ Resolver</a></li>
+					<li><a href="self-host.html">Run your own</a></li>
+				</ul>
+			</div>
+			<div>
+				<h4>Community</h4>
+				<ul>
+					<li><a href="https://discord.gg/aw8pt2SWnv" target="_blank" rel="noopener">Discord</a></li>
+					<li><a href="https://pururin.moe/" target="_blank" rel="noopener">Forum</a></li>
+					<li><a href="https://openpon.org/" target="_blank" rel="noopener">OpenPON</a></li>
+					<li><a href="https://github.com/PururinCollective/ElpisDNS" target="_blank" rel="noopener">GitHub</a></li>
+				</ul>
+			</div>
 		</div>
-		<div class="footer-text text-center">
-			<p>
-				<a href="https://pururin.moe/" target="_blank" rel="noopener">Forum</a> &bull;
-				<a href="https://discord.gg/aw8pt2SWnv" target="_blank" rel="noopener">Discord</a> &bull;
-				<a href="https://openpon.org/" target="_blank" rel="noopener">OpenPON</a> &bull;
-				<a href="mission.html">Why ΕΛΠΙΣ</a> &bull;
-				<a href="index.html">The table</a>
-			</p>
+
+		<div class="footer-credits">
+			<div>
+				<h4>Kept running by</h4>
+				<div class="asn-list">
+					<span><a href="https://bgp.tools/as/154516" target="_blank" rel="noopener">AS154516</a> Perfect Network ⭐</span>
+					<span><a href="https://bgp.tools/as/153334" target="_blank" rel="noopener">AS153334</a> Origin TechLab</span>
+					<span><a href="https://bgp.tools/as/135134" target="_blank" rel="noopener">AS135134</a> Shana Network</span>
+				</div>
+			</div>
+			<a class="sponsor" href="https://perfect.my/" target="_blank" rel="noopener">
+				<span>Proudly sponsored by</span>
+				<img src="img/perfect.png" alt="Perfect Network, AS154516" width="851" height="315" loading="lazy" decoding="async">
+			</a>
 		</div>
-		<div class="footer-bottom mt-3 pt-3 border-top">
+
+		<div class="footer-bottom">
 			<div id="footer-quote"></div>
-			<div class="mt-2">
-				Made with Love ♥ <br />
-				© 2026 ΕΛΠΙΣ DNS. All rights reserved.
+			<div>
+				Part of <a href="https://pururin.moe/" target="_blank" rel="noopener">Pururin Collective</a>
+				&middot; Made with love ♥ &middot; © 2026 ΕΛΠΙΣ DNS
 			</div>
 		</div>
 	</div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<script src="js/app-theme.js?hash=e17c7711"></script>
-<script src="js/app-setup.js?hash=e49234f2"></script>
-<script src="js/app-quote.js?hash=8ea9c26e"></script>
+<script src="js/app-theme.js?hash=391c4b31"></script>
+<script src="js/app-copy.js?hash=7fdd7e69"></script>
+<script src="js/app-setup.js?hash=fb7fc054"></script>
+<script src="js/app-resolvers.js?hash=770b4dc6"></script>
+<script src="js/app-quote.js?hash=41419574"></script>
 
 </body>
 </html>

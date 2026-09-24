@@ -417,13 +417,6 @@ function renderResult(entry){
 		<span class="server-badge">${escapeHTML(server)}</span>
 	`).join(""));
 
-	const chips = GROUPS.map(group => `
-		<span class="summary-chip">
-			<span class="summary-key">${group.label}</span>
-			<b>${escapeHTML(labelFor(group.key, state[group.key]))}</b>
-		</span>
-	`).join("");
-
 	const notes = entry.notes
 		? `<div class="summary-note">${escapeHTML(entry.notes)}</div>`
 		: "";
@@ -440,7 +433,9 @@ function renderResult(entry){
 		} &bull; ${entry.servers.length} host${entry.servers.length === 1 ? "" : "s"} in rotation</div>`
 		: "";
 
-	setHTML("summary", `<div class="summary-chips">${chips}</div>${notes}${filterNote}${credit}`);
+	// The choices themselves sit right beside the result, so the summary
+	// only says what they mean and who runs them.
+	setHTML("summary", `${filterNote}${notes}${credit}`);
 }
 
 function renderActions(){

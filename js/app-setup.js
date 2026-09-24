@@ -58,7 +58,8 @@ function addCopyButtons(){
 
 		const pre = block.querySelector("pre");
 
-		if(!pre) return;
+		// Blocks built by app-resolvers.js bring their own button.
+		if(!pre || block.querySelector(".copy-code")) return;
 
 		const button = document.createElement("button");
 

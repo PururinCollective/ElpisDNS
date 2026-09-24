@@ -4,9 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>Why ΕΛΠΙΣ DNS exists — block lists, recursion, DNSSEC</title>
+<title>Why ΕΛΠΙΣ DNS exists — our privacy promises · ΕΛΠΙΣ DNS</title>
 <link rel="icon" type="image/x-icon" href="favicon.ico">
-<link rel="icon" type="image/svg+xml" href="img/elpis-mark.svg?hash=edbc1f49">
+<link rel="icon" type="image/svg+xml" href="img/elpis-mark.svg?hash=3bcb26d5">
 <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
 
 <!-- Paint the correct theme before the first frame, no white flash -->
@@ -19,22 +19,19 @@
 			 window.matchMedia("(prefers-color-scheme: dark)").matches);
 		document.documentElement.dataset.theme = dark ? "dark" : "light";
 		document.documentElement.dataset.themeChoice = choice;
-		document.documentElement.setAttribute("data-bs-theme", dark ? "dark" : "light");
 	})();
 </script>
 
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-<link href="style-main.css?hash=68968e7f" rel="stylesheet">
-<link href="style-mobile.css?hash=37f4fe49" rel="stylesheet">
+<link href="style-main.css?hash=4bf88226" rel="stylesheet">
 
-<meta name="description" content="What Elpis DNS blocks and why, the filter lists with their URLs, our own C99 resolver with ML-DSA-44 DNSSEC, and raw recursors for your own AdGuard Home.">
+<meta name="description" content="Why Elpis DNS exists: no logs, no middlemen, and only ads, trackers and malware blocked. The filter lists we use, how a lookup travels, and how to check us.">
 <link rel="canonical" href="https://elpis.violetnetworks.xyz/mission.html">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
@@ -43,80 +40,30 @@
 <meta property="og:site_name" content="ΕΛΠΙΣ DNS">
 <meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://elpis.violetnetworks.xyz/mission.html">
-<meta property="og:title" content="Why ΕΛΠΙΣ exists">
-<meta property="og:description" content="No middlemen, no ledger, no opinions about where you go — and the second resolver in the world to validate ML-DSA-44 after Cloudflare.">
+<meta property="og:title" content="Why ΕΛΠΙΣ DNS exists">
+<meta property="og:description" content="No logs, no middlemen, and only the junk blocked. What we promise, what we block, and how to check us.">
 <meta property="og:image" content="https://elpis.violetnetworks.xyz/img/og-image.jpg">
 <meta property="og:image:secure_url" content="https://elpis.violetnetworks.xyz/img/og-image.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="ΕΛΠΙΣ DNS — Resolve freely. Answer to no one.">
+<meta property="og:image:alt" content="ΕΛΠΙΣ DNS — private DNS, answered by our own resolver">
 
 <!-- X / Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://elpis.violetnetworks.xyz/mission.html">
-<meta name="twitter:title" content="Why ΕΛΠΙΣ exists">
-<meta name="twitter:description" content="No middlemen, no ledger, no opinions about where you go — and the second resolver in the world to validate ML-DSA-44 after Cloudflare.">
+<meta name="twitter:title" content="Why ΕΛΠΙΣ DNS exists">
+<meta name="twitter:description" content="No logs, no middlemen, and only the junk blocked. What we promise, what we block, and how to check us.">
 <meta name="twitter:image" content="https://elpis.violetnetworks.xyz/img/og-image.jpg">
-<meta name="twitter:image:alt" content="ΕΛΠΙΣ DNS — Resolve freely. Answer to no one.">
+<meta name="twitter:image:alt" content="ΕΛΠΙΣ DNS — private DNS, answered by our own resolver">
 
 <!-- The stripe Discord paints down the side of the embed -->
-<meta name="theme-color" content="#f24f2f">
+<meta name="theme-color" content="#2f9ee0">
 
 <script type="application/ld+json">
 {
 	"@context": "https://schema.org",
 	"@graph": [
-		{
-			"@type": "WebSite",
-			"@id": "https://elpis.violetnetworks.xyz/#website",
-			"url": "https://elpis.violetnetworks.xyz/",
-			"name": "ΕΛΠΙΣ DNS",
-			"alternateName": [
-				"Elpis DNS",
-				"ELPIS DNS"
-			],
-			"description": "Community-run encrypted DNS resolvers: DNS over HTTPS and DNS over TLS, filtered, with no query logging.",
-			"inLanguage": "en",
-			"publisher": {
-				"@id": "https://elpis.violetnetworks.xyz/#org"
-			}
-		},
-		{
-			"@type": "Organization",
-			"@id": "https://elpis.violetnetworks.xyz/#org",
-			"name": "ΕΛΠΙΣ DNS",
-			"alternateName": "Elpis DNS",
-			"url": "https://elpis.violetnetworks.xyz/",
-			"logo": "https://elpis.violetnetworks.xyz/img/elpis-logo.svg",
-			"image": "https://elpis.violetnetworks.xyz/img/og-image.jpg",
-			"sameAs": [
-				"https://github.com/PururinCollective/ElpisDNS",
-				"https://github.com/PururinCollective/elpis-resolver",
-				"https://discord.gg/aw8pt2SWnv",
-				"https://pururin.moe/",
-				"https://openpon.org/"
-			]
-		},
-		{
-			"@type": "SoftwareApplication",
-			"@id": "https://elpis.violetnetworks.xyz/mission.html#software",
-			"name": "ΕΛΠΙΣ Resolver",
-			"applicationCategory": "UtilitiesApplication",
-			"operatingSystem": "Linux, FreeBSD, macOS",
-			"description": "A recursive DNS resolver in portable C99 with SIMD kernels and DNSSEC validation including post-quantum ML-DSA-44.",
-			"programmingLanguage": "C",
-			"codeRepository": "https://github.com/PururinCollective/elpis-resolver",
-			"isAccessibleForFree": true,
-			"offers": {
-				"@type": "Offer",
-				"price": "0",
-				"priceCurrency": "USD"
-			},
-			"author": {
-				"@id": "https://elpis.violetnetworks.xyz/#org"
-			}
-		},
 		{
 			"@type": "BreadcrumbList",
 			"itemListElement": [
@@ -141,727 +88,428 @@
 
 <body>
 
-<!-- Top bar -->
-<nav class="topbar">
-	<div class="container topbar-inner">
+<a class="skip" href="#main">Skip to content</a>
 
-		<a class="topbar-brand" href="index.html">
-			<img src="img/elpis-mark.svg?hash=edbc1f49" alt="" class="topbar-mark">
-			<span class="topbar-name">ΕΛΠΙΣ <span class="accent">DNS</span></span>
+<!-- Top bar -->
+<header class="topbar">
+	<div class="wrap topbar-inner">
+
+		<a class="brand" href="index.html">
+			<img src="img/elpis-mark.svg?hash=3bcb26d5" alt="" class="brand-mark" width="28" height="28">
+			<span class="brand-name">ΕΛΠΙΣ <span>DNS</span></span>
 		</a>
 
+		<nav class="nav" aria-label="Main">
+			<a href="setup.html">Setup</a>
+			<a href="resolver.html">Resolver</a>
+			<a href="self-host.html">Self-host</a>
+			<a href="mission.html" aria-current="page">Mission</a>
+		</nav>
+
 		<div class="topbar-actions">
-
-			<a class="topbar-link" href="index.html">
-				<i class="bi bi-arrow-left-short"></i>
-				<span>Back to the table</span>
+			<a class="icon-btn" href="https://github.com/PururinCollective/ElpisDNS" target="_blank" rel="noopener" title="Source on GitHub" aria-label="Source on GitHub">
+				<i class="bi bi-github"></i>
 			</a>
-
-			<a class="topbar-link" href="setup.html">
-				<i class="bi bi-life-preserver"></i>
-				<span>How to set it up</span>
-			</a>
-
-			<button class="theme-btn" id="theme-btn" type="button" title="Theme" aria-label="Theme">
+			<button class="icon-btn" id="theme-btn" type="button" title="Theme" aria-label="Theme">
 				<i class="bi bi-circle-half"></i>
 			</button>
 		</div>
 	</div>
-</nav>
+</header>
 
-<div class="container">
+<main id="main">
 
-	<div class="page-head">
-		<div class="page-kicker">The arrangement</div>
-		<div class="page-title">Why ΕΛΠΙΣ exists</div>
-		<div class="page-lead">
-			Every website you have ever opened began with somebody being asked a
-			question on your behalf: <i>where is this?</i> It is a small question.
-			It is also a complete record of your curiosity, handed over in the
-			clear, several hundred times a day, to whoever your network happened
-			to name.
-			<br /><br />
-			ΕΛΠΙΣ is that question answered by people who want nothing from it.
-			What follows is the whole arrangement &mdash; what we block, what we refuse
-			to keep, who we ask when we do not know, and how to check every word of
-			it without taking our word for anything.
-		</div>
-	</div>
-
-	<!-- The creed -->
-	<div class="rules rules-3 mb-5">
-
-		<div class="rule">
-			<div class="rule-index">THE QUESTION</div>
-			<div class="rule-title">Is nobody's business</div>
-			<div class="rule-text">
-				A list of the names you look up is a confession you never agreed to
-				make. Encrypted transport keeps it between you and the resolver, and
-				the resolver has no use for it afterwards.
-			</div>
-		</div>
-
-		<div class="rule">
-			<div class="rule-index">THE DOOR</div>
-			<div class="rule-title">Stays where it is</div>
-			<div class="rule-text">
-				We block advertising, tracking and malware, and we say so in writing.
-				We do not quietly decide which opinions, countries or libraries you
-				are allowed to reach. A resolver with politics is a censor with better
-				manners.
-			</div>
-		</div>
-
-		<div class="rule">
-			<div class="rule-index">THE LEDGER</div>
-			<div class="rule-title">Does not exist</div>
-			<div class="rule-text">
-				There is no profile with your name on it, because there is nothing to
-				put in it and nobody to sell it to. The lights are kept on by
-				operators and sponsors, not by your browsing history.
-			</div>
-		</div>
-
-		<div class="rule">
-			<div class="rule-index">THE CHAIN</div>
-			<div class="rule-title">Ends with us</div>
-			<div class="rule-text">
-				We do not hand your query to Google or Cloudflare and call the result
-				privacy. We ask the root servers ourselves, on our own hardware, on
-				our own AS.
-			</div>
-		</div>
-
-		<div class="rule">
-			<div class="rule-index">THE PROOF</div>
-			<div class="rule-title">Is yours to demand</div>
-			<div class="rule-text">
-				Every claim on this page can be tested from your own machine in under
-				a minute, with tools we do not control. Trust that cannot be checked
-				is just advertising.
-			</div>
-		</div>
-
-		<div class="rule">
-			<div class="rule-index">THE LIMIT</div>
-			<div class="rule-title">Is stated plainly</div>
-			<div class="rule-text">
-				Encrypted DNS hides which names you ask for. It is not a VPN, it does
-				not hide the addresses you then connect to, and it will not make you
-				anonymous. Anyone promising otherwise is selling something.
-			</div>
-		</div>
-	</div>
-
-	<!-- Jump list -->
-	<div class="doc-jump">
-		<a href="#blacklist"><i class="bi bi-slash-circle"></i> The Blacklist</a>
-		<a href="#middlemen"><i class="bi bi-diagram-3"></i> No Middlemen</a>
-		<a href="#resolver"><i class="bi bi-cpu"></i> Our own resolver</a>
-		<a href="#recursors"><i class="bi bi-hdd-network"></i> Recursive resolvers</a>
-	</div>
-
-	<!-- The Blacklist -->
-	<section id="blacklist" class="mt-5 pt-4">
-		<div class="section-heading">
-			The Blacklist
-		</div>
-		<div class="subtitle">
-			Every name on it earned its place. Ads, trackers, malware, phishing kits,
-			and the quiet little domains that exist for no reason other than to follow
-			you home &mdash; the resolver simply declines to tell you where they live.
-			Nothing to install, nothing to configure: it is already running on the
-			endpoint you picked on the <a href="index.html">front page</a>.
-			<br /><br />
-			These are the lists doing the work. They are not ours to hoard, so the
-			subscription URLs are right here &mdash; take them for your own AdGuard Home,
-			Pi-hole or Blocky.
-		</div>
-
-		<div class="blacklist mt-4">
-
-			<details class="bl-item">
-				<summary>
-					<span class="bl-index">01</span>
-					<span class="bl-name">AdGuard DNS filter</span>
-					<span class="bl-tag">ADS &amp; TRACKING</span>
-					<i class="bi bi-chevron-down bl-chev"></i>
-				</summary>
-				<div class="bl-body">
-					<div class="bl-text">
-						The workhorse. AdGuard Base, Social Media, Tracking Protection and Mobile
-					Ads rolled together with EasyList and EasyPrivacy, compiled for DNS rather
-					than for a browser.
-					</div>
-					<div class="bl-url">
-						<code>https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt</code>
-						<button class="btn btn-elpis-ghost btn-sm" type="button" data-copy="https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt">
-							<i class="bi bi-clipboard"></i> Copy
-						</button>
-					</div>
-					<a class="bl-src" href="https://github.com/AdguardTeam/AdGuardSDNSFilter" target="_blank" rel="noopener">
-						<i class="bi bi-box-arrow-up-right"></i> Where it comes from
-					</a>
-				</div>
-			</details>
-
-			<details class="bl-item">
-				<summary>
-					<span class="bl-index">02</span>
-					<span class="bl-name">AdAway Default Blocklist</span>
-					<span class="bl-tag">MOBILE ADS</span>
-					<i class="bi bi-chevron-down bl-chev"></i>
-				</summary>
-				<div class="bl-body">
-					<div class="bl-text">
-						Fifteen years of Android ad hosts, maintained by people who got tired of
-					paying for the same banner twice on a metered connection.
-					</div>
-					<div class="bl-url">
-						<code>https://adguardteam.github.io/HostlistsRegistry/assets/filter_2.txt</code>
-						<button class="btn btn-elpis-ghost btn-sm" type="button" data-copy="https://adguardteam.github.io/HostlistsRegistry/assets/filter_2.txt">
-							<i class="bi bi-clipboard"></i> Copy
-						</button>
-					</div>
-					<a class="bl-src" href="https://github.com/AdAway/adaway.github.io/" target="_blank" rel="noopener">
-						<i class="bi bi-box-arrow-up-right"></i> Where it comes from
-					</a>
-				</div>
-			</details>
-
-			<details class="bl-item">
-				<summary>
-					<span class="bl-index">03</span>
-					<span class="bl-name">uBlock&#8320; filters &ndash; Badware risks</span>
-					<span class="bl-tag">BADWARE</span>
-					<i class="bi bi-chevron-down bl-chev"></i>
-				</summary>
-				<div class="bl-body">
-					<div class="bl-text">
-						The short list of sites documented to hand you adware, crapware or malware,
-					or to relieve you of your login credentials. Short, because every entry on
-					it is there for a reason somebody wrote down.
-					</div>
-					<div class="bl-url">
-						<code>https://adguardteam.github.io/HostlistsRegistry/assets/filter_50.txt</code>
-						<button class="btn btn-elpis-ghost btn-sm" type="button" data-copy="https://adguardteam.github.io/HostlistsRegistry/assets/filter_50.txt">
-							<i class="bi bi-clipboard"></i> Copy
-						</button>
-					</div>
-					<a class="bl-src" href="https://github.com/uBlockOrigin/uAssets" target="_blank" rel="noopener">
-						<i class="bi bi-box-arrow-up-right"></i> Where it comes from
-					</a>
-				</div>
-			</details>
-
-			<details class="bl-item">
-				<summary>
-					<span class="bl-index">04</span>
-					<span class="bl-name">ΕΛΠΙΣ DNS filter</span>
-					<span class="bl-tag bl-tag-ours">IN HOUSE</span>
-					<i class="bi bi-chevron-down bl-chev"></i>
-				</summary>
-				<div class="bl-body">
-					<div class="bl-text">
-						Ours. Bogus, dead, parked, deceptive and legally abusive domains the big
-					lists have not got around to, reviewed and trimmed for DNS by @Riri1x86.
-					It ships with an exceptions list, because a filter that breaks your bank
-					login is not protecting you from anything.
-					</div>
-					<div class="bl-url">
-						<code>https://elpis.violetnetworks.xyz/bogus.txt</code>
-						<button class="btn btn-elpis-ghost btn-sm" type="button" data-copy="https://elpis.violetnetworks.xyz/bogus.txt">
-							<i class="bi bi-clipboard"></i> Copy
-						</button>
-					</div>
-					<div class="bl-url">
-						<code>https://elpis.violetnetworks.xyz/allow.txt</code>
-						<span class="bl-note">exceptions, load as an allowlist</span>
-						<button class="btn btn-elpis-ghost btn-sm" type="button" data-copy="https://elpis.violetnetworks.xyz/allow.txt">
-							<i class="bi bi-clipboard"></i> Copy
-						</button>
-					</div>
-					<a class="bl-src" href="https://riri.pururin.moe/" target="_blank" rel="noopener">
-						<i class="bi bi-box-arrow-up-right"></i> Where it comes from
-					</a>
-				</div>
-			</details>
-		</div>
-
-		<div class="subtitle mt-4">
-			<b>Family</b> adds adult content and enforced safe search on top of all four.
-			Everything else is left exactly where it is &mdash; a resolver that quietly
-			edits the rest of your internet is the thing this project exists to route
-			around.
-		</div>
-	</section>
-
-	<!-- No Middlemen -->
-	<section id="middlemen" class="mt-5 pt-4">
-		<div class="section-heading">
-			No Middlemen
-		</div>
-		<div class="subtitle">
-			Most privacy resolvers are a polite fiction. Your question arrives sealed,
-			and is then handed straight to Google or Cloudflare in the clear. One
-			padlock, two custodians, and the second one keeps records.
-			<br /><br />
-			ΕΛΠΙΣ answers it itself. The query goes to the root servers, down through
-			the TLD, to the authoritative server that actually holds the answer &mdash;
-			asked from our own hardware, on our own AS, over our own transit.
-			<b>Total privacy, total independence.</b> There is nobody upstream to sell
-			you to, because there is nobody upstream.
-		</div>
-
-		<div class="rules rules-3 mt-4">
-
-			<div class="rule">
-				<div class="rule-index">RECURSIVE</div>
-				<div class="rule-title">We ask, nobody asks for us</div>
-				<div class="rule-text">
-					Root, then TLD, then the authoritative name server. No forwarding to a
-					household name, and no third party quietly assembling the other half
-					of your day.
-				</div>
-			</div>
-
-			<div class="rule">
-				<div class="rule-index">IPv6 FIRST</div>
-				<div class="rule-title">The address space that is not rationed</div>
-				<div class="rule-text">
-					Native v6 from the resolver out, AAAA ahead of A, and DNS64/NAT64 for
-					networks that have finished with IPv4 entirely.
-				</div>
-			</div>
-
-			<div class="rule">
-				<div class="rule-index">EDNS(0)</div>
-				<div class="rule-title">Room to answer properly</div>
-				<div class="rule-text">
-					Responses larger than 512 bytes, DNS cookies, and the headroom that
-					signatures need. The modern internet does not fit in a packet designed
-					in 1987.
-				</div>
-			</div>
-
-			<div class="rule">
-				<div class="rule-index">DNSSEC</div>
-				<div class="rule-title">Signatures checked, not admired</div>
-				<div class="rule-text">
-					A tampered answer fails instead of arriving with a shrug. Ask for a
-					domain whose chain is broken &mdash; wrong signature, expired, missing
-					&mdash; and you get nothing at all, which is the only honest reply.
-					RSA, ECDSA P-256 and P-384, Ed25519 &mdash; and
-					<a href="#resolver">ML-DSA-44</a>, which almost nobody checks yet.
-				</div>
-			</div>
-
-			<div class="rule">
-				<div class="rule-index">ECH</div>
-				<div class="rule-title">The handshake stays shut</div>
-				<div class="rule-text">
-					HTTPS and SVCB records served intact, <code class="inline-code">ech</code>
-					parameter and all, so your browser can encrypt its Client Hello and stop
-					announcing which site it wants before it has even asked.
-				</div>
-			</div>
-
-			<div class="rule">
-				<div class="rule-index">VERIFY</div>
-				<div class="rule-title">Take nobody's word for it</div>
-				<div class="rule-text">
-					Ours least of all.
-					<a href="https://dnscheck.tools/" target="_blank" rel="noopener">dnscheck.tools</a>
-					reports who actually answered you, from which network, and what they
-					bothered to validate.
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- The resolver itself -->
-	<section id="resolver" class="mt-5 pt-4">
-		<div class="section-heading">
-			Our own resolver
-		</div>
-		<div class="subtitle">
-			Answering the question yourself means running something that can. So we
-			wrote one. <b>ΕΛΠΙΣ Resolver</b> is a recursive resolver in portable
-			C99 &mdash; the crypto, the event loop and the wire format all in one
-			tree, no dependencies, one static binary you copy to a machine and run.
-			It is <a href="https://github.com/PururinCollective/elpis-resolver" target="_blank" rel="noopener">open source</a>,
-			because a resolver you cannot read is a promise you cannot check.
-			<br /><br />
-			It is also the <b>second resolver in the world to validate ML-DSA-44</b>,
-			the post-quantum DNSSEC signature from FIPS&nbsp;204, after Cloudflare.
-			Not because a quantum computer is at your door this evening &mdash;
-			because the signatures collected today are the ones somebody intends to
-			forge later, and a resolver that waits for the standards body to finish
-			is a resolver that arrives after the fact.
-		</div>
-
-		<div class="subtitle mt-4">
-			It does not face you directly, and it is not trying to. AdGuard Home
-			keeps the encrypted transports, the block lists and the per-client
-			rules; Elpis sits behind it and does the part nobody sees &mdash;
-			recursion from the root, caching, and every signature on the way.
-			<br /><br />
-			There is more than one of them on purpose. Give AdGuard the whole list
-			and it asks them in parallel, keeps whichever answer arrives first, and
-			carries on without noticing when one of them goes away for an upgrade.
-			Redundancy and latency turn out to be the same setting.
-		</div>
-
-		<figure class="diagram">
-			<svg viewBox="0 0 360 284" role="img"
-				aria-label="AdGuard Home faces the network; behind it, four ΕΛΠΙΣ Resolver instances at 2402:4e20::1001, 2402:4e20::1111, 2402:4e20::babe and 151.158.198.49 port 5304.">
-
-				<!-- the public face -->
-				<rect class="dg-box" x="2" y="100" width="104" height="48" rx="2"/>
-				<text class="dg-name" x="54" y="120" text-anchor="middle">AdGuard</text>
-				<text class="dg-sub" x="54" y="135" text-anchor="middle">DoH · DoT · DoQ</text>
-
-				<!-- one upstream list, spread across all four -->
-				<path class="dg-wire" d="M106 124 H125 M125 25 V223 M125 25 H150 M125 91 H150 M125 157 H150 M125 223 H150"/>
-
-				<!-- the recursors -->
-				<rect class="dg-box" x="150" y="0" width="200" height="50" rx="2"/>
-				<rect class="dg-edge" x="150" y="0" width="3" height="50" rx="1"/>
-				<text class="dg-name" x="166" y="22">ΕΛΠΙΣ Resolver</text>
-				<text class="dg-addr" x="166" y="39">2402:4e20::1001</text>
-
-				<rect class="dg-box" x="150" y="66" width="200" height="50" rx="2"/>
-				<rect class="dg-edge" x="150" y="66" width="3" height="50" rx="1"/>
-				<text class="dg-name" x="166" y="88">ΕΛΠΙΣ Resolver</text>
-				<text class="dg-addr" x="166" y="105">2402:4e20::1111</text>
-
-				<rect class="dg-box" x="150" y="132" width="200" height="50" rx="2"/>
-				<rect class="dg-edge" x="150" y="132" width="3" height="50" rx="1"/>
-				<text class="dg-name" x="166" y="154">ΕΛΠΙΣ Resolver</text>
-				<text class="dg-addr" x="166" y="171">2402:4e20::babe</text>
-
-				<rect class="dg-box" x="150" y="198" width="200" height="50" rx="2"/>
-				<rect class="dg-edge" x="150" y="198" width="3" height="50" rx="1"/>
-				<text class="dg-name" x="166" y="220">ΕΛΠΙΣ Resolver</text>
-				<text class="dg-addr" x="166" y="237">151.158.198.49:5304</text>
-
-				<text class="dg-cap" x="2" y="268">public face,</text>
-				<text class="dg-cap" x="2" y="280">filtering, logging</text>
-
-				<text class="dg-cap" x="150" y="268">recursion, caching, DNSSEC,</text>
-				<text class="dg-cap" x="150" y="280">straight to the root and TLD servers</text>
-			</svg>
-		</figure>
-		<!--
-		<div class="doc-note mt-3">
-			<i class="bi bi-info-circle"></i>
-			<div>
-				<b>The <code class="inline-code">b00b</code> pair is not in that
-				picture yet.</b> Those two still answer from PowerDNS while we convert
-				them one at a time; everything else below is Elpis already. A resolver
-				swap nobody notices is the only kind worth doing.
-			</div>
-		</div>
-		-->
-		<div class="rules rules-3 mt-4">
-
-			<div class="rule">
-				<div class="rule-index">ML-DSA-44</div>
-				<div class="rule-title">Second in the world</div>
-				<div class="rule-text">
-					FIPS&nbsp;204 verification written from the specification, with the
-					draft's worked example &mdash; key tag, DS digest and a real RRSIG
-					&mdash; checked on every single build. 65 and 87 are in there too.
-				</div>
-			</div>
-
-			<div class="rule">
-				<div class="rule-index">SIMD</div>
-				<div class="rule-title">Machine speed, not generic speed</div>
-				<div class="rule-text">
-					Hand-written AVX2, SSE2 and NEON kernels for the hot paths,
-					chosen at startup from what the CPU actually reports. The crypto
-					runs faster than a portable C compiler would ever manage on its own.
-				</div>
-			</div>
-
-			<div class="rule">
-				<div class="rule-index">C99</div>
-				<div class="rule-title">Portable on purpose</div>
-				<div class="rule-text">
-					Strict C99 and POSIX.1-2008. epoll on Linux, kqueue on the BSDs
-					and macOS, poll everywhere else. One static binary, no shared
-					libraries, nothing to install beside it but its config.
-				</div>
-			</div>
-
-			<div class="rule">
-				<div class="rule-index">NO UPSTREAM</div>
-				<div class="rule-title">Root, TLD, authoritative</div>
-				<div class="rule-text">
-					It resolves rather than forwards, so there is no second custodian
-					to trust and none to audit. The chain ends at the servers that
-					actually hold the answer.
-				</div>
-			</div>
-
-			<div class="rule">
-				<div class="rule-index">TESTED</div>
-				<div class="rule-title">Every vector path, byte for byte</div>
-				<div class="rule-text">
-					The suite checks each SIMD kernel against the scalar one and
-					needs no network to do it, so the only difference between the
-					fast path and the plain one is how long it took.
-				</div>
-			</div>
-
-			<div class="rule">
-				<div class="rule-index">YOURS TOO</div>
-				<div class="rule-title">Build it for your own CPU</div>
-				<div class="rule-text">
-					<code class="inline-code">make static</code> and it is done; point
-					<code class="inline-code">-march</code> at your own processor for the
-					last few percent. Put it behind your own AdGuard Home and stop
-					needing us at all.
-				</div>
-			</div>
-		</div>
-
-		<div class="cta mt-4">
-			<div class="cta-body">
-				<div class="cta-title">Read it before you trust it</div>
-				<div class="cta-text">
-					The source, the DNSSEC notes, the cache sizing and the reasons the
-					hot paths look the way they do &mdash; all of it is in the open,
-					including the parts that are deliberately missing.
-				</div>
-			</div>
-			<a class="btn btn-elpis" href="https://github.com/PururinCollective/elpis-resolver" target="_blank" rel="noopener">
-				<i class="bi bi-github"></i> ΕΛΠΙΣ Resolver
-			</a>
-		</div>
-	</section>
-
-	<!-- Recursive resolvers - IPv6 -->
-	<section id="recursors" class="mt-5 pt-4">
-		<div class="section-heading">
-			Recursive resolvers
-		</div>
-		<div class="subtitle">
-			The recursors themselves, on plain port 53, doing exactly one thing:
-			resolving. No block lists, no rewrites, no NXDOMAIN where an answer ought
-			to be. Whatever the authoritative server says is what comes back, whether
-			we approve of it or not.
-			<br /><br />
-			Which makes these the wrong thing to hand a laptop, and the right thing to
-			put behind a box that already does its own filtering. Running
-			<b>AdGuard Home</b>, <b>Pi-hole</b>, <b>Blocky</b>, <b>Technitium</b> or
-			anything of that family? Set these as your upstream. You keep your lists,
-			your logs and your rules; we do the recursion, and your household stops
-			handing every query it makes to Google or Cloudflare on the way out.
-			They work in the <b>bootstrap</b> field too &mdash; the one that has to
-			resolve an encrypted endpoint's hostname before the encryption can begin.
-			That is the whole of our bootstrap advice: the recursor resolves the
-			resolver, and there is no separate set of plain servers to hand out.
-			<br /><br />
-			These are <a href="#resolver">ΕΛΠΙΣ Resolver</a> answering, and anyone is
-			welcome on them. IPv6 is preferred and it is not sentiment: the v6 path
-			goes straight out of our AS without a translator in the middle of it.
-		</div>
-
-		<div class="doc-note mt-3">
-			<i class="bi bi-info-circle"></i>
-			<div>
-				<b>Unfiltered on purpose.</b> If you want The Blacklist
-				doing its work as well, that lives on the encrypted endpoints on the
-				<a href="index.html">front page</a> &mdash; the same resolvers with the
-				filtering in front of them. Wiring one up as an upstream is on the
-				<a href="setup.html#adguard">setup page</a>.
-				The two <code class="inline-code">b00b</code> addresses still answer
-				from PowerDNS until their conversion comes round; they resolve exactly
-				the same names in the meantime.
-			</div>
-		</div>
-
-		<div class="subtitle mt-4">
-			<b>Over IPv6</b> &mdash; the ones to reach for.
-		</div>
-
-		<div class="address-grid mt-3">
-			<div class="copy-row">
-				<code>2402:4e20::1001</code>
-				<button class="btn btn-elpis-ghost btn-sm" type="button"
-					data-copy="2402:4e20::1001">
-					<i class="bi bi-clipboard"></i> Copy
-				</button>
-			</div>
-			<div class="copy-row">
-				<code>2402:4e20::1111</code>
-				<button class="btn btn-elpis-ghost btn-sm" type="button"
-					data-copy="2402:4e20::1111">
-					<i class="bi bi-clipboard"></i> Copy
-				</button>
-			</div>
-			<div class="copy-row">
-				<code>2402:4e20::babe</code>
-				<button class="btn btn-elpis-ghost btn-sm" type="button"
-					data-copy="2402:4e20::babe">
-					<i class="bi bi-clipboard"></i> Copy
-				</button>
-			</div>
-			<div class="copy-row">
-				<code>2402:4e20::cafe</code>
-				<button class="btn btn-elpis-ghost btn-sm" type="button"
-					data-copy="2402:4e20::cafe">
-					<i class="bi bi-clipboard"></i> Copy
-				</button>
-			</div>
-			<div class="copy-row">
-				<code>2402:4e20:bab1::1001</code>
-				<button class="btn btn-elpis-ghost btn-sm" type="button"
-					data-copy="2402:4e20:bab1::1001">
-					<i class="bi bi-clipboard"></i> Copy
-				</button>
-			</div>
-			<div class="copy-row">
-				<code>2402:4e20:bab1::1111</code>
-				<button class="btn btn-elpis-ghost btn-sm" type="button"
-					data-copy="2402:4e20:bab1::1111">
-					<i class="bi bi-clipboard"></i> Copy
-				</button>
-			</div>
-			<div class="copy-row">
-				<code>2402:4e20:b00b::1111</code>
-				<span class="bl-note">PowerDNS, for now</span>
-				<button class="btn btn-elpis-ghost btn-sm" type="button"
-					data-copy="2402:4e20:b00b::1111">
-					<i class="bi bi-clipboard"></i> Copy
-				</button>
-			</div>
-			<div class="copy-row">
-				<code>2402:4e20:b00b::1001</code>
-				<span class="bl-note">PowerDNS, for now</span>
-				<button class="btn btn-elpis-ghost btn-sm" type="button"
-					data-copy="2402:4e20:b00b::1001">
-					<i class="bi bi-clipboard"></i> Copy
-				</button>
-			</div>
-		</div>
-
-		<div class="subtitle mt-4">
-			<b>Over IPv4</b> &mdash; and deliberately not on port 53. A recursor on
-			port 53 of a public address spends its life being probed by botnets,
-			scanners and people looking for a reflector to point at somebody else.
-			Four digits further up, almost none of that arrives, and every client
-			worth using lets you write the port down.
-		</div>
-
-		<div class="address-grid mt-3">
-			<div class="copy-row">
-				<code>151.158.198.49:5301</code>
-				<button class="btn btn-elpis-ghost btn-sm" type="button"
-					data-copy="151.158.198.49:5301">
-					<i class="bi bi-clipboard"></i> Copy
-				</button>
-			</div>
-			<div class="copy-row">
-				<code>151.158.198.49:5302</code>
-				<button class="btn btn-elpis-ghost btn-sm" type="button"
-					data-copy="151.158.198.49:5302">
-					<i class="bi bi-clipboard"></i> Copy
-				</button>
-			</div>
-			<div class="copy-row">
-				<code>151.158.198.49:5303</code>
-				<button class="btn btn-elpis-ghost btn-sm" type="button"
-					data-copy="151.158.198.49:5303">
-					<i class="bi bi-clipboard"></i> Copy
-				</button>
-			</div>
-			<div class="copy-row">
-				<code>151.158.198.49:5304</code>
-				<button class="btn btn-elpis-ghost btn-sm" type="button"
-					data-copy="151.158.198.49:5304">
-					<i class="bi bi-clipboard"></i> Copy
-				</button>
-			</div>
-			<div class="copy-row">
-				<code>151.158.198.49:5305</code>
-				<button class="btn btn-elpis-ghost btn-sm" type="button"
-					data-copy="151.158.198.49:5305">
-					<i class="bi bi-clipboard"></i> Copy
-				</button>
-			</div>
-			<div class="copy-row">
-				<code>151.158.198.49:5306</code>
-				<button class="btn btn-elpis-ghost btn-sm" type="button"
-					data-copy="151.158.198.49:5306">
-					<i class="bi bi-clipboard"></i> Copy
-				</button>
-			</div>
-		</div>
-
-		<div class="cta mt-4">
-			<div class="cta-body">
-				<div class="cta-title">Then go and check</div>
-				<div class="cta-text">
-					One page, no account, no install. Set correctly you should see
-					<b>IPv6</b>, <b>EDNS</b>, <b>DNSSEC</b> and <b>ECH</b> all lit,
-					every signature test passing, and your resolver named as
-					Perfect Network in Semenyih &mdash; not as your telco.
-				</div>
-			</div>
-			<a class="btn btn-elpis" href="https://dnscheck.tools/" target="_blank" rel="noopener">
-				<i class="bi bi-clipboard-check"></i> Run dnscheck.tools
-			</a>
-		</div>
-	</section>
-
-	<div class="cta mt-5 mb-5">
-		<div class="cta-body">
-			<div class="cta-title">That is the whole arrangement</div>
-			<div class="cta-text">
-				No account, no client to install, no subscription to lapse. Pick a
-				region and a transport, take the endpoint, and the day we stop
-				deserving it, take it back.
-			</div>
-		</div>
-		<a class="btn btn-elpis" href="index.html">
-			<i class="bi bi-crosshair"></i> Choose your gun
-		</a>
-	</div>
-</div>
-
-<!-- Footer -->
-<footer class="mt-5 pt-5 pb-4 border-top">
-	<div class="container">
-		<div class="footer-title text-center">
-			~ Part of Pururin Collective Project ~
-		</div>
-		<div class="footer-text text-center">
-			<p>
-				<a href="https://pururin.moe/" target="_blank" rel="noopener">Forum</a> &bull;
-				<a href="https://discord.gg/aw8pt2SWnv" target="_blank" rel="noopener">Discord</a> &bull;
-				<a href="https://openpon.org/" target="_blank" rel="noopener">OpenPON</a> &bull;
-				<a href="setup.html">Setup guide</a> &bull;
-				<a href="index.html">The table</a>
+	<section class="page-head">
+		<div class="wrap">
+			<div class="eyebrow">Our mission</div>
+			<h1>Why ΕΛΠΙΣ exists</h1>
+			<p class="lead">
+				Before your device opens any website, it asks a DNS server where that
+				site lives &mdash; hundreds of times a day. Put together, those questions
+				say a lot about you: what you read, where you bank, who you talk to.
+				We think that belongs to you, and nobody else.
+			</p>
+			<p class="lead">
+				<i>Elpis</i> (ἐλπίς) is Greek for hope &mdash; the last thing left in the box.
 			</p>
 		</div>
-		<div class="footer-bottom mt-3 pt-3 border-top">
+	</section>
+
+	<!-- Promises -->
+	<section class="section" id="promises">
+		<div class="wrap">
+
+			<div class="section-head">
+				<h2>Our promises</h2>
+				<p>Six things we hold ourselves to. Short enough to remember, and easy to check.</p>
+			</div>
+
+			<div class="grid-3">
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-eye-slash"></i></span>
+					<h3>No logs, no profiles</h3>
+					<p>We answer your question and forget it. There's nothing to sell, and nothing to leak.</p>
+				</div>
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-signpost-split"></i></span>
+					<h3>No one in the middle</h3>
+					<p>Our own resolver asks the root servers directly. Your lookups never pass through Google or Cloudflare.</p>
+				</div>
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-funnel"></i></span>
+					<h3>We block junk, not opinions</h3>
+					<p>Ads, trackers, malware and phishing &mdash; and we publish the lists. No news, politics or countries get blocked.</p>
+				</div>
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-lock"></i></span>
+					<h3>Sealed on the way</h3>
+					<p>DNS over HTTPS and TLS keep your lookups private between your device and us.</p>
+				</div>
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-search"></i></span>
+					<h3>Easy to check</h3>
+					<p>Our resolver, our lists and this website are open source. Test us with tools we don't control.</p>
+				</div>
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-info-circle"></i></span>
+					<h3>Honest about limits</h3>
+					<p>Encrypted DNS hides which sites you look up, not the sites you then visit. It isn't a VPN.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- No middlemen -->
+	<section class="section section-alt" id="middlemen">
+		<div class="wrap">
+
+			<div class="section-head">
+				<h2>No middlemen</h2>
+				<p>
+					Plenty of "private" DNS services encrypt your question, then quietly pass
+					it on to a big provider anyway. Here's the difference.
+				</p>
+			</div>
+
+			<div class="compare">
+				<div class="card">
+					<h3>A typical DNS service</h3>
+					<ol class="route" aria-label="Typical route">
+						<li>You</li>
+						<li class="arrow" aria-hidden="true"><i class="bi bi-arrow-right"></i></li>
+						<li>DNS service</li>
+						<li class="arrow" aria-hidden="true"><i class="bi bi-arrow-right"></i></li>
+						<li class="them">Google or Cloudflare</li>
+						<li class="arrow" aria-hidden="true"><i class="bi bi-arrow-right"></i></li>
+						<li>Website's DNS</li>
+					</ol>
+					<p class="mt">Two companies see every lookup, and the second one usually keeps records.</p>
+				</div>
+
+				<div class="card card-feature">
+					<h3>ΕΛΠΙΣ DNS</h3>
+					<ol class="route" aria-label="ΕΛΠΙΣ route">
+						<li>You</li>
+						<li class="arrow" aria-hidden="true"><i class="bi bi-arrow-right"></i></li>
+						<li class="ours">ΕΛΠΙΣ</li>
+						<li class="arrow" aria-hidden="true"><i class="bi bi-arrow-right"></i></li>
+						<li>Root</li>
+						<li class="arrow" aria-hidden="true"><i class="bi bi-arrow-right"></i></li>
+						<li>.com</li>
+						<li class="arrow" aria-hidden="true"><i class="bi bi-arrow-right"></i></li>
+						<li>Website's DNS</li>
+					</ol>
+					<p class="mt">
+						Only we see your lookup, and we forget it. Each server along the way
+						learns just enough to answer, and never your IP address.
+					</p>
+				</div>
+			</div>
+
+			<div class="tech">
+				<span class="pill pill-accent">DNSSEC validated</span>
+				<span class="pill pill-accent">ML-DSA-44</span>
+				<span class="pill pill-accent">QNAME minimisation</span>
+				<span class="pill pill-accent">IPv6 first</span>
+				<span class="pill pill-accent">HTTPS &amp; SVCB records for ECH</span>
+				<span class="pill pill-accent">DNS64 / NAT64</span>
+			</div>
+		</div>
+	</section>
+
+	<!-- Blacklist -->
+	<section class="section" id="blacklist">
+		<div class="wrap">
+
+			<div class="section-head">
+				<h2>What we block</h2>
+				<p>
+					Four lists, all public. They're already running on every address from
+					the <a href="index.html#get">home page</a> &mdash; nothing to install.
+					Want them for your own AdGuard Home, Pi-hole or Blocky? Copy the URLs.
+				</p>
+			</div>
+
+			<div class="blacklist">
+
+				<details class="bl-item">
+					<summary>
+						<span class="bl-name">AdGuard DNS filter</span>
+						<span class="pill">Ads &amp; tracking</span>
+						<i class="bi bi-chevron-down bl-chev"></i>
+					</summary>
+					<div class="bl-body">
+						<p class="bl-text">
+							The main list: AdGuard's base, social, tracking and mobile filters,
+							plus EasyList and EasyPrivacy, built for DNS.
+						</p>
+						<div class="copy-row">
+							<code>https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt</code>
+							<button class="btn btn-ghost btn-sm" type="button" data-copy="https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt">
+								<i class="bi bi-clipboard"></i> Copy
+							</button>
+						</div>
+						<a class="bl-src" href="https://github.com/AdguardTeam/AdGuardSDNSFilter" target="_blank" rel="noopener">
+							<i class="bi bi-box-arrow-up-right"></i> Where it comes from
+						</a>
+					</div>
+				</details>
+
+				<details class="bl-item">
+					<summary>
+						<span class="bl-name">AdAway Default Blocklist</span>
+						<span class="pill">Mobile ads</span>
+						<i class="bi bi-chevron-down bl-chev"></i>
+					</summary>
+					<div class="bl-body">
+						<p class="bl-text">
+							A long-running list of ad servers found inside Android apps &mdash;
+							good news for your data plan.
+						</p>
+						<div class="copy-row">
+							<code>https://adguardteam.github.io/HostlistsRegistry/assets/filter_2.txt</code>
+							<button class="btn btn-ghost btn-sm" type="button" data-copy="https://adguardteam.github.io/HostlistsRegistry/assets/filter_2.txt">
+								<i class="bi bi-clipboard"></i> Copy
+							</button>
+						</div>
+						<a class="bl-src" href="https://github.com/AdAway/adaway.github.io/" target="_blank" rel="noopener">
+							<i class="bi bi-box-arrow-up-right"></i> Where it comes from
+						</a>
+					</div>
+				</details>
+
+				<details class="bl-item">
+					<summary>
+						<span class="bl-name">uBlock&#8320; filters &ndash; Badware risks</span>
+						<span class="pill">Badware</span>
+						<i class="bi bi-chevron-down bl-chev"></i>
+					</summary>
+					<div class="bl-body">
+						<p class="bl-text">
+							Sites known to push adware or malware, or to steal logins. Short,
+							and every entry is there for a documented reason.
+						</p>
+						<div class="copy-row">
+							<code>https://adguardteam.github.io/HostlistsRegistry/assets/filter_50.txt</code>
+							<button class="btn btn-ghost btn-sm" type="button" data-copy="https://adguardteam.github.io/HostlistsRegistry/assets/filter_50.txt">
+								<i class="bi bi-clipboard"></i> Copy
+							</button>
+						</div>
+						<a class="bl-src" href="https://github.com/uBlockOrigin/uAssets" target="_blank" rel="noopener">
+							<i class="bi bi-box-arrow-up-right"></i> Where it comes from
+						</a>
+					</div>
+				</details>
+
+				<details class="bl-item">
+					<summary>
+						<span class="bl-name">ΕΛΠΙΣ DNS filter</span>
+						<span class="pill pill-accent">Our own</span>
+						<i class="bi bi-chevron-down bl-chev"></i>
+					</summary>
+					<div class="bl-body">
+						<p class="bl-text">
+							Scam, fake, parked and abusive domains the big lists haven't caught
+							yet, reviewed by @Riri1x86. It comes with an allowlist, so your bank
+							login keeps working.
+						</p>
+						<div class="copy-row">
+							<code>https://elpis.violetnetworks.xyz/bogus.txt</code>
+							<button class="btn btn-ghost btn-sm" type="button" data-copy="https://elpis.violetnetworks.xyz/bogus.txt">
+								<i class="bi bi-clipboard"></i> Copy
+							</button>
+						</div>
+						<div class="copy-row">
+							<code>https://elpis.violetnetworks.xyz/allow.txt</code>
+							<span class="bl-note">allowlist</span>
+							<button class="btn btn-ghost btn-sm" type="button" data-copy="https://elpis.violetnetworks.xyz/allow.txt">
+								<i class="bi bi-clipboard"></i> Copy
+							</button>
+						</div>
+						<a class="bl-src" href="https://riri.pururin.moe/" target="_blank" rel="noopener">
+							<i class="bi bi-box-arrow-up-right"></i> Where it comes from
+						</a>
+					</div>
+				</details>
+			</div>
+
+			<div class="note mt">
+				<i class="bi bi-people"></i>
+				<div>
+					<b>Family</b> adds adult content and safe search on top of all four.
+					Everything else is left exactly as it is.
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Resolver -->
+	<section class="section section-alt" id="resolver">
+		<div class="wrap split">
+
+			<div class="card card-feature">
+				<div class="eyebrow">Our own resolver</div>
+				<h2>ΕΛΠΙΣ Resolver</h2>
+				<p>
+					To answer questions ourselves, we needed software that could. So we
+					wrote it: a recursive resolver in portable C99, open source down to the
+					cryptography. It's the second resolver in the world to check
+					post-quantum ML-DSA-44 signatures, after Cloudflare &mdash; because the
+					signatures collected today are the ones someone will try to forge later.
+				</p>
+				<div class="actions">
+					<a class="btn btn-primary" href="resolver.html">About the resolver</a>
+					<a class="btn btn-ghost" href="self-host.html">Run your own</a>
+				</div>
+			</div>
+
+			<div class="card" id="recursors">
+				<span class="card-icon"><i class="bi bi-hdd-network"></i></span>
+				<h3>Plain resolver addresses</h3>
+				<p>
+					Running AdGuard Home, Pi-hole, Blocky or Technitium? Use ΕΛΠΙΣ Resolver
+					as your upstream. You keep your lists and your logs; we do the lookups,
+					unfiltered.
+				</p>
+				<div class="actions mt">
+					<a class="btn btn-ghost btn-sm" href="resolver.html#servers">
+						See the addresses <i class="bi bi-arrow-right"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Verify -->
+	<section class="section" id="verify">
+		<div class="wrap">
+
+			<div class="section-head">
+				<h2>Check us</h2>
+				<p>Trust that can't be checked is just advertising. Here's how to check ours.</p>
+			</div>
+
+			<div class="grid-3">
+				<a class="card" href="https://dnscheck.tools/" target="_blank" rel="noopener">
+					<span class="card-icon"><i class="bi bi-clipboard-check"></i></span>
+					<h3>dnscheck.tools</h3>
+					<p>Shows who really answered you, and whether DNSSEC and IPv6 are working.</p>
+				</a>
+				<a class="card" href="https://dnsleaktest.com/" target="_blank" rel="noopener">
+					<span class="card-icon"><i class="bi bi-droplet-half"></i></span>
+					<h3>dnsleaktest.com</h3>
+					<p>If your internet provider shows up here, something is bypassing your setting.</p>
+				</a>
+				<a class="card" href="https://github.com/PururinCollective" target="_blank" rel="noopener">
+					<span class="card-icon"><i class="bi bi-github"></i></span>
+					<h3>Read the source</h3>
+					<p>The resolver, the lists and this website &mdash; all on GitHub.</p>
+				</a>
+			</div>
+
+			<div class="card cta mt-lg">
+				<div>
+					<h3>Ready when you are</h3>
+					<p class="muted">No account, no app, no subscription. Pick an address and go.</p>
+				</div>
+				<a class="btn btn-primary" href="index.html#get">
+					<i class="bi bi-lightning-charge"></i> Get your DNS address
+				</a>
+			</div>
+		</div>
+	</section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+	<div class="wrap">
+		<div class="footer-grid">
+			<div class="footer-about">
+				<a class="brand" href="index.html">
+					<img src="img/elpis-mark.svg?hash=3bcb26d5" alt="" class="brand-mark" width="28" height="28">
+					<span class="brand-name">ΕΛΠΙΣ <span>DNS</span></span>
+				</a>
+				<p>
+					Free, encrypted DNS run by the community. No logs, no profiles, nobody
+					in the middle &mdash; built for an open internet, in the spirit of the
+					<a href="https://www.eff.org/" target="_blank" rel="noopener">EFF</a>.
+				</p>
+			</div>
+			<div>
+				<h4>Use it</h4>
+				<ul>
+					<li><a href="index.html#get">Get your DNS address</a></li>
+					<li><a href="setup.html">Setup guides</a></li>
+					<li><a href="resolver.html#upstream">For AdGuard &amp; Pi-hole</a></li>
+				</ul>
+			</div>
+			<div>
+				<h4>Learn</h4>
+				<ul>
+					<li><a href="mission.html">Our mission</a></li>
+					<li><a href="resolver.html">ΕΛΠΙΣ Resolver</a></li>
+					<li><a href="self-host.html">Run your own</a></li>
+				</ul>
+			</div>
+			<div>
+				<h4>Community</h4>
+				<ul>
+					<li><a href="https://discord.gg/aw8pt2SWnv" target="_blank" rel="noopener">Discord</a></li>
+					<li><a href="https://pururin.moe/" target="_blank" rel="noopener">Forum</a></li>
+					<li><a href="https://openpon.org/" target="_blank" rel="noopener">OpenPON</a></li>
+					<li><a href="https://github.com/PururinCollective/ElpisDNS" target="_blank" rel="noopener">GitHub</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="footer-credits">
+			<div>
+				<h4>Kept running by</h4>
+				<div class="asn-list">
+					<span><a href="https://bgp.tools/as/154516" target="_blank" rel="noopener">AS154516</a> Perfect Network ⭐</span>
+					<span><a href="https://bgp.tools/as/153334" target="_blank" rel="noopener">AS153334</a> Origin TechLab</span>
+					<span><a href="https://bgp.tools/as/135134" target="_blank" rel="noopener">AS135134</a> Shana Network</span>
+				</div>
+			</div>
+			<a class="sponsor" href="https://perfect.my/" target="_blank" rel="noopener">
+				<span>Proudly sponsored by</span>
+				<img src="img/perfect.png" alt="Perfect Network, AS154516" width="851" height="315" loading="lazy" decoding="async">
+			</a>
+		</div>
+
+		<div class="footer-bottom">
 			<div id="footer-quote"></div>
-			<div class="mt-2">
-				Made with Love ♥ <br />
-				© 2026 ΕΛΠΙΣ DNS. All rights reserved.
+			<div>
+				Part of <a href="https://pururin.moe/" target="_blank" rel="noopener">Pururin Collective</a>
+				&middot; Made with love ♥ &middot; © 2026 ΕΛΠΙΣ DNS
 			</div>
 		</div>
 	</div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<script src="js/app-theme.js?hash=e17c7711"></script>
+<script src="js/app-theme.js?hash=391c4b31"></script>
 <script src="js/app-copy.js?hash=7fdd7e69"></script>
-<script src="js/app-quote.js?hash=8ea9c26e"></script>
+<script src="js/app-quote.js?hash=41419574"></script>
 
 </body>
 </html>

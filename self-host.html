@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Run your own ΕΛΠΙΣ Resolver — home lab, VM or ISP · ΕΛΠΙΣ DNS</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/svg+xml" href="img/elpis-mark.svg?hash=3bcb26d5">
+<link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+
+<!-- Paint the correct theme before the first frame, no white flash -->
+<script>
+	(function(){
+		var choice = "auto";
+		try { choice = localStorage.getItem("elpis-theme") || "auto"; } catch(e){}
+		var dark = choice === "dark" ||
+			(choice === "auto" &&
+			 window.matchMedia("(prefers-color-scheme: dark)").matches);
+		document.documentElement.dataset.theme = dark ? "dark" : "light";
+		document.documentElement.dataset.themeChoice = choice;
+	})();
+</script>
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link href="style-main.css?hash=4bf88226" rel="stylesheet">
+
+<meta name="description" content="Run your own ΕΛΠΙΣ Resolver: system requirements for a home lab, a VM or small business, and ISP-scale deployments on dedicated hardware, plus a five-step install.">
+<link rel="canonical" href="https://elpis.violetnetworks.xyz/self-host.html">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+<!-- Open Graph: Facebook, Discord, Telegram, Slack, WhatsApp, LinkedIn -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ΕΛΠΙΣ DNS">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://elpis.violetnetworks.xyz/self-host.html">
+<meta property="og:title" content="Run your own ΕΛΠΙΣ Resolver">
+<meta property="og:description" content="From a Raspberry Pi to an ISP's server rack: what you need to run ΕΛΠΙΣ Resolver, and how to install it in five steps.">
+<meta property="og:image" content="https://elpis.violetnetworks.xyz/img/og-image.jpg">
+<meta property="og:image:secure_url" content="https://elpis.violetnetworks.xyz/img/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ΕΛΠΙΣ DNS — private DNS, answered by our own resolver">
+
+<!-- X / Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://elpis.violetnetworks.xyz/self-host.html">
+<meta name="twitter:title" content="Run your own ΕΛΠΙΣ Resolver">
+<meta name="twitter:description" content="From a Raspberry Pi to an ISP's server rack: what you need to run ΕΛΠΙΣ Resolver, and how to install it in five steps.">
+<meta name="twitter:image" content="https://elpis.violetnetworks.xyz/img/og-image.jpg">
+<meta name="twitter:image:alt" content="ΕΛΠΙΣ DNS — private DNS, answered by our own resolver">
+
+<!-- The stripe Discord paints down the side of the embed -->
+<meta name="theme-color" content="#2f9ee0">
+
+<script type="application/ld+json">
+{
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": "BreadcrumbList",
+			"itemListElement": [
+				{
+					"@type": "ListItem",
+					"position": 1,
+					"name": "ΕΛΠΙΣ DNS",
+					"item": "https://elpis.violetnetworks.xyz/"
+				},
+				{
+					"@type": "ListItem",
+					"position": 2,
+					"name": "Run your own ΕΛΠΙΣ Resolver",
+					"item": "https://elpis.violetnetworks.xyz/self-host.html"
+				}
+			]
+		}
+	]
+}
+</script>
+</head>
+
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- Top bar -->
+<header class="topbar">
+	<div class="wrap topbar-inner">
+
+		<a class="brand" href="index.html">
+			<img src="img/elpis-mark.svg?hash=3bcb26d5" alt="" class="brand-mark" width="28" height="28">
+			<span class="brand-name">ΕΛΠΙΣ <span>DNS</span></span>
+		</a>
+
+		<nav class="nav" aria-label="Main">
+			<a href="setup.html">Setup</a>
+			<a href="resolver.html">Resolver</a>
+			<a href="self-host.html" aria-current="page">Self-host</a>
+			<a href="mission.html">Mission</a>
+		</nav>
+
+		<div class="topbar-actions">
+			<a class="icon-btn" href="https://github.com/PururinCollective/ElpisDNS" target="_blank" rel="noopener" title="Source on GitHub" aria-label="Source on GitHub">
+				<i class="bi bi-github"></i>
+			</a>
+			<button class="icon-btn" id="theme-btn" type="button" title="Theme" aria-label="Theme">
+				<i class="bi bi-circle-half"></i>
+			</button>
+		</div>
+	</div>
+</header>
+
+<main id="main">
+
+	<section class="page-head">
+		<div class="wrap">
+			<div class="crumbs"><a href="resolver.html">ΕΛΠΙΣ Resolver</a> / Run your own</div>
+			<h1>Run your own ΕΛΠΙΣ Resolver</h1>
+			<p class="lead">
+				It's free, open source, and one small file. Run it for your home, your
+				office or your whole network &mdash; and stop depending on anyone else's
+				resolver, ours included.
+			</p>
+			<div class="actions">
+				<a class="btn btn-primary" href="#install">
+					<i class="bi bi-download"></i> Install in five steps
+				</a>
+				<a class="btn btn-ghost" href="https://github.com/PururinCollective/elpis-resolver/releases" target="_blank" rel="noopener">
+					<i class="bi bi-github"></i> Releases
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- Sizes -->
+	<section class="section" id="sizes">
+		<div class="wrap">
+
+			<div class="section-head">
+				<h2>Pick your size</h2>
+				<p>
+					The same binary runs everywhere. What changes is how much memory you
+					give its cache, and what it runs on.
+				</p>
+			</div>
+
+			<div class="grid-3 tiers">
+
+				<div class="card tier">
+					<div class="tier-head">
+						<span class="card-icon"><i class="bi bi-house"></i></span>
+						<h3>Home lab</h3>
+					</div>
+					<p class="tier-for">For a household, a flat full of gadgets, or a tinkerer's rack.</p>
+					<dl class="spec">
+						<dt>Runs on</dt>
+						<dd>Raspberry Pi 4 or 5, an old mini PC or NAS, or an LXC container</dd>
+						<dt>CPU</dt>
+						<dd>Any 64-bit ARM or x86, 1&ndash;2 cores</dd>
+						<dt>Memory</dt>
+						<dd>1&ndash;2&nbsp;GB &mdash; a 171&ndash;410&nbsp;MiB cache, about 340,000&ndash;830,000 names</dd>
+						<dt>Disk</dt>
+						<dd>A few MB. The static binary is about 1.4&nbsp;MB</dd>
+						<dt>VM or container</dt>
+						<dd><span class="pill pill-ok">Fine</span></dd>
+					</dl>
+					<p class="tier-foot hint">Put AdGuard Home or Pi-hole on the same box and point it at <code>127.0.0.1:5335</code>.</p>
+				</div>
+
+				<div class="card tier">
+					<div class="tier-head">
+						<span class="card-icon"><i class="bi bi-building"></i></span>
+						<h3>VM &amp; small business</h3>
+					</div>
+					<p class="tier-for">For an office, a school, a campus network or a VPS.</p>
+					<dl class="spec">
+						<dt>Runs on</dt>
+						<dd>A KVM or Proxmox VM, or an LXC container &mdash; one per instance, each with its own IPv6 address</dd>
+						<dt>CPU</dt>
+						<dd>2&ndash;4 vCPU; x86-64-v3 (AVX2) or newer is ideal</dd>
+						<dt>Memory</dt>
+						<dd>4&nbsp;GB &mdash; an 819&nbsp;MiB cache, about 1.6 million names</dd>
+						<dt>How many</dt>
+						<dd>Two, so one can restart while the other answers</dd>
+						<dt>VM or container</dt>
+						<dd><span class="pill pill-ok">Recommended</span></dd>
+					</dl>
+					<p class="tier-foot hint">A container per resolver is easy to firewall, easy to move, and easy to spot in a packet capture.</p>
+				</div>
+
+				<div class="card tier tier-strong">
+					<div class="tier-head">
+						<span class="card-icon"><i class="bi bi-hdd-rack"></i></span>
+						<h3>ISP &amp; operator</h3>
+					</div>
+					<p class="tier-for">For thousands of subscribers, where every millisecond is felt.</p>
+					<dl class="spec">
+						<dt>Runs on</dt>
+						<dd><b>Dedicated servers</b> &mdash; real hardware, not virtual machines</dd>
+						<dt>CPU</dt>
+						<dd>8+ physical cores, x86-64-v3 (AVX2) or newer, or Arm Neoverse</dd>
+						<dt>Memory</dt>
+						<dd>32&ndash;64&nbsp;GB ECC; the cache grows itself up to 16&nbsp;GiB</dd>
+						<dt>Network</dt>
+						<dd>10&nbsp;GbE with multiple receive queues (RSS)</dd>
+						<dt>How many</dt>
+						<dd>Two or more per site, behind anycast or a load balancer</dd>
+						<dt>VM or container</dt>
+						<dd><span class="pill pill-warn">Not at this scale</span></dd>
+					</dl>
+					<p class="tier-foot hint"><a href="#why-hardware">Why real hardware?</a> &middot; Commercial support is available.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Why hardware -->
+	<section class="section section-alt" id="why-hardware">
+		<div class="wrap">
+
+			<div class="section-head">
+				<h2>Why real hardware for ISPs?</h2>
+				<p>
+					Virtual machines are great right up until thousands of people share
+					one resolver. At that point steady beats fast, and a hypervisor gets in
+					the way of steady.
+				</p>
+			</div>
+
+			<div class="grid-4">
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-cpu"></i></span>
+					<h3>Every core counts</h3>
+					<p>
+						Elpis runs one worker per CPU core, each with its own socket. Real
+						cores and real NIC queues let it scale straight up.
+					</p>
+				</div>
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-people"></i></span>
+					<h3>No noisy neighbours</h3>
+					<p>
+						A VM shares its CPU. When the host gets busy, the stolen time shows
+						up as random delays your subscribers can feel.
+					</p>
+				</div>
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-arrow-left-right"></i></span>
+					<h3>One hop fewer</h3>
+					<p>
+						Packets reach the resolver without a virtual switch in the way, so
+						latency stays low and flat under load.
+					</p>
+				</div>
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-memory"></i></span>
+					<h3>Memory that stays put</h3>
+					<p>
+						A big cache is what makes answers instant. Dedicated RAM is never
+						ballooned away or swapped out by a host.
+					</p>
+				</div>
+			</div>
+
+			<div class="note mt">
+				<i class="bi bi-speedometer2"></i>
+				<div>
+					<b>For scale:</b> on an eight-core VM, answers from cache measure
+					600,000&ndash;780,000 queries a second, about 200,000 on a single thread,
+					with a 0.6&nbsp;ms median. Dedicated hardware gives you that headroom
+					without the jitter.
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Install -->
+	<section class="section" id="install">
+		<div class="wrap">
+
+			<div class="section-head">
+				<h2>Install in five steps</h2>
+				<p>
+					Linux shown here. The BSDs and macOS work too &mdash; see the
+					<a href="https://github.com/PururinCollective/elpis-resolver/blob/main/docs/COMPILING.md" target="_blank" rel="noopener">compiling guide</a>.
+				</p>
+			</div>
+
+			<div class="doc-section">
+				<h3 class="doc-title"><i class="bi bi-1-circle"></i> Get it</h3>
+				<p class="doc-text">
+					Download the static binary from
+					<a href="https://github.com/PururinCollective/elpis-resolver/releases" target="_blank" rel="noopener">Releases</a>
+					&mdash; it runs on any recent Linux with nothing else to install:
+				</p>
+				<div class="code-block"><pre>sudo mkdir -p /opt/elpis-resolver/bin
+sudo cp elpis elpis.conf /opt/elpis-resolver/bin/
+/opt/elpis-resolver/bin/elpis -t        # check the config and exit</pre></div>
+				<p class="doc-text">Or build it yourself. A C compiler and make are all it needs:</p>
+				<div class="code-block"><pre>sudo apt install build-essential git
+git clone https://github.com/PururinCollective/elpis-resolver.git
+cd elpis-resolver &amp;&amp; make
+sudo make install                        # to /opt/elpis-resolver/bin</pre></div>
+			</div>
+
+			<div class="doc-section">
+				<h3 class="doc-title"><i class="bi bi-2-circle"></i> Configure it</h3>
+				<p class="doc-text">
+					With no changes at all, Elpis is a working resolver on
+					<code>127.0.0.1:5335</code> &mdash; perfect when AdGuard Home runs on
+					the same machine. To serve a network, edit
+					<code>/opt/elpis-resolver/bin/elpis.conf</code>:
+				</p>
+				<div class="code-block"><pre>listen: [2001:db8::53]@53
+listen: 192.0.2.53@53
+access-control: 2001:db8::/48 allow
+access-control: 192.0.2.0/24 allow
+dnssec: yes</pre></div>
+				<p class="doc-text">
+					Swap in your own addresses. Anything not allowed is refused, so an open
+					resolver never happens by accident. Every other setting is documented in
+					the file at its default.
+				</p>
+			</div>
+
+			<div class="doc-section">
+				<h3 class="doc-title"><i class="bi bi-3-circle"></i> Run it as a service</h3>
+				<p class="doc-text">
+					The systemd unit binds port 53 without running as root. It needs an
+					account to drop to:
+				</p>
+				<div class="code-block"><pre>sudo useradd --system --user-group --no-create-home --shell /usr/sbin/nologin elpis
+sudo install -m0644 contrib/elpis.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now elpis</pre></div>
+				<div class="note">
+					<i class="bi bi-info-circle"></i>
+					<div>
+						Starting it stops <code>systemd-resolved</code>, so the two never fight
+						over port 53. Point <code>/etc/resolv.conf</code> at Elpis afterwards,
+						or remove the <code>Conflicts=</code> line if you keep resolved and
+						run Elpis on another port.
+					</div>
+				</div>
+			</div>
+
+			<div class="doc-section">
+				<h3 class="doc-title"><i class="bi bi-4-circle"></i> Point your filter at it</h3>
+				<p class="doc-text">
+					In AdGuard Home, open <b>Settings &rarr; DNS settings &rarr; Upstream DNS
+					servers</b> and replace what's there with your resolver:
+				</p>
+				<div class="code-block"><pre>127.0.0.1:5335
+[2001:db8::53]:53</pre></div>
+				<p class="doc-text">
+					Running two? List both, and set <b>Upstream mode</b> to
+					<b>Load-balancing</b>. In Pi-hole, the same goes in
+					<b>Custom DNS servers</b> as <code>127.0.0.1#5335</code>.
+				</p>
+			</div>
+
+			<div class="doc-section">
+				<h3 class="doc-title"><i class="bi bi-5-circle"></i> Check it</h3>
+				<p class="doc-text">
+					Ask it for a name, then ask it what it is. The second line answers with
+					its version, build, CPU kernel and whether DNSSEC is validating.
+				</p>
+				<div class="code-block"><pre>dig @127.0.0.1 -p 5335 example.com +dnssec
+dig @127.0.0.1 -p 5335 elpis.sakurako.oomuro TXT</pre></div>
+				<p class="doc-text">
+					Want graphs? Add <code>webgui: yes</code> and a password for a read-only
+					status page on loopback &mdash; reach it over SSH or a VPN.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- Tuning -->
+	<section class="section section-alt" id="tuning">
+		<div class="wrap">
+
+			<div class="section-head">
+				<h2>Tuning for your CPU</h2>
+				<p>
+					The default build runs on any CPU of its kind, and still picks AVX2 at
+					start-up when it's there. For the last few percent, build for the exact
+					processor it will run on.
+				</p>
+			</div>
+
+			<div class="split">
+				<div class="card">
+					<div class="code-block"><pre>make static OPT="-O3 -fno-strict-aliasing -march=x86-64-v3"</pre></div>
+					<dl class="spec">
+						<dt><code>x86-64-v3</code></dt>
+						<dd>Intel Haswell (2013) and later, AMD Zen and later</dd>
+						<dt><code>znver4</code></dt>
+						<dd>AMD Zen 4: Ryzen 7000, EPYC Genoa</dd>
+						<dt><code>neoverse-n1</code></dt>
+						<dd>Ampere Altra, AWS Graviton2 (use <code>-mcpu</code> on ARM)</dd>
+						<dt><code>cortex-a76</code></dt>
+						<dd>Raspberry Pi 5</dd>
+					</dl>
+				</div>
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-exclamation-triangle"></i></span>
+					<h3>One thing to watch</h3>
+					<p>
+						A binary built for a newer CPU stops with <b>Illegal instruction</b> on
+						an older one. For a mixed fleet, pick the lowest
+						<code>x86-64-vN</code> level they all support.
+					</p>
+					<p>
+						The first log line always tells you what you're running: compiler,
+						CPU target and the SIMD kernel in use.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Docs -->
+	<section class="section" id="docs">
+		<div class="wrap">
+
+			<div class="section-head">
+				<h2>Read more</h2>
+				<p>Everything else lives next to the source.</p>
+			</div>
+
+			<div class="doc-jump">
+				<a href="https://github.com/PururinCollective/elpis-resolver/blob/main/docs/COMPILING.md" target="_blank" rel="noopener"><i class="bi bi-tools"></i> Compiling</a>
+				<a href="https://github.com/PururinCollective/elpis-resolver/blob/main/docs/configuration.md" target="_blank" rel="noopener"><i class="bi bi-sliders"></i> Configuration</a>
+				<a href="https://github.com/PururinCollective/elpis-resolver/blob/main/docs/caching.md" target="_blank" rel="noopener"><i class="bi bi-lightning"></i> Caching</a>
+				<a href="https://github.com/PururinCollective/elpis-resolver/blob/main/docs/dnssec.md" target="_blank" rel="noopener"><i class="bi bi-patch-check"></i> DNSSEC</a>
+				<a href="https://github.com/PururinCollective/elpis-resolver/blob/main/docs/status-page.md" target="_blank" rel="noopener"><i class="bi bi-graph-up"></i> Status page</a>
+				<a href="https://github.com/PururinCollective/elpis-resolver/blob/main/docs/troubleshooting.md" target="_blank" rel="noopener"><i class="bi bi-life-preserver"></i> Troubleshooting</a>
+			</div>
+
+			<div class="grid-2">
+				<div class="card cta">
+					<div>
+						<h3>Running it for customers?</h3>
+						<p class="muted">
+							Commercial support covers deployment, tuning for your traffic and
+							priority fixes. Signed licences let your resolver say who runs it.
+						</p>
+					</div>
+					<a class="btn btn-ghost" href="https://discord.gg/aw8pt2SWnv" target="_blank" rel="noopener">
+						<i class="bi bi-discord"></i> Talk to us
+					</a>
+				</div>
+				<div class="card cta">
+					<div>
+						<h3>Running a public one?</h3>
+						<p class="muted">
+							Offer DoH or DoT to everyone and list it on ΕΛΠΙΣ DNS: one JSON
+							block, one pull request.
+						</p>
+					</div>
+					<a class="btn btn-ghost" href="https://github.com/PururinCollective/ElpisDNS/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">
+						<i class="bi bi-github"></i> How to add it
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+	<div class="wrap">
+		<div class="footer-grid">
+			<div class="footer-about">
+				<a class="brand" href="index.html">
+					<img src="img/elpis-mark.svg?hash=3bcb26d5" alt="" class="brand-mark" width="28" height="28">
+					<span class="brand-name">ΕΛΠΙΣ <span>DNS</span></span>
+				</a>
+				<p>
+					Free, encrypted DNS run by the community. No logs, no profiles, nobody
+					in the middle &mdash; built for an open internet, in the spirit of the
+					<a href="https://www.eff.org/" target="_blank" rel="noopener">EFF</a>.
+				</p>
+			</div>
+			<div>
+				<h4>Use it</h4>
+				<ul>
+					<li><a href="index.html#get">Get your DNS address</a></li>
+					<li><a href="setup.html">Setup guides</a></li>
+					<li><a href="resolver.html#upstream">For AdGuard &amp; Pi-hole</a></li>
+				</ul>
+			</div>
+			<div>
+				<h4>Learn</h4>
+				<ul>
+					<li><a href="mission.html">Our mission</a></li>
+					<li><a href="resolver.html">ΕΛΠΙΣ Resolver</a></li>
+					<li><a href="self-host.html">Run your own</a></li>
+				</ul>
+			</div>
+			<div>
+				<h4>Community</h4>
+				<ul>
+					<li><a href="https://discord.gg/aw8pt2SWnv" target="_blank" rel="noopener">Discord</a></li>
+					<li><a href="https://pururin.moe/" target="_blank" rel="noopener">Forum</a></li>
+					<li><a href="https://openpon.org/" target="_blank" rel="noopener">OpenPON</a></li>
+					<li><a href="https://github.com/PururinCollective/ElpisDNS" target="_blank" rel="noopener">GitHub</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="footer-credits">
+			<div>
+				<h4>Kept running by</h4>
+				<div class="asn-list">
+					<span><a href="https://bgp.tools/as/154516" target="_blank" rel="noopener">AS154516</a> Perfect Network ⭐</span>
+					<span><a href="https://bgp.tools/as/153334" target="_blank" rel="noopener">AS153334</a> Origin TechLab</span>
+					<span><a href="https://bgp.tools/as/135134" target="_blank" rel="noopener">AS135134</a> Shana Network</span>
+				</div>
+			</div>
+			<a class="sponsor" href="https://perfect.my/" target="_blank" rel="noopener">
+				<span>Proudly sponsored by</span>
+				<img src="img/perfect.png" alt="Perfect Network, AS154516" width="851" height="315" loading="lazy" decoding="async">
+			</a>
+		</div>
+
+		<div class="footer-bottom">
+			<div id="footer-quote"></div>
+			<div>
+				Part of <a href="https://pururin.moe/" target="_blank" rel="noopener">Pururin Collective</a>
+				&middot; Made with love ♥ &middot; © 2026 ΕΛΠΙΣ DNS
+			</div>
+		</div>
+	</div>
+</footer>
+
+<script src="js/app-theme.js?hash=391c4b31"></script>
+<script src="js/app-copy.js?hash=7fdd7e69"></script>
+<script src="js/app-setup.js?hash=fb7fc054"></script>
+<script src="js/app-quote.js?hash=41419574"></script>
+
+</body>
+</html>

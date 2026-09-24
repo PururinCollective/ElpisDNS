@@ -116,26 +116,23 @@ plan to run it. That is the whole ritual.
 | File | What it holds |
 | --- | --- |
 | `index.html` | The front page and the selector markup |
+| `resolver.html` | ΕΛΠΙΣ Resolver: server table and upstream lists |
+| `self-host.html` | Running your own ΕΛΠΙΣ Resolver |
 | `setup.html` | The setup guide, linked from the top bar |
-| `mission.html` | Why ΕΛΠΙΣ exists: block lists, recursion, the raw resolvers |
-| `style-main.css` | Every colour token, both themes, all components |
-| `style-mobile.css` | The narrow layout |
+| `mission.html` | Why ΕΛΠΙΣ exists: promises, block lists, how a lookup travels |
+| `resolvers.json` | Public ΕΛΠΙΣ Resolver addresses. Edit this, not the HTML |
+| `style-main.css` | Every colour token, both themes, all components, the narrow layout |
 | `js/app.js` | Selector engine, endpoint building, share links |
+| `js/app-resolvers.js` | Resolver table and AdGuard Home / Pi-hole lists, from `resolvers.json` |
 | `js/app-theme.js` | System, light and dark switching |
 | `js/app-copy.js` | Clipboard, shared by every page |
 | `js/app-stamp.js` | Builds the `sdns://` stamp for the selected endpoint |
 | `js/app-quote.js` | Footer quotes |
 | `js/app-mikrotik.js` | The `.rsc` generator |
 | `js/app-setup.js` | Setup page helpers |
-| `img/hero-map.svg` | The animated banner. Generated, do not hand edit |
-| `tools/make-hero-map.py` | Regenerates the banner and its reduced-motion still |
+| `img/hero-map.svg` | The animated map. Generated, and not shown by the current design |
+| `tools/make-hero-map.py` | Regenerates the map and its reduced-motion still |
 | `tools/stamp-assets.py` | Re-stamps `?hash=` cache busters. Run after changing CSS, JS or JSON |
-
-The banner is the one file in the project that is not written by hand. The
-ASN list the HUD walks through, the traffic arcs and the blocked queries all
-live near the top of `tools/make-hero-map.py`; change them there and run
-`python tools/make-hero-map.py`. Editing the SVG directly works right up
-until somebody regenerates it.
 
 House style: tabs for indentation, blank line between logical steps, no
 build tooling. Colours go in the token block at the top of `style-main.css`

@@ -76,33 +76,31 @@ fetched over HTTP.
 | --- | --- |
 | `dns.json` | Every resolver, region and filtering profile |
 | `dns.schema.json` | Schema that validates the above in your editor |
+| `resolvers.json` | Public ΕΛΠΙΣ Resolver addresses, the backup notice, and what each server runs |
 | `index.html` | Front page and selector markup |
+| `resolver.html` | ΕΛΠΙΣ Resolver: the server table and the AdGuard Home / Pi-hole upstream lists |
+| `self-host.html` | Running your own resolver, from a home lab to ISP hardware |
 | `setup.html` | Setup guide |
-| `mission.html` | Why ΕΛΠΙΣ exists: block lists, recursion, the raw resolvers |
-| `style-main.css` | Colour tokens, light and dark themes, all components |
-| `style-mobile.css` | Narrow layout |
+| `mission.html` | Why ΕΛΠΙΣ exists: promises, block lists, how a lookup travels |
+| `style-main.css` | Colour tokens, light and dark themes, all components and the narrow layout |
 | `js/app.js` | Selector engine, endpoint building, share links |
+| `js/app-resolvers.js` | Builds the resolver table and upstream lists from `resolvers.json` |
 | `js/app-theme.js` | System / light / dark switching |
 | `js/app-copy.js` | Clipboard, shared by every page |
 | `js/app-stamp.js` | `sdns://` DNS stamp generator |
 | `js/app-quote.js` | Footer quotes |
 | `js/app-mikrotik.js` | RouterOS `.rsc` generator |
-| `js/app-setup.js` | Setup page helpers |
-| `img/hero-map.svg` | Animated night map behind the hero, generated |
+| `js/app-setup.js` | Setup page helpers, and copy buttons on code blocks |
+| `img/hero-map.svg` | Animated night map, generated. Not shown by the current design |
 | `tools/make-hero-map.py` | Regenerates that map. Only needed if you change it |
 | `tools/stamp-assets.py` | Re-stamps `?hash=` cache busters after any asset change |
 
-The banner is a self-contained animated SVG: encrypted traffic leaving the
-resolver in orange, a HUD walking the autonomous systems on the path, and
-blocked queries dying in red on the shield ring. It is generated because the
-landmass is fourteen hundred dots sampled from coastline polygons:
+The colours are the ones the ΕΛΠΙΣ Resolver status page uses &mdash; steel grey
+and one blue accent &mdash; so the site and the resolver read as one product.
 
-```
-python tools/make-hero-map.py
-```
-
-That writes both `img/hero-map.svg` and a still `img/hero-map-static.svg`,
-which is what visitors who ask for reduced motion get served.
+The public resolver addresses live in `resolvers.json`. Add a server, change a
+role between `active` and `backup`, or clear the `notice`, and the resolver
+page, the setup page and every AdGuard Home and Pi-hole list follow.
 
 The site follows your operating system's light or dark preference out of the box;
 the icon in the top bar cycles system, light and dark, and the choice is remembered.

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>ΕΛΠΙΣ Resolver — our own recursive DNS resolver · ΕΛΠΙΣ DNS</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/svg+xml" href="img/elpis-mark.svg?hash=3bcb26d5">
+<link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+
+<!-- Paint the correct theme before the first frame, no white flash -->
+<script>
+	(function(){
+		var choice = "auto";
+		try { choice = localStorage.getItem("elpis-theme") || "auto"; } catch(e){}
+		var dark = choice === "dark" ||
+			(choice === "auto" &&
+			 window.matchMedia("(prefers-color-scheme: dark)").matches);
+		document.documentElement.dataset.theme = dark ? "dark" : "light";
+		document.documentElement.dataset.themeChoice = choice;
+	})();
+</script>
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link href="style-main.css?hash=4bf88226" rel="stylesheet">
+
+<meta name="description" content="ΕΛΠΙΣ Resolver is our own open-source recursive DNS resolver with DNSSEC and ML-DSA-44. Public IPv6 and IPv4 addresses, and ready-made upstream lists for AdGuard Home and Pi-hole.">
+<link rel="canonical" href="https://elpis.violetnetworks.xyz/resolver.html">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+<!-- Open Graph: Facebook, Discord, Telegram, Slack, WhatsApp, LinkedIn -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ΕΛΠΙΣ DNS">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://elpis.violetnetworks.xyz/resolver.html">
+<meta property="og:title" content="ΕΛΠΙΣ Resolver — the engine behind ΕΛΠΙΣ DNS">
+<meta property="og:description" content="Our own recursive resolver: straight to the root servers, DNSSEC with ML-DSA-44, open source. Use it as the upstream for your AdGuard Home or Pi-hole.">
+<meta property="og:image" content="https://elpis.violetnetworks.xyz/img/og-image.jpg">
+<meta property="og:image:secure_url" content="https://elpis.violetnetworks.xyz/img/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ΕΛΠΙΣ DNS — private DNS, answered by our own resolver">
+
+<!-- X / Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://elpis.violetnetworks.xyz/resolver.html">
+<meta name="twitter:title" content="ΕΛΠΙΣ Resolver — the engine behind ΕΛΠΙΣ DNS">
+<meta name="twitter:description" content="Our own recursive resolver: straight to the root servers, DNSSEC with ML-DSA-44, open source. Use it as the upstream for your AdGuard Home or Pi-hole.">
+<meta name="twitter:image" content="https://elpis.violetnetworks.xyz/img/og-image.jpg">
+<meta name="twitter:image:alt" content="ΕΛΠΙΣ DNS — private DNS, answered by our own resolver">
+
+<!-- The stripe Discord paints down the side of the embed -->
+<meta name="theme-color" content="#2f9ee0">
+
+<script type="application/ld+json">
+{
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": "SoftwareApplication",
+			"name": "ΕΛΠΙΣ Resolver",
+			"alternateName": "Elpis Resolver",
+			"applicationCategory": "NetworkingApplication",
+			"operatingSystem": "Linux, FreeBSD, macOS",
+			"license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+			"codeRepository": "https://github.com/PururinCollective/elpis-resolver",
+			"offers": {
+				"@type": "Offer",
+				"price": "0",
+				"priceCurrency": "USD"
+			},
+			"publisher": {
+				"@id": "https://elpis.violetnetworks.xyz/#org"
+			}
+		},
+		{
+			"@type": "BreadcrumbList",
+			"itemListElement": [
+				{
+					"@type": "ListItem",
+					"position": 1,
+					"name": "ΕΛΠΙΣ DNS",
+					"item": "https://elpis.violetnetworks.xyz/"
+				},
+				{
+					"@type": "ListItem",
+					"position": 2,
+					"name": "ΕΛΠΙΣ Resolver",
+					"item": "https://elpis.violetnetworks.xyz/resolver.html"
+				}
+			]
+		}
+	]
+}
+</script>
+</head>
+
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- Top bar -->
+<header class="topbar">
+	<div class="wrap topbar-inner">
+
+		<a class="brand" href="index.html">
+			<img src="img/elpis-mark.svg?hash=3bcb26d5" alt="" class="brand-mark" width="28" height="28">
+			<span class="brand-name">ΕΛΠΙΣ <span>DNS</span></span>
+		</a>
+
+		<nav class="nav" aria-label="Main">
+			<a href="setup.html">Setup</a>
+			<a href="resolver.html" aria-current="page">Resolver</a>
+			<a href="self-host.html">Self-host</a>
+			<a href="mission.html">Mission</a>
+		</nav>
+
+		<div class="topbar-actions">
+			<a class="icon-btn" href="https://github.com/PururinCollective/ElpisDNS" target="_blank" rel="noopener" title="Source on GitHub" aria-label="Source on GitHub">
+				<i class="bi bi-github"></i>
+			</a>
+			<button class="icon-btn" id="theme-btn" type="button" title="Theme" aria-label="Theme">
+				<i class="bi bi-circle-half"></i>
+			</button>
+		</div>
+	</div>
+</header>
+
+<main id="main">
+
+	<section class="page-head">
+		<div class="wrap">
+			<div class="eyebrow">The engine behind ΕΛΠΙΣ DNS</div>
+			<h1>ΕΛΠΙΣ Resolver</h1>
+			<p class="lead">
+				Our own recursive DNS resolver. It finds every answer by asking the
+				internet's root servers directly, so there's no Google, Cloudflare or
+				anyone else in the middle to see your lookups. Free, open source, and
+				yours to use.
+			</p>
+			<div class="actions">
+				<a class="btn btn-primary" href="#servers">
+					<i class="bi bi-hdd-stack"></i> Server addresses
+				</a>
+				<a class="btn btn-ghost" href="#upstream">
+					Use with AdGuard or Pi-hole
+				</a>
+				<a class="btn btn-ghost" href="https://github.com/PururinCollective/elpis-resolver" target="_blank" rel="noopener">
+					<i class="bi bi-github"></i> Source
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- What it is -->
+	<section class="section">
+		<div class="wrap grid-4">
+
+			<div class="card">
+				<span class="card-icon"><i class="bi bi-signpost-split"></i></span>
+				<h3>Asks the source</h3>
+				<p>
+					Resolves from the root servers down. There's no upstream provider,
+					so nobody else gets a copy of your lookups.
+				</p>
+			</div>
+
+			<div class="card">
+				<span class="card-icon"><i class="bi bi-patch-check"></i></span>
+				<h3>Checks every signature</h3>
+				<p>
+					DNSSEC with RSA, ECDSA, Ed25519 and post-quantum ML-DSA-44 &mdash; the
+					second resolver in the world to check it, after Cloudflare.
+				</p>
+			</div>
+
+			<div class="card">
+				<span class="card-icon"><i class="bi bi-speedometer2"></i></span>
+				<h3>Quick</h3>
+				<p>
+					0.6&nbsp;ms median from cache, with hand-tuned code for your CPU:
+					AVX2, SSE2 or NEON, picked at start-up.
+				</p>
+			</div>
+
+			<div class="card">
+				<span class="card-icon"><i class="bi bi-box-seam"></i></span>
+				<h3>Small and open</h3>
+				<p>
+					Portable C99 with no dependencies: one static binary of about
+					1.4&nbsp;MB. GPL-2.0 licensed.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- How it fits -->
+	<section class="section section-alt">
+		<div class="wrap">
+
+			<div class="section-head">
+				<h2>How it fits together</h2>
+				<p>
+					ΕΛΠΙΣ Resolver does the quiet part: finding answers and checking them.
+					A filter such as AdGuard Home sits in front and takes care of blocklists
+					and encrypted connections.
+				</p>
+			</div>
+
+			<ol class="chain">
+				<li>
+					<span class="card-icon"><i class="bi bi-laptop"></i></span>
+					<b>Your devices</b>
+					<span class="chain-text">Phones, laptops, TVs &mdash; anything on the network.</span>
+				</li>
+				<li>
+					<span class="card-icon"><i class="bi bi-funnel"></i></span>
+					<b>AdGuard Home or Pi-hole</b>
+					<span class="chain-text">Blocklists, per-device rules, DoH and DoT.</span>
+				</li>
+				<li class="ours">
+					<span class="card-icon"><i class="bi bi-cpu"></i></span>
+					<b>ΕΛΠΙΣ Resolver</b>
+					<span class="chain-text">Recursion, caching and DNSSEC.</span>
+				</li>
+				<li>
+					<span class="card-icon"><i class="bi bi-diagram-3"></i></span>
+					<b>Root, TLD and authoritative servers</b>
+					<span class="chain-text">Where every answer really lives.</span>
+				</li>
+			</ol>
+
+			<p class="hint mt">
+				That is exactly how ΕΛΠΙΣ DNS runs. We keep several resolvers side by side:
+				AdGuard spreads the load across them and carries on if one is away for an
+				upgrade.
+			</p>
+		</div>
+	</section>
+
+	<!-- Addresses -->
+	<section class="section" id="servers">
+		<div class="wrap">
+
+			<div class="section-head">
+				<h2>Public resolver addresses</h2>
+				<p>
+					Free for anyone. These are <b>unfiltered on purpose</b>: they answer
+					everything and leave the blocking to your own AdGuard Home, Pi-hole or
+					similar. For filtered DNS on a phone or laptop,
+					<a href="index.html#get">get an address from the home page</a> instead.
+				</p>
+			</div>
+
+			<div class="stack">
+
+				<div class="note note-warn" data-resolver-notice hidden>
+					<i class="bi bi-life-preserver"></i>
+					<div data-notice-text></div>
+				</div>
+
+				<div class="card table-card" data-resolver-table>
+					<noscript>
+						<div class="note">
+							<i class="bi bi-info-circle"></i>
+							<div>The table needs JavaScript. The same list is in
+							<a href="resolvers.json?hash=799fe164">resolvers.json</a>.</div>
+						</div>
+					</noscript>
+				</div>
+
+				<div class="grid-2">
+					<div class="note">
+						<i class="bi bi-globe2"></i>
+						<div>
+							<b>IPv6 is direct.</b> Straight to the resolver on port 53, with
+							nothing translating in between. Use it when you can.
+						</div>
+					</div>
+					<div class="note">
+						<i class="bi bi-shield-lock"></i>
+						<div>
+							<b>IPv4 skips port 53 on purpose.</b> Ports 5301&ndash;5306 keep
+							scanners and abuse away. Any decent DNS app lets you set a port.
+						</div>
+					</div>
+				</div>
+
+				<p class="hint">
+					Click an address to copy it. List last updated
+					<span data-resolver-updated>recently</span>.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- Upstream -->
+	<section class="section section-alt" id="upstream">
+		<div class="wrap">
+
+			<div class="section-head">
+				<h2>Use it with AdGuard Home or Pi-hole</h2>
+				<p>
+					Already filtering at home? Keep your blocklists and swap the upstream.
+					Instead of sending every lookup on to Google or Cloudflare, your filter
+					asks ΕΛΠΙΣ Resolver.
+				</p>
+			</div>
+
+			<div class="split">
+
+				<div class="card" data-upstream-builder>
+					<noscript>
+						<p>The list builder needs JavaScript. The addresses are in
+						<a href="resolvers.json?hash=799fe164">resolvers.json</a>.</p>
+					</noscript>
+				</div>
+
+				<div class="card">
+					<h3>Three steps</h3>
+					<ol class="doc-steps mt-sm">
+						<li>Pick your app and your network, then copy the list.</li>
+						<li>Paste it where the caption says, replacing Google, Cloudflare or your ISP.</li>
+						<li>In AdGuard Home, set <b>Upstream mode</b> to <b>Load-balancing</b>, press <b>Test upstreams</b>, then <b>Apply</b>.</li>
+					</ol>
+					<p class="hint">
+						Using encrypted hostnames anywhere else in AdGuard? Put the IPv6
+						addresses in <b>Bootstrap DNS servers</b> too, so it can find them on
+						a cold start.
+					</p>
+					<a class="result-next" href="setup.html#adguard">
+						Full AdGuard Home &amp; Pi-hole guide <i class="bi bi-arrow-right"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Verify -->
+	<section class="section" id="verify">
+		<div class="wrap">
+
+			<div class="section-head">
+				<h2>Check it's working</h2>
+				<p>Don't take our word for it &mdash; two quick ways to see for yourself.</p>
+			</div>
+
+			<div class="grid-2">
+				<div class="card">
+					<h3>From a terminal</h3>
+					<p>
+						Ask a resolver directly. An <code>ad</code> flag in the reply means
+						the DNSSEC signatures checked out.
+					</p>
+					<div class="code-block">
+						<pre>dig @2402:4e20::babe example.com +dnssec
+dig @151.158.198.49 -p 5301 example.com +dnssec</pre>
+						<button type="button" class="copy-code" data-copy="dig @2402:4e20::babe example.com +dnssec&#10;dig @151.158.198.49 -p 5301 example.com +dnssec">
+							<i class="bi bi-clipboard"></i> Copy
+						</button>
+					</div>
+				</div>
+
+				<div class="card">
+					<h3>From a browser</h3>
+					<p>
+						Once your filter uses ΕΛΠΙΣ Resolver, open dnscheck.tools. You should
+						see DNSSEC and IPv6 light up, and your resolver named as Perfect
+						Network in Semenyih &mdash; not your internet provider.
+					</p>
+					<div class="actions mt">
+						<a class="btn btn-ghost btn-sm" href="https://dnscheck.tools/" target="_blank" rel="noopener">
+							<i class="bi bi-box-arrow-up-right"></i> Open dnscheck.tools
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="card cta mt">
+				<div>
+					<h3>Want one of your own?</h3>
+					<p class="muted">
+						ΕΛΠΙΣ Resolver runs on anything from a Raspberry Pi to an ISP's server
+						rack. Here's what you need for each.
+					</p>
+				</div>
+				<a class="btn btn-primary" href="self-host.html">
+					<i class="bi bi-hdd-rack"></i> Run your own
+				</a>
+			</div>
+		</div>
+	</section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+	<div class="wrap">
+		<div class="footer-grid">
+			<div class="footer-about">
+				<a class="brand" href="index.html">
+					<img src="img/elpis-mark.svg?hash=3bcb26d5" alt="" class="brand-mark" width="28" height="28">
+					<span class="brand-name">ΕΛΠΙΣ <span>DNS</span></span>
+				</a>
+				<p>
+					Free, encrypted DNS run by the community. No logs, no profiles, nobody
+					in the middle &mdash; built for an open internet, in the spirit of the
+					<a href="https://www.eff.org/" target="_blank" rel="noopener">EFF</a>.
+				</p>
+			</div>
+			<div>
+				<h4>Use it</h4>
+				<ul>
+					<li><a href="index.html#get">Get your DNS address</a></li>
+					<li><a href="setup.html">Setup guides</a></li>
+					<li><a href="resolver.html#upstream">For AdGuard &amp; Pi-hole</a></li>
+				</ul>
+			</div>
+			<div>
+				<h4>Learn</h4>
+				<ul>
+					<li><a href="mission.html">Our mission</a></li>
+					<li><a href="resolver.html">ΕΛΠΙΣ Resolver</a></li>
+					<li><a href="self-host.html">Run your own</a></li>
+				</ul>
+			</div>
+			<div>
+				<h4>Community</h4>
+				<ul>
+					<li><a href="https://discord.gg/aw8pt2SWnv" target="_blank" rel="noopener">Discord</a></li>
+					<li><a href="https://pururin.moe/" target="_blank" rel="noopener">Forum</a></li>
+					<li><a href="https://openpon.org/" target="_blank" rel="noopener">OpenPON</a></li>
+					<li><a href="https://github.com/PururinCollective/ElpisDNS" target="_blank" rel="noopener">GitHub</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="footer-credits">
+			<div>
+				<h4>Kept running by</h4>
+				<div class="asn-list">
+					<span><a href="https://bgp.tools/as/154516" target="_blank" rel="noopener">AS154516</a> Perfect Network ⭐</span>
+					<span><a href="https://bgp.tools/as/153334" target="_blank" rel="noopener">AS153334</a> Origin TechLab</span>
+					<span><a href="https://bgp.tools/as/135134" target="_blank" rel="noopener">AS135134</a> Shana Network</span>
+				</div>
+			</div>
+			<a class="sponsor" href="https://perfect.my/" target="_blank" rel="noopener">
+				<span>Proudly sponsored by</span>
+				<img src="img/perfect.png" alt="Perfect Network, AS154516" width="851" height="315" loading="lazy" decoding="async">
+			</a>
+		</div>
+
+		<div class="footer-bottom">
+			<div id="footer-quote"></div>
+			<div>
+				Part of <a href="https://pururin.moe/" target="_blank" rel="noopener">Pururin Collective</a>
+				&middot; Made with love ♥ &middot; © 2026 ΕΛΠΙΣ DNS
+			</div>
+		</div>
+	</div>
+</footer>
+
+<script src="js/app-theme.js?hash=391c4b31"></script>
+<script src="js/app-copy.js?hash=7fdd7e69"></script>
+<script src="js/app-resolvers.js?hash=770b4dc6"></script>
+<script src="js/app-quote.js?hash=41419574"></script>
+
+</body>
+</html>

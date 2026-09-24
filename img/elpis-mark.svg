@@ -2,10 +2,11 @@
 	<title id="elpis-mark-title">ΕΛΠΙΣ DNS mark</title>
 
 	<defs>
+		<!-- Resolver blue, the same accent the status page and the site use -->
 		<linearGradient id="elpisFlame" x1="96" y1="64" x2="416" y2="464" gradientUnits="userSpaceOnUse">
-			<stop offset="0" stop-color="#ffb072"/>
-			<stop offset="0.45" stop-color="#ff7a2f"/>
-			<stop offset="1" stop-color="#e2431f"/>
+			<stop offset="0" stop-color="#8fd0f7"/>
+			<stop offset="0.45" stop-color="#2f9ee0"/>
+			<stop offset="1" stop-color="#1f6fa8"/>
 		</linearGradient>
 
 		<linearGradient id="elpisSteel" x1="64" y1="32" x2="448" y2="480" gradientUnits="userSpaceOnUse">

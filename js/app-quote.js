@@ -1,10 +1,8 @@
 /*
 	ΕΛΠΙΣ DNS - footer quotes
 
-	Three sources:
+	Two sources:
 	  "voices" - real people, quoted as they said it
-	  "concierge" - house lines written in the cadence of a certain
-	                fedora-wearing concierge of crime
 	  "house" - ΕΛΠΙΣ house lines
 
 	Click the quote to draw another one.
@@ -33,32 +31,6 @@ const footerQuotes = [
 	{ text: "We reject: kings, presidents and voting. We believe in: rough consensus and running code.", by: "David Clark, IETF" },
 
 	{ text: "This is for everyone.", by: "Tim Berners-Lee" },
-
-	/* ---- the concierge ---- */
-
-	{ text: "I'm a criminal. Criminals are notorious liars.", by: "Raymond Reddington" },
-
-	{ text: "Trust is a fragile thing. Once earned, it affords us tremendous freedom.", by: "Raymond Reddington" },
-
-	{ text: "Everyone wants to know where you are going. Very few have earned the right to ask.", by: "The Concierge" },
-
-	{ text: "The man who controls the answers never has to bother censoring the questions.", by: "The Concierge" },
-
-	{ text: "A closed door is only an opinion. I have never been especially moved by opinions.", by: "The Concierge" },
-
-	{ text: "Never let a stranger hold your keys, and never let your ISP hold your curiosity.", by: "The Concierge" },
-
-	{ text: "They do not need your secrets. They only need to know which doors you knock on.", by: "The Concierge" },
-
-	{ text: "Surveillance is rarely announced. It arrives quietly, dressed as convenience.", by: "The Concierge" },
-
-	{ text: "Pick your resolver the way you pick your friends. Carefully, and with an exit in mind.", by: "The Concierge" },
-
-	{ text: "There are two kinds of networks: the ones that answer you, and the ones that answer about you.", by: "The Concierge" },
-
-	{ text: "I have no interest in your browsing history. That is precisely why you can use mine.", by: "The Concierge" },
-
-	{ text: "Freedom is not granted by the people holding the ledger. It is taken back, one query at a time.", by: "The Concierge" },
 
 	/* ---- house lines ---- */
 

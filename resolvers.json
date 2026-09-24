@@ -1,0 +1,79 @@
+{
+	"//": "ΕΛΠΙΣ Resolver public addresses. The table on resolver.html and the ready-made AdGuard Home / Pi-hole upstream lists on resolver.html and setup.html are all built from this file. Edit a block, run python tools/stamp-assets.py, commit.",
+
+	"updated": "2026-09-24",
+
+	"//notice": "Shown above the table when set. Leave it empty to hide it.",
+	"notice": "PowerDNS-R1 and PowerDNS-R2 are standby backups. They stay online while ΕΛΠΙΣ Resolver finishes proving itself stable, before it moves into full production. They answer the same names, but do not validate ML-DSA-44.",
+
+	"engines": {
+		"elpis": {
+			"label": "ΕΛΠΙΣ Resolver",
+			"url": "https://github.com/PururinCollective/elpis-resolver"
+		},
+		"powerdns": {
+			"label": "PowerDNS",
+			"url": "https://www.powerdns.com/"
+		}
+	},
+
+	"//servers": "ipv4 is the NATed address with its port (null if there is none). ipv6 is a list, served directly on port 53. role is \"active\" or \"backup\".",
+	"servers": [
+		{
+			"name": "Sakurako-DNS1",
+			"ipv4": "151.158.198.49:5301",
+			"ipv6": ["2402:4e20::babe"],
+			"engine": "elpis",
+			"mldsa44": true,
+			"role": "active"
+		},
+		{
+			"name": "Sakurako-DNS2",
+			"ipv4": "151.158.198.49:5302",
+			"ipv6": ["2402:4e20::cafe"],
+			"engine": "elpis",
+			"mldsa44": true,
+			"role": "active"
+		},
+		{
+			"name": "Sakurako-DNS3",
+			"ipv4": "151.158.198.49:5303",
+			"ipv6": ["2402:4e20::1001"],
+			"engine": "elpis",
+			"mldsa44": true,
+			"role": "active"
+		},
+		{
+			"name": "Sakurako-DNS4",
+			"ipv4": "151.158.198.49:5304",
+			"ipv6": ["2402:4e20::1111"],
+			"engine": "elpis",
+			"mldsa44": true,
+			"role": "active"
+		},
+		{
+			"name": "KevinMoeDove1",
+			"ipv4": null,
+			"ipv6": ["2402:4e20:bab1::1001", "2402:4e20:bab1::1111"],
+			"engine": "elpis",
+			"mldsa44": true,
+			"role": "active"
+		},
+		{
+			"name": "PowerDNS-R1",
+			"ipv4": "151.158.198.49:5305",
+			"ipv6": ["2402:4e20:b00b::1001"],
+			"engine": "powerdns",
+			"mldsa44": false,
+			"role": "backup"
+		},
+		{
+			"name": "PowerDNS-R2",
+			"ipv4": "151.158.198.49:5306",
+			"ipv6": ["2402:4e20:b00b::1111"],
+			"engine": "powerdns",
+			"mldsa44": false,
+			"role": "backup"
+		}
+	]
+}
