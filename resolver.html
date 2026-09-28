@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-<link href="style-main.css?hash=32066cf4" rel="stylesheet">
+<link href="style-main.css?hash=11dfa335" rel="stylesheet">
 
 <meta name="description" content="ΕΛΠΙΣ Resolver is our own open-source recursive DNS resolver with DNSSEC and ML-DSA-44. Public IPv6 and IPv4 addresses, and ready-made upstream lists for AdGuard Home and Pi-hole.">
 <link rel="canonical" href="https://elpis.violetnetworks.xyz/resolver.html">
@@ -128,7 +128,7 @@
 				"width": 1200,
 				"height": 630
 			},
-			"dateModified": "2026-09-25",
+			"dateModified": "2026-09-28",
 			"mainEntity": {
 				"@id": "https://elpis.violetnetworks.xyz/resolver.html#software"
 			},
@@ -338,7 +338,7 @@
 			<div class="stack">
 
 				<div class="note note-warn" data-resolver-notice hidden>
-					<i class="bi bi-life-preserver"></i>
+					<i class="bi bi-exclamation-triangle"></i>
 					<div data-notice-text></div>
 				</div>
 
@@ -347,12 +347,12 @@
 						<div class="note">
 							<i class="bi bi-info-circle"></i>
 							<div>The table needs JavaScript. The same list is in
-							<a href="resolvers.json?hash=799fe164">resolvers.json</a>.</div>
+							<a href="resolvers.json?hash=7141eaa5">resolvers.json</a>.</div>
 						</div>
 					</noscript>
 				</div>
 
-				<div class="grid-2">
+				<div class="grid-3 notes-3">
 					<div class="note">
 						<i class="bi bi-globe2"></i>
 						<div>
@@ -363,8 +363,18 @@
 					<div class="note">
 						<i class="bi bi-shield-lock"></i>
 						<div>
-							<b>IPv4 skips port 53 on purpose.</b> Ports 5301&ndash;5306 keep
-							scanners and abuse away. Any decent DNS app lets you set a port.
+							<b>IPv4 mostly skips port 53.</b> Ports 5301&ndash;5306 keep
+							scanners and abuse away; FizoRDNS uses the usual 53. Any decent
+							DNS app lets you set a port.
+						</div>
+					</div>
+					<div class="note">
+						<i class="bi bi-geo-alt"></i>
+						<div>
+							<b>ECS is on, for nearby CDNs.</b> A website's own DNS gets a /24
+							(IPv4) or /56 (IPv6) of your address &mdash; never all of it
+							&mdash; so it can send you to a server close by.
+							<a href="#ecs">How it works</a>.
 						</div>
 					</div>
 				</div>
@@ -395,7 +405,7 @@
 				<div class="card" data-upstream-builder>
 					<noscript>
 						<p>The list builder needs JavaScript. The addresses are in
-						<a href="resolvers.json?hash=799fe164">resolvers.json</a>.</p>
+						<a href="resolvers.json?hash=7141eaa5">resolvers.json</a>.</p>
 					</noscript>
 				</div>
 
@@ -419,8 +429,40 @@
 		</div>
 	</section>
 
+	<!-- ECS -->
+	<section class="section" id="ecs">
+		<div class="wrap split">
+
+			<div class="card">
+				<span class="card-icon"><i class="bi bi-geo-alt"></i></span>
+				<h3>EDNS Client Subnet, in plain words</h3>
+				<p>
+					Big websites and CDNs keep copies of themselves all over the world and
+					pick one near whoever asks. Without help, "whoever asks" is our
+					resolver, so you might be sent to a server in the wrong city or country.
+				</p>
+				<p>
+					With ECS on, we pass along a shortened part of your network address so
+					the website can answer for where you really are. The result is faster
+					downloads and smoother video.
+				</p>
+			</div>
+
+			<div class="card">
+				<span class="card-icon"><i class="bi bi-shield-check"></i></span>
+				<h3>What is shared, and what isn't</h3>
+				<ul class="checks">
+					<li>Only a /24 of an IPv4 address or a /56 of an IPv6 address &mdash; never your full address</li>
+					<li>Only to a website's own DNS servers, never to the root or TLD servers</li>
+					<li>A server that shows no sign of using it gets nothing for the next hour</li>
+					<li>Want to opt out? Send a /0 ECS option (Firefox's own DoH does) and we send our network instead of yours</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+
 	<!-- Verify -->
-	<section class="section" id="verify">
+	<section class="section section-alt" id="verify">
 		<div class="wrap">
 
 			<div class="section-head">
@@ -436,9 +478,9 @@
 						the DNSSEC signatures checked out.
 					</p>
 					<div class="code-block">
-						<pre>dig @2402:4e20::babe example.com +dnssec
+						<pre>dig @2402:4e20::1001 example.com +dnssec
 dig @151.158.198.49 -p 5301 example.com +dnssec</pre>
-						<button type="button" class="copy-code" data-copy="dig @2402:4e20::babe example.com +dnssec&#10;dig @151.158.198.49 -p 5301 example.com +dnssec">
+						<button type="button" class="copy-code" data-copy="dig @2402:4e20::1001 example.com +dnssec&#10;dig @151.158.198.49 -p 5301 example.com +dnssec">
 							<i class="bi bi-clipboard"></i> Copy
 						</button>
 					</div>
@@ -545,7 +587,7 @@ dig @151.158.198.49 -p 5301 example.com +dnssec</pre>
 
 <script src="js/app-theme.js?hash=391c4b31"></script>
 <script src="js/app-copy.js?hash=7fdd7e69"></script>
-<script src="js/app-resolvers.js?hash=770b4dc6"></script>
+<script src="js/app-resolvers.js?hash=827d72b0"></script>
 <script src="js/app-quote.js?hash=41419574"></script>
 
 </body>

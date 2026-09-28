@@ -2030,8 +2030,10 @@ a.card:hover h3{
 		grid-template-columns:repeat(2,minmax(0,1fr));
 	}
 
-	/* three tiers read as a ladder; two and an orphan do not */
-	.tiers{
+	/* three tiers read as a ladder, three notes as a list; two and an
+	   orphan read as neither */
+	.tiers,
+	.notes-3{
 		grid-template-columns:minmax(0,1fr);
 	}
 

@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-<link href="style-main.css?hash=32066cf4" rel="stylesheet">
+<link href="style-main.css?hash=11dfa335" rel="stylesheet">
 
 <meta name="description" content="Run your own ΕΛΠΙΣ Resolver: system requirements for a home lab, a VM or small business, and ISP-scale deployments on dedicated hardware, plus a five-step install.">
 <link rel="canonical" href="https://elpis.violetnetworks.xyz/self-host.html">
@@ -128,7 +128,7 @@
 				"width": 1200,
 				"height": 630
 			},
-			"dateModified": "2026-09-25",
+			"dateModified": "2026-09-28",
 			"breadcrumb": {
 				"@id": "https://elpis.violetnetworks.xyz/self-host.html#breadcrumb"
 			}
@@ -397,6 +397,11 @@ dnssec: yes</pre></div>
 					Swap in your own addresses. Anything not allowed is refused, so an open
 					resolver never happens by accident. Every other setting is documented in
 					the file at its default.
+				</p>
+				<p class="doc-text">
+					Serving clients in another city or country? Add <code>ecs: yes</code> so
+					CDNs answer for where your clients are, not where the resolver is. It
+					sends a /24 or /56 of the client's address, never the whole of it.
 				</p>
 			</div>
 

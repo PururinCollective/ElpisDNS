@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-<link href="style-main.css?hash=32066cf4" rel="stylesheet">
+<link href="style-main.css?hash=11dfa335" rel="stylesheet">
 
 <meta name="description" content="Why Elpis DNS exists: no logs, no middlemen, and only ads, trackers and malware blocked. The filter lists we use, how a lookup travels, and how to check us.">
 <link rel="canonical" href="https://elpis.violetnetworks.xyz/mission.html">
@@ -128,7 +128,7 @@
 				"width": 1200,
 				"height": 630
 			},
-			"dateModified": "2026-09-25",
+			"dateModified": "2026-09-28",
 			"breadcrumb": {
 				"@id": "https://elpis.violetnetworks.xyz/mission.html#breadcrumb"
 			}
@@ -290,8 +290,10 @@
 						<li>Website's DNS</li>
 					</ol>
 					<p class="mt">
-						Only we see your lookup, and we forget it. Each server along the way
-						learns just enough to answer, and never your IP address.
+						We see your lookup, and we forget it. Each server along the way learns
+						just enough to answer. The website's own DNS also gets a shortened
+						part of your network address, never the whole of it, so it can send
+						you somewhere close.
 					</p>
 				</div>
 			</div>
@@ -303,6 +305,18 @@
 				<span class="pill pill-accent">IPv6 first</span>
 				<span class="pill pill-accent">HTTPS &amp; SVCB records for ECH</span>
 				<span class="pill pill-accent">DNS64 / NAT64</span>
+				<a class="pill pill-accent" href="resolver.html#ecs">EDNS Client Subnet</a>
+			</div>
+
+			<div class="note mt">
+				<i class="bi bi-geo-alt"></i>
+				<div>
+					<b>Why a shortened address?</b> Big websites pick a server near whoever
+					asks. So they answer for where you are rather than where we are, we pass
+					on a /24 (IPv4) or /56 (IPv6) of your address &mdash; never all of it,
+					and never to the root or TLD servers. This is called EDNS Client Subnet;
+					<a href="resolver.html#ecs">here's exactly what is shared</a>.
+				</div>
 			</div>
 		</div>
 	</section>

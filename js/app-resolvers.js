@@ -16,10 +16,15 @@
 	copy() comes from app-copy.js, loaded ahead of this file.
 */
 
-const RESOLVER_ROLES = {
-	active: { label: "Active", pill: "pill-ok" },
-	backup: { label: "Backup", pill: "pill-warn" }
-};
+// "SG" -> "Singapore", in whatever the browser has, falling back to the code.
+const REGION_NAMES = (() => {
+	try{
+		return new Intl.DisplayNames(["en"], { type: "region" });
+	}
+	catch(err){
+		return null;
+	}
+})();
 
 // How each app wants an IPv4 address that is not on port 53. IPv6 is
 // always served directly on 53, so it is written bare everywhere.
@@ -99,18 +104,25 @@ function addressButtons(list){
 	</div>`;
 }
 
-function renderResolverTable(node){
+function regionName(code){
 
-	const engines = resolverData.engines || {};
+	if(!code) return "";
+
+	try{
+		return REGION_NAMES ? REGION_NAMES.of(code) : code;
+	}
+	catch(err){
+		return code;
+	}
+}
+
+function renderResolverTable(node){
 
 	const rows = resolverData.servers.map(server => {
 
-		const engine = engines[server.engine] || { label: server.engine };
-		const role = RESOLVER_ROLES[server.role] || RESOLVER_ROLES.active;
-
-		const engineCell = engine.url
-			? `<a href="${resolverEscape(engine.url)}" target="_blank" rel="noopener">${resolverEscape(engine.label)}</a>`
-			: resolverEscape(engine.label);
+		const standby = server.role === "backup"
+			? ' <span class="pill pill-warn">Backup</span>'
+			: "";
 
 		const mldsa = server.mldsa44
 			? '<span class="yes"><i class="bi bi-check-lg"></i> Yes</span>'
@@ -118,12 +130,11 @@ function renderResolverTable(node){
 
 		return `
 			<tr class="${server.role === "backup" ? "is-backup" : ""}">
-				<td class="server-name" data-label="Server">${resolverEscape(server.name)}</td>
+				<td class="server-name" data-label="Server">${resolverEscape(server.name)}${standby}</td>
 				<td data-label="IPv4 (NAT)">${addressButtons(server.ipv4 ? [server.ipv4] : [])}</td>
 				<td data-label="IPv6 (direct)">${addressButtons(server.ipv6 || [])}</td>
-				<td data-label="Software">${engineCell}</td>
+				<td data-label="Location">${resolverEscape(regionName(server.location))}</td>
 				<td data-label="ML-DSA-44">${mldsa}</td>
-				<td data-label="Status"><span class="pill ${role.pill}">${role.label}</span></td>
 			</tr>`;
 	}).join("");
 
@@ -134,9 +145,8 @@ function renderResolverTable(node){
 					<th scope="col">Server</th>
 					<th scope="col">IPv4 (NAT)</th>
 					<th scope="col">IPv6 (direct)</th>
-					<th scope="col">Software</th>
+					<th scope="col">Location</th>
 					<th scope="col">ML-DSA-44</th>
-					<th scope="col">Status</th>
 				</tr>
 			</thead>
 			<tbody>${rows}</tbody>
@@ -152,9 +162,32 @@ function renderResolverTable(node){
 	};
 }
 
+// Retired addresses first - someone still pointing at one is the reader
+// this line is for - then any free-text notice from the JSON.
 function renderResolverNotice(node){
 
-	if(!resolverData.notice){
+	const retired = resolverData.retired || [];
+	const parts = [];
+
+	if(retired.length){
+
+		const list = retired.map(addr => `<code>${resolverEscape(addr)}</code>`);
+		const joined = list.length > 1
+			? `${list.slice(0, -1).join(", ")} and ${list[list.length - 1]}`
+			: list[0];
+
+		parts.push(
+			`<b>Retired:</b> ${joined} ${retired.length > 1 ? "have" : "has"} been ` +
+			"taken out of service. If your AdGuard Home, Pi-hole or router still " +
+			"lists " + (retired.length > 1 ? "them" : "it") + ", swap in the addresses below."
+		);
+	}
+
+	if(resolverData.notice){
+		parts.push(resolverEscape(resolverData.notice));
+	}
+
+	if(!parts.length){
 
 		node.hidden = true;
 
@@ -163,7 +196,7 @@ function renderResolverNotice(node){
 
 	const text = node.querySelector("[data-notice-text]") || node;
 
-	text.textContent = resolverData.notice;
+	text.innerHTML = parts.join("<br>");
 
 	node.hidden = false;
 }
@@ -329,7 +362,7 @@ async function loadResolvers(){
 
 	try{
 
-		const response = await fetch("resolvers.json?hash=799fe164", { cache: "no-cache" });
+		const response = await fetch("resolvers.json?hash=7141eaa5", { cache: "no-cache" });
 
 		if(!response.ok){
 			throw new Error(`resolvers.json responded ${response.status}`);
@@ -349,7 +382,7 @@ async function loadResolvers(){
 			node.innerHTML =
 				'<div class="note note-warn"><i class="bi bi-exclamation-triangle"></i>' +
 				'<div>The address list could not be loaded. ' +
-				'<a href="resolvers.json?hash=799fe164">Open resolvers.json</a> to see it directly.</div></div>';
+				'<a href="resolvers.json?hash=7141eaa5">Open resolvers.json</a> to see it directly.</div></div>';
 		});
 
 		return;

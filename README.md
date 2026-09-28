@@ -76,7 +76,7 @@ fetched over HTTP.
 | --- | --- |
 | `dns.json` | Every resolver, region and filtering profile |
 | `dns.schema.json` | Schema that validates the above in your editor |
-| `resolvers.json` | Public ΕΛΠΙΣ Resolver addresses, the backup notice, and what each server runs |
+| `resolvers.json` | Public ΕΛΠΙΣ Resolver addresses, where each one is, and retired addresses |
 | `index.html` | Front page and selector markup |
 | `resolver.html` | ΕΛΠΙΣ Resolver: the server table and the AdGuard Home / Pi-hole upstream lists |
 | `self-host.html` | Running your own resolver, from a home lab to ISP hardware |
@@ -104,9 +104,10 @@ fetched over HTTP.
 The colours are the ones the ΕΛΠΙΣ Resolver status page uses &mdash; steel grey
 and one blue accent &mdash; so the site and the resolver read as one product.
 
-The public resolver addresses live in `resolvers.json`. Add a server, change a
-role between `active` and `backup`, or clear the `notice`, and the resolver
-page, the setup page and every AdGuard Home and Pi-hole list follow.
+The public resolver addresses live in `resolvers.json`. Add a server, move an
+old address to `retired` (the page then tells anyone still using it to switch),
+or set a `notice`, and the resolver page, the setup page and every AdGuard Home
+and Pi-hole list follow.
 
 The site follows your operating system's light or dark preference out of the box;
 the icon in the top bar cycles system, light and dark, and the choice is remembered.
