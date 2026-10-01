@@ -4,35 +4,53 @@
 
 # ΕΛΠΙΣ DNS
 
-**Resolve freely. Answer to no one.**
+**By the community, for the community.**
 
-Every website you open begins with a question: *where is this?* Whoever answers
-that question owns your internet &mdash; they can log it, sell it, or decide that
-today, for reasons nobody wrote down, this particular door is closed.
+Free, encrypted DNS for South East Asia. Ads and trackers blocked, no query
+logs, and our own resolver answering all the way from the root &mdash; no ISP,
+no Google, no Cloudflare in between. Run by volunteers on four community
+networks, and aligned with the vision of
+[EFF Internet Freedom and Privacy](https://www.eff.org/).
 
-ΕΛΠΙΣ DNS is a community-run set of encrypted resolvers so that question stays
-between you and someone who does not want anything from it. DoH and DoT only,
-regional routing, CDN acceleration, DNS64/NAT64, and no ledger of your curiosity.
-Aligned with the vision of [EFF Internet Freedom and Privacy](https://www.eff.org/).
-
-- **[Pick an endpoint](https://elpis.violetnetworks.xyz/)** &mdash; filter, region, provider, transport
-- **[Why ΕΛΠΙΣ](https://elpis.violetnetworks.xyz/mission.html)** &mdash; what we block, what we refuse to keep, and how to check it
-- **[Setup guide](https://elpis.violetnetworks.xyz/setup.html)** &mdash; Android, Windows, iOS, Firefox, Chrome, MikroTik, OpenWrt, AdGuard Home
+- **[Get your DNS](https://elpis.violetnetworks.xyz/#start)** &mdash; pick a filter, region and protocol, take the address
+- **[Network](https://elpis.violetnetworks.xyz/network.html)** &mdash; where we answer from, ECS for CDNs, DNS64 for IPv6-only
+- **[Resolver](https://elpis.violetnetworks.xyz/resolver.html)** &mdash; public recursive resolvers for your own AdGuard Home or Pi-hole
+- **[Setup guide](https://elpis.violetnetworks.xyz/setup.html)** &mdash; Android, iPhone, Windows, Firefox, Chrome, MikroTik, OpenWrt, AdGuard Home
+- **[About](https://elpis.violetnetworks.xyz/mission.html)** &mdash; what we block, what we never keep, and how to check us
 - **[Add your resolver](CONTRIBUTING.md)** &mdash; one JSON block, one pull request
-- **[The resolver we wrote](https://github.com/PururinCollective/elpis-resolver)** &mdash; C99, SIMD, ML-DSA-44, one static binary
 
-## What it is built on
+## What you get
 
-- Privacy first: encrypted transport, no query logging, no profiling
-- [ΕΛΠΙΣ Resolver](https://github.com/PururinCollective/elpis-resolver), our own recursive
-  resolver &mdash; portable C99 with SIMD kernels, no dependencies, and the second resolver
-  in the world to validate ML-DSA-44 post-quantum DNSSEC after Cloudflare
+- Encrypted DNS over HTTPS and TLS, no query logging, no profiling
+- Ads, trackers, malware and phishing filtered; a Family profile adds adult content and safe search
+- Servers in Malaysia, Singapore and Indonesia
+- ECS on `a.hitoha.moe` and `b.hitoha.moe` only, so YouTube and other CDNs serve you from the nearest cache
+- DNS64 with our own NAT64 gateway for IPv6-only networks, like a VPS without IPv4 &mdash; use `64.hitoha.moe`
 - An `sdns://` DNS stamp generated for every endpoint, for dnscrypt-proxy and friends
-- Ads, trackers, malware and phishing filtered by default
-- A Family profile with adult content blocked and safe search enforced
-- CDN acceleration and regional routing optimisation
-- DNS64/NAT64 for IPv6-only networks
-- Internet freedom &mdash; a block list is somebody's opinion, and the network was designed to route around exactly that
+- [ΕΛΠΙΣ Resolver](https://github.com/PururinCollective/elpis-resolver) behind it all
+
+## ΕΛΠΙΣ Resolver
+
+Our own recursive resolver: portable C99, hand-written SIMD kernels, no
+dependencies, built by the community with Claude AI assistance. It is the
+second resolver in the world to validate ML-DSA-44 post-quantum DNSSEC, and
+it answers more than 30 million queries a day across our resolvers.
+
+Running AdGuard Home or Pi-hole at home, the office or a business? Use these
+as your upstream. They are unfiltered on purpose &mdash; your lists, our
+recursion and DNSSEC.
+
+| Server     | IPv4                  | IPv6                   |
+|------------|-----------------------|------------------------|
+| Fizo-1     | `151.158.198.47`      | `2402:4e20:6767::b00b` |
+| Fizo-2     | `151.158.198.46`      | `2402:4e20:6767::bab1` |
+| Sakurako-1 | `151.158.198.49:5301` | `2402:4e20:b00b::1001` |
+| Sakurako-2 | `151.158.198.49:5302` | `2402:4e20:b00b::1111` |
+| Kevin-1    | `89.23.82.53`         | `2402:4e20:bab1::1001` |
+| Kevin-2    | `89.23.82.82`         | `2402:4e20:bab1::1111` |
+
+> AS204535 (`89.23.82.0/24` and `2a0f:1cc6:bab1::/48`) is moving to a new BGP
+> upstream, AS154516. The Kevin IPv4 addresses may change.
 
 ## Adding your DoH/DoT resolver
 
@@ -76,33 +94,45 @@ fetched over HTTP.
 | --- | --- |
 | `dns.json` | Every resolver, region and filtering profile |
 | `dns.schema.json` | Schema that validates the above in your editor |
-| `index.html` | Front page and selector markup |
+| `index.html` | Home: the DNS lookup banner and the endpoint picker |
+| `network.html` | The network map and the AS sites behind it |
+| `resolver.html` | ΕΛΠΙΣ Resolver and its public addresses |
 | `setup.html` | Setup guide |
-| `mission.html` | Why ΕΛΠΙΣ exists: block lists, recursion, the raw resolvers |
+| `mission.html` | About: block lists, promises, how to check us |
 | `style-main.css` | Colour tokens, light and dark themes, all components |
 | `style-mobile.css` | Narrow layout |
 | `js/app.js` | Selector engine, endpoint building, share links |
+| `js/app-flow.js` | The DNS lookup animation in the home page banner |
+| `js/app-map.js` | AS sites, cities and traffic on the network map |
+| `js/app-nav.js` | The menu button on phones |
 | `js/app-theme.js` | System / light / dark switching |
 | `js/app-copy.js` | Clipboard, shared by every page |
 | `js/app-stamp.js` | `sdns://` DNS stamp generator |
 | `js/app-quote.js` | Footer quotes |
 | `js/app-mikrotik.js` | RouterOS `.rsc` generator |
-| `js/app-setup.js` | Setup page helpers |
-| `img/hero-map.svg` | Animated night map behind the hero, generated |
-| `tools/make-hero-map.py` | Regenerates that map. Only needed if you change it |
+| `js/app-setup.js` | Setup page helpers, code block copy buttons |
+| `img/sea-map.svg` | South East Asia land for the network map, generated |
+| `img/hero-mesh.svg` | The light mesh behind every banner, generated |
+| `tools/make-graphics.py` | Regenerates both of those. Only needed if you change them |
 | `tools/stamp-assets.py` | Re-stamps `?hash=` cache busters after any asset change |
 
-The banner is a self-contained animated SVG: encrypted traffic leaving the
-resolver in orange, a HUD walking the autonomous systems on the path, and
-blocked queries dying in red on the shield ring. It is generated because the
-landmass is fourteen hundred dots sampled from coastline polygons:
+The look follows Firefox: night-violet banners with a glow underneath,
+Mozilla Headline and Mozilla Text, violet pill buttons. The home page banner
+plays one DNS lookup end to end &mdash; you, ΕΛΠΙΣ DNS, ΕΛΠΙΣ Resolver, the root,
+the TLD and the name server &mdash; with light running along the wires the way
+the mesh on [openpon.org](https://openpon.org/) does. The boxes are plain HTML,
+so the same banner reflows on a phone.
+
+The network map's land and the banner mesh are generated, because the land
+is a few thousand points from Natural Earth that nobody should type by hand:
 
 ```
-python tools/make-hero-map.py
+python tools/make-graphics.py
 ```
 
-That writes both `img/hero-map.svg` and a still `img/hero-map-static.svg`,
-which is what visitors who ask for reduced motion get served.
+It downloads world-atlas from jsDelivr each run; pass `--topojson` with a
+local copy to work offline. The AS sites, cities and traffic on the map live
+at the top of `js/app-map.js` &mdash; add a city there, no regeneration needed.
 
 The site follows your operating system's light or dark preference out of the box;
 the icon in the top bar cycles system, light and dark, and the choice is remembered.
@@ -165,11 +195,14 @@ add name=* forward-to=AdGuard type=FWD
 The front page will generate this file for whichever endpoint you pick &mdash;
 press **.rsc**.
 
-## Sponsor
+## Supported by
 
-Proudly Sponsored by [Perfect Network](https://perfect.my/) ([AS154516](https://bgp.tools/as/154516))
+ΕΛΠΙΣ DNS runs on these community networks. Thank you for keeping it free.
 
-![PERFECT](img/perfect.png)
+- [AS154516](https://bgp.tools/as/154516) &mdash; Perfect Network, Semenyih, Malaysia
+- [AS153334](https://bgp.tools/as/153334) &mdash; Origin TechLab, Kuala Lumpur, Malaysia
+- [AS135134](https://bgp.tools/as/135134) &mdash; Shana Network, Singapore
+- [AS204535](https://bgp.tools/as/204535) &mdash; kevin.moe, Kuala Lumpur, Malaysia
 
 ---
 

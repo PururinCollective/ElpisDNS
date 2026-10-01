@@ -18,7 +18,7 @@ const GROUPS = [
 	{ key: "provider", field: "provider", container: "provider-options", label: "Provider"  },
 	{ key: "network",  field: "network",  container: "network-options",  label: "Network"   },
 	{ key: "feature",  field: "feature",  container: "feature-options",  label: "Feature"   },
-	{ key: "kind",     field: "kind",     container: "kind-options",     label: "Transport" }
+	{ key: "kind",     field: "kind",     container: "kind-options",     label: "Protocol"  }
 ];
 
 const db = {
@@ -45,7 +45,7 @@ async function loadDatabase(){
 
 	try{
 
-		const response = await fetch("dns.json?hash=e5ec537d", { cache: "no-cache" });
+		const response = await fetch("dns.json?hash=39534cdd", { cache: "no-cache" });
 
 		if(!response.ok){
 			throw new Error(`dns.json responded ${response.status}`);

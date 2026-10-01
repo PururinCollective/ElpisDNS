@@ -3,7 +3,8 @@
 
 	1. Drops the endpoint the visitor picked on the front page into
 	   every example, so nobody has to copy hostnames by hand.
-	2. Gives every code block a copy button.
+	2. Gives every code block a copy button. The resolver page loads
+	   this file for that alone.
 */
 
 const FALLBACK_ENDPOINT = "https://b.hitoha.moe/dns-query";

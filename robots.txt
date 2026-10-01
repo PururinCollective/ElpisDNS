@@ -1,6 +1,6 @@
 # ΕΛΠΙΣ DNS — https://elpis.violetnetworks.xyz/
 #
-# Nothing here is private. The whole site is three static pages and the
+# Nothing here is private. The whole site is five static pages and the
 # JSON behind them, so everything is open to everything.
 
 User-agent: *

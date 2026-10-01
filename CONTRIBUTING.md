@@ -115,27 +115,33 @@ plan to run it. That is the whole ritual.
 
 | File | What it holds |
 | --- | --- |
-| `index.html` | The front page and the selector markup |
+| `index.html` | Home: the DNS lookup banner and the selector markup |
+| `network.html` | The network map and the AS sites behind it |
+| `resolver.html` | ΕΛΠΙΣ Resolver and its public addresses |
 | `setup.html` | The setup guide, linked from the top bar |
-| `mission.html` | Why ΕΛΠΙΣ exists: block lists, recursion, the raw resolvers |
+| `mission.html` | About: block lists, promises, how to check us |
 | `style-main.css` | Every colour token, both themes, all components |
 | `style-mobile.css` | The narrow layout |
 | `js/app.js` | Selector engine, endpoint building, share links |
+| `js/app-flow.js` | The DNS lookup animation in the home page banner |
+| `js/app-map.js` | AS sites, cities and traffic on the network map |
+| `js/app-nav.js` | The menu button on phones |
 | `js/app-theme.js` | System, light and dark switching |
 | `js/app-copy.js` | Clipboard, shared by every page |
 | `js/app-stamp.js` | Builds the `sdns://` stamp for the selected endpoint |
 | `js/app-quote.js` | Footer quotes |
 | `js/app-mikrotik.js` | The `.rsc` generator |
-| `js/app-setup.js` | Setup page helpers |
-| `img/hero-map.svg` | The animated banner. Generated, do not hand edit |
-| `tools/make-hero-map.py` | Regenerates the banner and its reduced-motion still |
+| `js/app-setup.js` | Setup page helpers and code block copy buttons |
+| `img/sea-map.svg` | Land for the network map. Generated, do not hand edit |
+| `img/hero-mesh.svg` | The light mesh behind the banners. Generated, do not hand edit |
+| `tools/make-graphics.py` | Regenerates both of those |
 | `tools/stamp-assets.py` | Re-stamps `?hash=` cache busters. Run after changing CSS, JS or JSON |
 
-The banner is the one file in the project that is not written by hand. The
-ASN list the HUD walks through, the traffic arcs and the blocked queries all
-live near the top of `tools/make-hero-map.py`; change them there and run
-`python tools/make-hero-map.py`. Editing the SVG directly works right up
-until somebody regenerates it.
+Two pictures are not written by hand: the map's land and the banner mesh.
+Their settings live near the top of `tools/make-graphics.py`; change them
+there and run `python tools/make-graphics.py`. The markers on the map are
+not part of that &mdash; a new city or AS site is one line at the top of
+`js/app-map.js`.
 
 House style: tabs for indentation, blank line between logical steps, no
 build tooling. Colours go in the token block at the top of `style-main.css`
