@@ -127,15 +127,20 @@ plan to run it. That is the whole ritual.
 | `js/app-quote.js` | Footer quotes |
 | `js/app-mikrotik.js` | The `.rsc` generator |
 | `js/app-setup.js` | Setup page helpers |
-| `img/hero-map.svg` | The animated banner. Generated, do not hand edit |
-| `tools/make-hero-map.py` | Regenerates the banner and its reduced-motion still |
+| `js/app-mesh.js` | The animated network behind the hero and the page heads |
+| `js/app-map.js` | The network map and the cards under it |
+| `network.json` | What the map shows: networks, endpoints, cities |
+| `img/sea-map.json` | The land under the map. Generated, do not hand edit |
+| `tools/make-sea-map.py` | Regenerates that land from Natural Earth |
 | `tools/stamp-assets.py` | Re-stamps `?hash=` cache busters. Run after changing CSS, JS or JSON |
 
-The banner is the one file in the project that is not written by hand. The
-ASN list the HUD walks through, the traffic arcs and the blocked queries all
-live near the top of `tools/make-hero-map.py`; change them there and run
-`python tools/make-hero-map.py`. Editing the SVG directly works right up
-until somebody regenerates it.
+The map has two halves. `network.json` is written by hand: one block per
+network with its ASN, a place, coordinates and the endpoints it serves, plus
+the cities the map draws links to. A network you add there gets a node, a
+tooltip and a card with nothing else to touch. `img/sea-map.json` is the
+land, and is the one file in the project that is not written by hand &mdash;
+change the region in `tools/make-sea-map.py` and run
+`python tools/make-sea-map.py`.
 
 House style: tabs for indentation, blank line between logical steps, no
 build tooling. Colours go in the token block at the top of `style-main.css`

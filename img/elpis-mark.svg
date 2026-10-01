@@ -3,14 +3,15 @@
 
 	<defs>
 		<linearGradient id="elpisFlame" x1="96" y1="64" x2="416" y2="464" gradientUnits="userSpaceOnUse">
-			<stop offset="0" stop-color="#ffb072"/>
-			<stop offset="0.45" stop-color="#ff7a2f"/>
-			<stop offset="1" stop-color="#e2431f"/>
+			<stop offset="0" stop-color="#ffbd4f"/>
+			<stop offset="0.35" stop-color="#ff7139"/>
+			<stop offset="0.7" stop-color="#ff4aa2"/>
+			<stop offset="1" stop-color="#9059ff"/>
 		</linearGradient>
 
 		<linearGradient id="elpisSteel" x1="64" y1="32" x2="448" y2="480" gradientUnits="userSpaceOnUse">
-			<stop offset="0" stop-color="#5c6067"/>
-			<stop offset="1" stop-color="#2a2d31"/>
+			<stop offset="0" stop-color="#4a2a99"/>
+			<stop offset="1" stop-color="#1d0b3a"/>
 		</linearGradient>
 	</defs>
 
@@ -30,7 +31,7 @@
 	<!-- Orbit / routing ring -->
 	<circle cx="256" cy="252" r="150"
 		fill="none"
-		stroke="#8b9099"
+		stroke="#c9b4ff"
 		stroke-width="7"
 		stroke-opacity="0.55"
 		stroke-linecap="round"

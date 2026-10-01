@@ -575,6 +575,22 @@ wire("shuffle-btn", () => {
 	remember(endpoint, stamp);
 });
 
+// Links elsewhere on the page that put an entry on the table, written
+// as share links: <a href="#my-perfect-nat64/DoT" data-pick>.
+document.querySelectorAll("[data-pick]").forEach(link => {
+
+	link.addEventListener("click", event => {
+
+		event.preventDefault();
+
+		location.hash = link.getAttribute("href");
+
+		const table = document.getElementById("table");
+
+		if(table) table.scrollIntoView();
+	});
+});
+
 window.addEventListener("hashchange", () => {
 
 	readHash();

@@ -1,179 +1,363 @@
-@media (max-width: 992px){
+/*
+	ΕΛΠΙΣ DNS - narrow layouts
+
+	Three steps down from the desktop: the two-column blocks fold at
+	1200px, the cards at 992px, and at 768px everything becomes one
+	column with the top bar's links on a row of their own.
+*/
+
+@media (max-width: 1199.98px){
+
+	.picker{
+		grid-template-columns:1fr;
+	}
+
+	/* One column: the result sits under the selectors rather than
+	   floating beside them. */
+	.picker-result{
+		position:static;
+	}
+
+	.net-grid{
+		grid-template-columns:repeat(2,1fr);
+	}
+
+	.voices{
+		grid-template-columns:1fr 1fr;
+	}
+
+	.thread-card{
+		grid-column:1 / -1;
+	}
+
+	.topbar-link{
+		padding:8px 10px;
+	}
+}
+
+@media (max-width: 991.98px){
 
 	.cta{
 		flex-direction:column;
 		align-items:flex-start;
 	}
+
+	/* minmax(0,...) so a wide table scrolls instead of widening the page. */
+	.duo,
+	.resolver-top{
+		grid-template-columns:minmax(0,1fr);
+	}
+
+	.hero-stats{
+		grid-template-columns:repeat(2,1fr);
+	}
+
+	/* Icons only up here, the words are in the menu row below. */
+	.topbar-link span{
+		display:none;
+	}
 }
 
-@media (max-width: 768px){
+@media (max-width: 767.98px){
 
-	/* TOP BAR */
+	body{
+		font-size:15.5px;
+	}
+
+	/* TOP BAR - brand and theme on one row, the links scroll on the next */
 
 	.topbar-inner{
 		flex-wrap:wrap;
-		gap:8px;
-		padding:8px 4px;
+		gap:4px 8px;
+		padding:8px 16px;
 	}
 
 	.topbar-name{
-		font-size:17px;
-		letter-spacing:2px;
+		font-size:21px;
 	}
 
-	.topbar-link span{
+	.topbar-mark{
+		width:28px;
+		height:28px;
+	}
+
+	/* Positioned, so the hidden label inside the GitHub link is held by
+	   the scroller and cannot stretch the page sideways. */
+	.topbar-nav{
+		position:relative;
+		order:3;
+		width:calc(100% + 32px);
+		margin:0 -16px;
+		padding:2px 16px 4px;
+
+		overflow-x:auto;
+		scrollbar-width:none;
+	}
+
+	.topbar-nav::-webkit-scrollbar{
 		display:none;
 	}
 
 	.topbar-link{
-		padding:8px 10px;
-		font-size:16px;
+		padding:7px 12px;
+		font-size:14px;
+		background:rgba(255,255,255,.05);
+	}
+
+	.topbar-link span{
+		display:inline;
+	}
+
+	/* The theme button stays on the brand row. */
+	.theme-btn{
+		margin-left:auto;
+		width:34px;
+		height:34px;
 	}
 
 	/* HERO */
 
-	.hero-banner{
-		height:240px;
+	.hero{
+		padding-top:44px;
 	}
 
-	/* The map cannot be beside the text on a phone, so it goes behind it:
-	   whole map visible, pinned to the top, words over the bottom half. */
-	.hero-banner::after{
-		padding:0;
-		background-position:right top;
-		background-size:contain;
-		opacity:.85;
-	}
-
-	.hero-overlay{
-		align-items:flex-end;
-		background:linear-gradient(
-			180deg,
-			rgba(11,14,19,.15) 0%,
-			rgba(11,14,19,.55) 38%,
-			rgba(11,14,19,.90) 68%,
-			rgba(11,14,19,.96) 100%
-		);
-	}
-
-	.hero-kicker{
-		font-size:10px;
-		letter-spacing:3px;
-	}
-
-	.hero-title{
-		font-size:38px;
-		letter-spacing:3px;
-	}
-
-	.hero-subtitle{
-		font-size:14px;
-		line-height:1.6;
-	}
-
-	.brand{
-		font-size:32px;
-		letter-spacing:2px;
-	}
-
-	.section-heading{
-		font-size:20px;
-	}
-
-	/* CONTENT */
-
-	.container{
-		padding-left:18px;
-		padding-right:18px;
-	}
-
-	.subtitle{
-		font-size:15px;
-		line-height:1.7;
+	.hero-badge{
+		padding:9px 14px;
+		font-size:13px;
 		text-align:left;
 	}
 
-	/* HOUSE RULES */
+	.hero-kicker{
+		margin-top:30px;
+		font-size:11.5px;
+		letter-spacing:2px;
+	}
 
-	.rules{
+	.hero-lead{
+		font-size:16px;
+	}
+
+	.hero-actions{
+		flex-direction:column;
+		align-items:stretch;
+		max-width:340px;
+		margin-left:auto;
+		margin-right:auto;
+	}
+
+	.hero-stats{
+		gap:10px;
+		margin-top:48px;
+	}
+
+	.stat{
+		padding:16px;
+		border-radius:18px;
+	}
+
+	.stat-num{
+		font-size:34px;
+	}
+
+	.stat-label{
+		font-size:12.5px;
+	}
+
+	/* A phone hero is tall: let the mesh show at the top and bottom
+	   and stay out from behind the words. */
+	.hero-mesh{
+		-webkit-mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.25) 22%,rgba(0,0,0,.15) 60%,rgba(0,0,0,.6) 100%);
+		mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.25) 22%,rgba(0,0,0,.15) 60%,rgba(0,0,0,.6) 100%);
+	}
+
+	.page-hero{
+		padding:40px 0 54px;
+		margin-bottom:34px;
+	}
+
+	.page-lead{
+		font-size:16px;
+	}
+
+	/* SECTIONS */
+
+	.container{
+		padding-left:16px;
+		padding-right:16px;
+	}
+
+	.section{
+		padding-top:64px;
+	}
+
+	.section-head{
+		margin-bottom:26px;
+	}
+
+	.section-lead,
+	.subtitle{
+		font-size:15.5px;
+	}
+
+	.brand{
+		font-size:38px;
+	}
+
+	/* CARDS */
+
+	.rules,
+	.rules-3,
+	.rules-4,
+	.gates,
+	.net-grid,
+	.voices{
 		grid-template-columns:1fr;
 	}
 
-	/* SELECTOR LAYOUT */
+	.rule,
+	.gate,
+	.feature{
+		padding:22px;
+	}
+
+	/* THE TABLE */
+
+	.picker-controls{
+		padding:6px 16px;
+	}
 
 	.selector-group{
 		flex-direction:column;
-		border-left:none;
-		margin-bottom:22px;
+		gap:10px;
+		padding:14px 0;
 	}
 
 	.selector-label{
-		min-width:100%;
-		margin-bottom:10px;
+		min-width:0;
 		padding-top:0;
-		border-left:4px solid var(--accent);
-		padding-left:10px;
 	}
-
-	/* BUTTON GRID */
 
 	.selector-options{
-		display:grid !important;
+		display:grid;
 		grid-template-columns:1fr 1fr;
 		gap:6px;
-	}
-
-	.selector-options.full-width{
-		display:block !important;
-	}
-
-	/* FULL WIDTH */
-
-	.command-box{
 		width:100%;
-		overflow:hidden;
-		padding:16px;
 	}
-
-	/* BUTTONS */
 
 	.option-btn{
 		width:100%;
 		min-width:0;
-		padding:14px 8px;
+		padding:12px 8px;
 		font-size:14px;
-		margin:0;
 	}
 
-	.btn-elpis,
-	.btn-elpis-ghost{
+	.result-head,
+	.result-block{
+		padding-left:16px;
+		padding-right:16px;
+	}
+
+	#endpoint{
+		font-size:13.5px;
+	}
+
+	.result-actions .btn{
 		flex:1 1 auto;
 		justify-content:center;
 	}
 
-	/* ENDPOINT */
+	.stamp-row{
+		flex-direction:column;
+		align-items:stretch;
+	}
 
-	#endpoint{
-		font-size:13px;
-		overflow-x:auto;
-		white-space:nowrap;
+	.stamp-row .btn{
+		justify-content:center;
+	}
+
+	/* MAP */
+
+	.map-card{
+		height:460px;
+		border-radius:18px;
+	}
+
+	.map-hint{
+		display:none;
+	}
+
+	.map-tip{
+		left:12px !important;
+		right:12px;
+		top:auto !important;
+		bottom:12px;
+		width:auto;
+		max-width:none;
+	}
+
+	/* RESOLVER */
+
+	.bench{
+		padding:20px;
+	}
+
+	.bench-row{
+		grid-template-columns:100px 1fr 58px;
+		gap:10px;
+	}
+
+	.prod-table{
+		font-size:14px;
+	}
+
+	.prod-table th:nth-child(3),
+	.prod-table td:nth-child(3){
+		display:none;
+	}
+
+	.prod-table th{
+		white-space:normal;
+	}
+
+	.timeline{
+		grid-template-columns:1fr;
+	}
+
+	/* On a phone the rail runs down the side instead. */
+	.timeline li{
+		padding:0 0 18px 30px;
+	}
+
+	.timeline li::before{
+		left:7px !important;
+		right:auto !important;
+		top:0;
+		bottom:0;
+		width:2px !important;
+		height:auto;
+	}
+
+	.timeline li:first-child::before{ top:8px }
+	.timeline li:last-child::before{ bottom:auto; height:8px }
+
+	/* CALLS TO ACTION */
+
+	.cta{
+		padding:24px 20px;
+	}
+
+	.cta .btn-elpis{
+		width:100%;
+		justify-content:center;
+	}
+
+	.cta .d-flex{
 		width:100%;
 	}
 
-	/* SUMMARY */
-
-	.selection-summary{
-		font-size:13.5px;
-	}
-
-	.address-grid{
-		grid-template-columns:1fr;
-	}
-
-	/* GATES */
-
-	.gates{
-		grid-template-columns:1fr;
+	.cta .d-flex .btn-elpis{
+		flex:1 1 auto;
+		width:auto;
 	}
 
 	/* BLACKLIST */
@@ -184,14 +368,9 @@
 		padding:12px 14px;
 	}
 
-	.bl-index{
-		font-size:17px;
-		min-width:24px;
-	}
-
 	.bl-name{
 		flex:1 1 auto;
-		font-size:17px;
+		font-size:16px;
 	}
 
 	/* The tag drops to its own line rather than squeezing the name. */
@@ -216,6 +395,7 @@
 		flex-direction:column;
 		align-items:stretch;
 		gap:8px;
+		padding:10px;
 	}
 
 	.bl-url code,
@@ -232,31 +412,52 @@
 		text-align:center;
 	}
 
+	.address-grid{
+		grid-template-columns:1fr;
+	}
+
 	/* SETUP PAGE */
 
 	.doc-jump{
-		flex-direction:column;
+		flex-wrap:nowrap;
+		overflow-x:auto;
+		margin:0 -16px 30px;
+		padding:0 16px 4px;
+		scrollbar-width:none;
 	}
 
 	.doc-jump a{
-		width:100%;
+		flex-shrink:0;
 	}
 
 	.doc-section{
-		padding:18px;
+		padding:20px 18px;
+	}
+
+	.doc-title{
+		font-size:28px;
+	}
+
+	.doc-tag{
+		display:none;
 	}
 
 	/* FOOTER */
 
-	footer{
-		text-align:center;
+	.site-footer{
+		margin-top:80px;
+		padding-top:48px;
+	}
+}
+
+@media (max-width: 399.98px){
+
+	.hero-stats{
+		grid-template-columns:1fr 1fr;
 	}
 
-	.footer-title{
-		margin-top:12px;
+	.stat-num{
+		font-size:30px;
 	}
 
-	.footer-links{
-		align-items:center;
-	}
 }

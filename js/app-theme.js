@@ -58,8 +58,10 @@ function applyTheme(choice){
 
 	const meta = document.querySelector('meta[name="theme-color"]');
 
+	// The browser chrome on a phone matches the top bar, which is night
+	// in both themes.
 	if(meta){
-		meta.setAttribute("content", theme === "dark" ? "#131416" : "#f24f2f");
+		meta.setAttribute("content", "#1d0b3a");
 	}
 
 	const button = document.getElementById("theme-btn");

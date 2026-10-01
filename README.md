@@ -4,16 +4,17 @@
 
 # ΕΛΠΙΣ DNS
 
-**Resolve freely. Answer to no one.**
+**Resolve freely. Answer to no one.** By the community, for the community.
 
 Every website you open begins with a question: *where is this?* Whoever answers
 that question owns your internet &mdash; they can log it, sell it, or decide that
 today, for reasons nobody wrote down, this particular door is closed.
 
-ΕΛΠΙΣ DNS is a community-run set of encrypted resolvers so that question stays
-between you and someone who does not want anything from it. DoH and DoT only,
-regional routing, CDN acceleration, DNS64/NAT64, and no ledger of your curiosity.
-Aligned with the vision of [EFF Internet Freedom and Privacy](https://www.eff.org/).
+ΕΛΠΙΣ DNS is a community-run set of encrypted resolvers for South East Asia, so
+that question stays between you and someone who does not want anything from it.
+DoH and DoT only, four networks carrying it, ECS for the CDNs, DNS64/NAT64 for
+IPv6-only hosts, and no ledger of your curiosity. Aligned with the vision of
+[EFF Internet Freedom and Privacy](https://www.eff.org/).
 
 - **[Pick an endpoint](https://elpis.violetnetworks.xyz/)** &mdash; filter, region, provider, transport
 - **[Why ΕΛΠΙΣ](https://elpis.violetnetworks.xyz/mission.html)** &mdash; what we block, what we refuse to keep, and how to check it
@@ -27,6 +28,11 @@ Aligned with the vision of [EFF Internet Freedom and Privacy](https://www.eff.or
 - [ΕΛΠΙΣ Resolver](https://github.com/PururinCollective/elpis-resolver), our own recursive
   resolver &mdash; portable C99 with SIMD kernels, no dependencies, and the second resolver
   in the world to validate ML-DSA-44 post-quantum DNSSEC after Cloudflare
+- Battle tested from 1.0.0 to 2.2.0 behind `a`, `b`, `c` and `gg.hitoha.moe`, about
+  29 million queries a day between them, built in the open with community
+  collaboration and Claude AI assistance
+- EDNS Client Subnet on AS154516 only, so YouTube and the other CDNs answer for where
+  you are; every other network sends no subnet at all
 - An `sdns://` DNS stamp generated for every endpoint, for dnscrypt-proxy and friends
 - Ads, trackers, malware and phishing filtered by default
 - A Family profile with adult content blocked and safe search enforced
@@ -75,6 +81,7 @@ fetched over HTTP.
 | File | What it holds |
 | --- | --- |
 | `dns.json` | Every resolver, region and filtering profile |
+| `network.json` | The networks on the map: ASNs, places, endpoints, queries a day |
 | `dns.schema.json` | Schema that validates the above in your editor |
 | `index.html` | Front page and selector markup |
 | `setup.html` | Setup guide |
@@ -88,21 +95,25 @@ fetched over HTTP.
 | `js/app-quote.js` | Footer quotes |
 | `js/app-mikrotik.js` | RouterOS `.rsc` generator |
 | `js/app-setup.js` | Setup page helpers |
-| `img/hero-map.svg` | Animated night map behind the hero, generated |
-| `tools/make-hero-map.py` | Regenerates that map. Only needed if you change it |
+| `js/app-mesh.js` | The animated network behind the hero and the page heads |
+| `js/app-map.js` | The South East Asia network map and the cards under it |
+| `img/sea-map.json` | Land for the map, generated |
+| `tools/make-sea-map.py` | Regenerates that land. Only needed if you change the region |
 | `tools/stamp-assets.py` | Re-stamps `?hash=` cache busters after any asset change |
 
-The banner is a self-contained animated SVG: encrypted traffic leaving the
-resolver in orange, a HUD walking the autonomous systems on the path, and
-blocked queries dying in red on the shield ring. It is generated because the
-landmass is fourteen hundred dots sampled from coastline polygons:
+The look is Firefox's: ink purple, violet, and the yellow-to-violet sweep of
+the fox, set in Mozilla Headline and Mozilla Text. The banner is a network
+drawn by `js/app-mesh.js` &mdash; nodes, links and streaks of light running
+across them &mdash; sized to whatever screen it lands on, paused when it scrolls
+away, and left still for anyone who asks for reduced motion.
+
+The network map reads `network.json` for the nodes and `img/sea-map.json`
+for the land. The land is Natural Earth 1:50m clipped to the region, and only
+needs rebuilding if the region changes:
 
 ```
-python tools/make-hero-map.py
+python tools/make-sea-map.py
 ```
-
-That writes both `img/hero-map.svg` and a still `img/hero-map-static.svg`,
-which is what visitors who ask for reduced motion get served.
 
 The site follows your operating system's light or dark preference out of the box;
 the icon in the top bar cycles system, light and dark, and the choice is remembered.
@@ -165,11 +176,17 @@ add name=* forward-to=AdGuard type=FWD
 The front page will generate this file for whichever endpoint you pick &mdash;
 press **.rsc**.
 
-## Sponsor
+## The networks
 
-Proudly Sponsored by [Perfect Network](https://perfect.my/) ([AS154516](https://bgp.tools/as/154516))
+By the community, for the community. ΕΛΠΙΣ is carried by four autonomous
+systems, and no single one of them can switch it off:
 
-![PERFECT](img/perfect.png)
+| ASN | Network | Where |
+| --- | --- | --- |
+| [AS154516](https://bgp.tools/as/154516) | [Perfect Network](https://perfect.my/) | Semenyih, Malaysia &mdash; ECS on |
+| [AS153334](https://bgp.tools/as/153334) | Origin TechLab | Kuala Lumpur, Malaysia |
+| [AS135134](https://bgp.tools/as/135134) | Shana Network | Singapore |
+| [AS204535](https://bgp.tools/as/204535) | [kevin.moe](https://kevin.moe/) | Malaysia |
 
 ---
 

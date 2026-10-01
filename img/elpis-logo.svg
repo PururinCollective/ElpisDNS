@@ -3,24 +3,25 @@
 
 	<defs>
 		<linearGradient id="logoFlame" x1="60" y1="40" x2="300" y2="300" gradientUnits="userSpaceOnUse">
-			<stop offset="0" stop-color="#ffb072"/>
-			<stop offset="0.45" stop-color="#ff7a2f"/>
-			<stop offset="1" stop-color="#e2431f"/>
+			<stop offset="0" stop-color="#ffbd4f"/>
+			<stop offset="0.35" stop-color="#ff7139"/>
+			<stop offset="0.7" stop-color="#ff4aa2"/>
+			<stop offset="1" stop-color="#9059ff"/>
 		</linearGradient>
 
 		<linearGradient id="logoSteel" x1="40" y1="20" x2="300" y2="300" gradientUnits="userSpaceOnUse">
-			<stop offset="0" stop-color="#5c6067"/>
-			<stop offset="1" stop-color="#2a2d31"/>
+			<stop offset="0" stop-color="#4a2a99"/>
+			<stop offset="1" stop-color="#1d0b3a"/>
 		</linearGradient>
 
 		<style>
 			/* Readable on a white README and on a dark page alike */
-			.wordmark{ fill:#1b1c1e; }
-			.tagline{ fill:#6b7078; }
+			.wordmark{ fill:#15141a; }
+			.tagline{ fill:#5b5b66; }
 
 			@media (prefers-color-scheme: dark){
-				.wordmark{ fill:#e9e7e4; }
-				.tagline{ fill:#8b9099; }
+				.wordmark{ fill:#fbfbfe; }
+				.tagline{ fill:#b48cff; }
 			}
 		</style>
 	</defs>
@@ -40,7 +41,7 @@
 
 		<circle cx="256" cy="252" r="150"
 			fill="none"
-			stroke="#8b9099"
+			stroke="#c9b4ff"
 			stroke-width="7"
 			stroke-opacity="0.55"
 			stroke-linecap="round"
@@ -58,14 +59,14 @@
 	<!-- Wordmark -->
 	<text x="360" y="168"
 		class="wordmark"
-		font-family="Oswald, 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif"
+		font-family="'Mozilla Headline', 'Roboto Condensed', 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif"
 		font-size="118"
 		font-weight="600"
 		letter-spacing="10">ΕΛΠΙΣ <tspan fill="url(#logoFlame)">DNS</tspan></text>
 
 	<text x="364" y="226"
 		class="tagline"
-		font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif"
+		font-family="'Mozilla Text', 'Segoe UI', Helvetica, Arial, sans-serif"
 		font-size="30"
 		letter-spacing="4">RESOLVE FREELY. ANSWER TO NO ONE.</text>
 </svg>

@@ -30,7 +30,7 @@ a quoted string that merely looks like a path is left alone. Absolute URLs
 do not host.
 
 References chain: index.html points at js/app.js, which points at dns.json;
-style-main.css points at the generated hero map. Stamping dns.json changes
+app-map.js points at network.json and the map's land. Stamping dns.json changes
 app.js, which changes app.js's own hash, which index.html then has to catch
 up with. So the tool runs repeatedly until a pass changes nothing.
 

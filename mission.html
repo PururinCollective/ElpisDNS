@@ -6,7 +6,7 @@
 
 <title>Why ΕΛΠΙΣ DNS exists — block lists, recursion, DNSSEC</title>
 <link rel="icon" type="image/x-icon" href="favicon.ico">
-<link rel="icon" type="image/svg+xml" href="img/elpis-mark.svg?hash=edbc1f49">
+<link rel="icon" type="image/svg+xml" href="img/elpis-mark.svg?hash=143b29df">
 <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
 
 <!-- Paint the correct theme before the first frame, no white flash -->
@@ -27,12 +27,15 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
+<!-- Mozilla's own faces. They stop at Latin, so the Greek in ΕΛΠΙΣ
+     comes from a few glyphs of Roboto, fetched by themselves. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Mozilla+Headline:wdth,wght@75..100,400..700&family=Mozilla+Text:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@600;700&family=Roboto:wght@400;600&text=%CE%95%CE%9B%CE%A0%CE%99%CE%A3%CE%B5%CE%BB%CF%80%CE%AF%CF%82%E1%BC%90&display=swap" rel="stylesheet">
 
-<link href="style-main.css?hash=68968e7f" rel="stylesheet">
-<link href="style-mobile.css?hash=37f4fe49" rel="stylesheet">
+<link href="style-main.css?hash=1a0256b4" rel="stylesheet">
+<link href="style-mobile.css?hash=5cc2492f" rel="stylesheet">
 
 <meta name="description" content="What Elpis DNS blocks and why, the filter lists with their URLs, our own C99 resolver with ML-DSA-44 DNSSEC, and raw recursors for your own AdGuard Home.">
 <link rel="canonical" href="https://elpis.violetnetworks.xyz/mission.html">
@@ -61,7 +64,7 @@
 <meta name="twitter:image:alt" content="ΕΛΠΙΣ DNS — Resolve freely. Answer to no one.">
 
 <!-- The stripe Discord paints down the side of the embed -->
-<meta name="theme-color" content="#f24f2f">
+<meta name="theme-color" content="#7542e5">
 
 <script type="application/ld+json">
 {
@@ -142,38 +145,60 @@
 <body>
 
 <!-- Top bar -->
-<nav class="topbar">
+<nav class="topbar" aria-label="Main">
 	<div class="container topbar-inner">
 
 		<a class="topbar-brand" href="index.html">
-			<img src="img/elpis-mark.svg?hash=edbc1f49" alt="" class="topbar-mark">
+			<img src="img/elpis-mark.svg?hash=143b29df" alt="" class="topbar-mark" width="32" height="32">
 			<span class="topbar-name">ΕΛΠΙΣ <span class="accent">DNS</span></span>
 		</a>
 
-		<div class="topbar-actions">
+		<div class="topbar-nav">
 
-			<a class="topbar-link" href="index.html">
-				<i class="bi bi-arrow-left-short"></i>
-				<span>Back to the table</span>
+			<a class="topbar-link" href="index.html#table">
+				<i class="bi bi-crosshair"></i>
+				<span>Endpoints</span>
+			</a>
+
+			<a class="topbar-link" href="index.html#network">
+				<i class="bi bi-globe-asia-australia"></i>
+				<span>Network</span>
+			</a>
+
+			<a class="topbar-link" href="index.html#resolver">
+				<i class="bi bi-cpu"></i>
+				<span>Resolver</span>
 			</a>
 
 			<a class="topbar-link" href="setup.html">
 				<i class="bi bi-life-preserver"></i>
-				<span>How to set it up</span>
+				<span>Setup</span>
 			</a>
 
-			<button class="theme-btn" id="theme-btn" type="button" title="Theme" aria-label="Theme">
-				<i class="bi bi-circle-half"></i>
-			</button>
+			<a class="topbar-link" href="mission.html" aria-current="page">
+				<i class="bi bi-flag"></i>
+				<span>Mission</span>
+			</a>
+
+			<a class="topbar-link" href="https://github.com/PururinCollective/ElpisDNS" target="_blank" rel="noopener" title="Source on GitHub">
+				<i class="bi bi-github"></i>
+				<span class="visually-hidden">Source on GitHub</span>
+			</a>
 		</div>
+
+		<button class="theme-btn" id="theme-btn" type="button" title="Theme" aria-label="Theme">
+			<i class="bi bi-circle-half"></i>
+		</button>
 	</div>
 </nav>
 
-<div class="container">
+<header class="page-hero">
 
-	<div class="page-head">
+	<div class="hero-mesh" data-mesh="page" aria-hidden="true"></div>
+
+	<div class="container">
 		<div class="page-kicker">The arrangement</div>
-		<div class="page-title">Why ΕΛΠΙΣ exists</div>
+		<h1 class="page-title">Why ΕΛΠΙΣ exists</h1>
 		<div class="page-lead">
 			Every website you have ever opened began with somebody being asked a
 			question on your behalf: <i>where is this?</i> It is a small question.
@@ -187,6 +212,9 @@
 			it without taking our word for anything.
 		</div>
 	</div>
+</header>
+
+<main class="container">
 
 	<!-- The creed -->
 	<div class="rules rules-3 mb-5">
@@ -830,38 +858,71 @@
 			<i class="bi bi-crosshair"></i> Choose your gun
 		</a>
 	</div>
-</div>
+</main>
 
 <!-- Footer -->
-<footer class="mt-5 pt-5 pb-4 border-top">
+<footer class="site-footer">
 	<div class="container">
-		<div class="footer-title text-center">
-			~ Part of Pururin Collective Project ~
+		<div class="row gx-4 gy-5">
+
+			<div class="col-lg-4">
+				<div class="footer-slogan">
+					By the community, <span class="fx-text">for the community.</span>
+				</div>
+				<div class="footer-text mt-3">
+					Encrypted DNS kept running by network operators, maintainers and the
+					people who use it, built on the principles of an open internet and
+					aligned with the vision of
+					<a href="https://www.eff.org/" target="_blank" rel="noopener">EFF Internet Freedom and Privacy</a>.
+				</div>
+			</div>
+
+			<div class="col-sm-6 col-lg-4">
+				<div class="footer-title">The networks</div>
+				<ul class="footer-links">
+					<li class="footer-asn"><a href="https://bgp.tools/as/154516" target="_blank" rel="noopener">AS154516</a> <span>Perfect Network</span></li>
+					<li class="footer-asn"><a href="https://bgp.tools/as/153334" target="_blank" rel="noopener">AS153334</a> <span>Origin TechLab</span></li>
+					<li class="footer-asn"><a href="https://bgp.tools/as/135134" target="_blank" rel="noopener">AS135134</a> <span>Shana Network</span></li>
+					<li class="footer-asn"><a href="https://bgp.tools/as/204535" target="_blank" rel="noopener">AS204535</a> <span>kevin.moe</span></li>
+				</ul>
+			</div>
+
+			<div class="col-6 col-sm-3 col-lg-2">
+				<div class="footer-title">Project</div>
+				<ul class="footer-links">
+					<li><a href="index.html#table">Endpoints</a></li>
+					<li><a href="setup.html">Setup guide</a></li>
+					<li><a href="mission.html">Why ΕΛΠΙΣ</a></li>
+					<li><a href="https://github.com/PururinCollective/ElpisDNS" target="_blank" rel="noopener">Source</a></li>
+					<li><a href="https://github.com/PururinCollective/elpis-resolver" target="_blank" rel="noopener">ΕΛΠΙΣ Resolver</a></li>
+				</ul>
+			</div>
+
+			<div class="col-6 col-sm-3 col-lg-2">
+				<div class="footer-title">Pururin Collective</div>
+				<ul class="footer-links">
+					<li><a href="https://pururin.moe/" target="_blank" rel="noopener">Forum</a></li>
+					<li><a href="https://discord.gg/aw8pt2SWnv" target="_blank" rel="noopener">Discord</a></li>
+					<li><a href="https://forum.lowyat.net/topic/5576215" target="_blank" rel="noopener">Lowyat.NET</a></li>
+					<li><a href="https://openpon.org/" target="_blank" rel="noopener">OpenPON</a></li>
+				</ul>
+			</div>
 		</div>
-		<div class="footer-text text-center">
-			<p>
-				<a href="https://pururin.moe/" target="_blank" rel="noopener">Forum</a> &bull;
-				<a href="https://discord.gg/aw8pt2SWnv" target="_blank" rel="noopener">Discord</a> &bull;
-				<a href="https://openpon.org/" target="_blank" rel="noopener">OpenPON</a> &bull;
-				<a href="setup.html">Setup guide</a> &bull;
-				<a href="index.html">The table</a>
-			</p>
-		</div>
-		<div class="footer-bottom mt-3 pt-3 border-top">
+
+		<div class="footer-bottom">
 			<div id="footer-quote"></div>
-			<div class="mt-2">
-				Made with Love ♥ <br />
+			<div>
+				Made with love ♥ &middot; Part of the Pururin Collective project<br>
 				© 2026 ΕΛΠΙΣ DNS. All rights reserved.
 			</div>
 		</div>
 	</div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<script src="js/app-theme.js?hash=e17c7711"></script>
+<script src="js/app-theme.js?hash=f49721cc"></script>
 <script src="js/app-copy.js?hash=7fdd7e69"></script>
 <script src="js/app-quote.js?hash=8ea9c26e"></script>
+<script src="js/app-mesh.js?hash=72f40499"></script>
 
 </body>
 </html>

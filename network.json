@@ -1,0 +1,90 @@
+{
+	"//": "ΕΛΠΙΣ DNS network map. js/app-map.js draws every entry in \"networks\" as a node on the map and a card under it, and every entry in \"cities\" as a place the nearest node reaches. Coordinates are decimal degrees; \"place\" is free text, so a network whose town is not public can just say its country. A city with \"side\": \"left\" has its name drawn left of the dot.",
+
+	"updated": "2026-10-01",
+
+	"view": {
+		"//": "What the map shows first, and what the reset button goes back to: west, south, east, north.",
+		"home": [92.5, -11.5, 127.5, 22.5],
+		"intro": [80, -22, 150, 32]
+	},
+
+	"networks": [
+		{
+			"asn": 154516,
+			"name": "Perfect Network",
+			"place": "Semenyih, Malaysia",
+			"lat": 2.952,
+			"lon": 101.843,
+			"ecs": true,
+			"homepage": "https://perfect.my/",
+			"notes": "EDNS Client Subnet is switched on here, so YouTube and every other CDN hands back a cache near you rather than near us. The DNS64 endpoint lives here as well.",
+			"endpoints": [
+				{ "host": "a.hitoha.moe", "profile": "Family", "qpd": 17000 },
+				{ "host": "b.hitoha.moe", "profile": "Standard", "qpd": 7000000 },
+				{ "host": "64.hitoha.moe", "profile": "DNS64/NAT64" }
+			]
+		},
+
+		{
+			"asn": 153334,
+			"name": "Origin TechLab",
+			"place": "Kuala Lumpur, Malaysia",
+			"lat": 3.130,
+			"lon": 101.672,
+			"ecs": false,
+			"homepage": "https://originwifi.com.my/",
+			"notes": "The busiest endpoint in the project, and a second opinion inside Malaysia when one upstream is having a bad day.",
+			"endpoints": [
+				{ "host": "c.hitoha.moe", "profile": "Standard", "qpd": 12000000 }
+			]
+		},
+
+		{
+			"asn": 135134,
+			"name": "Shana Network",
+			"place": "Singapore",
+			"lat": 1.290,
+			"lon": 103.850,
+			"ecs": false,
+			"homepage": "https://bgp.tools/as/135134",
+			"notes": "Answers from Singapore. The way out when a local resolver develops opinions.",
+			"endpoints": [
+				{ "host": "gg.hitoha.moe", "profile": "Standard", "qpd": 10000000 }
+			]
+		},
+
+		{
+			"asn": 204535,
+			"name": "kevin.moe",
+			"place": "Malaysia",
+			"lat": 3.220,
+			"lon": 101.560,
+			"ecs": false,
+			"homepage": "https://kevin.moe/",
+			"notes": "A community network, and one of the four autonomous systems the project stands on. Four operators means no single one of them can switch ΕΛΠΙΣ off.",
+			"endpoints": []
+		}
+	],
+
+	"cities": [
+		{ "name": "Penang", "lat": 5.414, "lon": 100.329 },
+		{ "name": "Medan", "lat": 3.595, "lon": 98.672 },
+		{ "name": "Kuching", "lat": 1.553, "lon": 110.359 },
+		{ "name": "Kota Kinabalu", "lat": 5.980, "lon": 116.073 },
+		{ "name": "Bandar Seri Begawan", "lat": 4.890, "lon": 114.940 },
+		{ "name": "Jakarta", "lat": -6.200, "lon": 106.845 },
+		{ "name": "Surabaya", "lat": -7.257, "lon": 112.752 },
+		{ "name": "Denpasar", "lat": -8.650, "lon": 115.216 },
+		{ "name": "Makassar", "lat": -5.147, "lon": 119.432 },
+		{ "name": "Dili", "lat": -8.556, "lon": 125.560 },
+		{ "name": "Bangkok", "lat": 13.756, "lon": 100.502 },
+		{ "name": "Phnom Penh", "lat": 11.556, "lon": 104.928, "side": "left" },
+		{ "name": "Ho Chi Minh City", "lat": 10.823, "lon": 106.630 },
+		{ "name": "Hanoi", "lat": 21.028, "lon": 105.834 },
+		{ "name": "Vientiane", "lat": 17.975, "lon": 102.633 },
+		{ "name": "Yangon", "lat": 16.866, "lon": 96.195 },
+		{ "name": "Manila", "lat": 14.599, "lon": 120.984 },
+		{ "name": "Cebu", "lat": 10.316, "lon": 123.885 }
+	]
+}
