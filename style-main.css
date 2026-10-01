@@ -80,6 +80,11 @@
 	--map-traffic:#ff6a3d;
 	--map-label:#3b2a6e;
 	--map-callout:rgba(255,255,255,.94);
+
+	/* Size chart: the one bar the story is about, and the rest for scale.
+	   Both checked for contrast and colour-blind separation on --surface. */
+	--bar-hero:#7542e5;
+	--bar-context:#8f8d9a;
 }
 
 /* ---------- dark ---------- */
@@ -121,6 +126,9 @@
 	--map-traffic:#ff9a5c;
 	--map-label:#e7defe;
 	--map-callout:rgba(29,11,61,.92);
+
+	--bar-hero:#a06bff;
+	--bar-context:#7d7299;
 }
 
 /* ---------- base ---------- */
@@ -1779,6 +1787,107 @@ a.as-card:hover{
 	flex-wrap:wrap;
 	gap:8px;
 	margin-top:14px;
+}
+
+/* ---------- size chart ---------- */
+
+/*
+	A table that is also a bar chart: every value is printed, so the bars
+	only carry the proportion. One axis, starting at zero, scaled to the
+	largest signature. Thin bars, square at the baseline, 4px round at the
+	data end.
+*/
+
+.size-table tbody th{
+	padding:12px 18px;
+	border-bottom:1px solid var(--line);
+	background:none;
+
+	color:var(--text);
+	font-size:15px;
+	font-weight:400;
+	letter-spacing:0;
+	text-transform:none;
+	white-space:nowrap;
+}
+
+.size-table tr:last-child th{
+	border-bottom:0;
+}
+
+.alg-num{
+	margin-left:6px;
+	color:var(--text-faint);
+	font-family:var(--font-mono);
+	font-size:12.5px;
+}
+
+.size-table td{
+	color:var(--text-soft);
+	font-family:var(--font-mono);
+	font-size:14px;
+}
+
+.size-col{
+	width:44%;
+}
+
+.size-cell{
+	display:flex;
+	align-items:center;
+	gap:12px;
+}
+
+.size-bar{
+	flex:1;
+	display:block;
+	height:14px;
+}
+
+.size-bar i{
+	display:block;
+	width:var(--w);
+	min-width:3px;
+	height:100%;
+
+	background:var(--bar-context);
+	border-radius:0 4px 4px 0;
+}
+
+.size-val{
+	flex:0 0 64px;
+	color:var(--text);
+	text-align:right;
+}
+
+.size-table .is-hero{
+	background:var(--accent-soft);
+}
+
+.size-table .is-hero .size-bar i{
+	background:var(--bar-hero);
+}
+
+.size-table .is-hero .srv-name,
+.size-table .is-hero .size-val{
+	font-weight:650;
+}
+
+.safe-no,
+.safe-yes{
+	display:inline-flex;
+	align-items:center;
+	gap:6px;
+	font-family:var(--font-body);
+}
+
+.safe-yes{
+	color:var(--text);
+	font-weight:600;
+}
+
+.safe-yes i{
+	color:var(--accent);
 }
 
 /* ---------- notes and calls to action ---------- */

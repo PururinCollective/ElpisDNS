@@ -50,7 +50,7 @@
 	}
 }
 
-@media (max-width: 860px){
+@media (max-width: 920px){
 
 	/* TOP BAR - the links fold into a menu */
 
@@ -327,6 +327,27 @@
 
 	.table-actions .btn{
 		flex:1 1 auto;
+	}
+
+	.ip-table tbody th{
+		display:block;
+		padding:0 0 6px;
+		border:0;
+	}
+
+	/* "Quantum" is a longer label than "IPv4", and the bar sits beside
+	   its label rather than under it. */
+	.size-table td[data-label]::before{
+		min-width:76px;
+	}
+
+	.size-table td.size-col{
+		display:flex;
+		align-items:center;
+	}
+
+	.size-cell{
+		flex:1;
 	}
 
 	/* BLOCK LISTS */

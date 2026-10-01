@@ -15,6 +15,7 @@ networks, and aligned with the vision of
 - **[Get your DNS](https://elpis.violetnetworks.xyz/#start)** &mdash; pick a filter, region and protocol, take the address
 - **[Network](https://elpis.violetnetworks.xyz/network.html)** &mdash; where we answer from, ECS for CDNs, DNS64 for IPv6-only
 - **[Resolver](https://elpis.violetnetworks.xyz/resolver.html)** &mdash; public recursive resolvers for your own AdGuard Home or Pi-hole
+- **[ML-DSA-44](https://elpis.violetnetworks.xyz/ml-dsa-44.html)** &mdash; post-quantum DNSSEC explained, and how to test it yourself
 - **[Setup guide](https://elpis.violetnetworks.xyz/setup.html)** &mdash; Android, iPhone, Windows, Firefox, Chrome, MikroTik, OpenWrt, AdGuard Home
 - **[About](https://elpis.violetnetworks.xyz/mission.html)** &mdash; what we block, what we never keep, and how to check us
 - **[Add your resolver](CONTRIBUTING.md)** &mdash; one JSON block, one pull request
@@ -33,7 +34,9 @@ networks, and aligned with the vision of
 
 Our own recursive resolver: portable C99, hand-written SIMD kernels, no
 dependencies, built by the community with Claude AI assistance. It is the
-second resolver in the world to validate ML-DSA-44 post-quantum DNSSEC, and
+second resolver in the world to validate
+[ML-DSA-44](https://elpis.violetnetworks.xyz/ml-dsa-44.html) post-quantum DNSSEC
+(algorithm 18, FIPS 204), and
 it answers more than 30 million queries a day across our resolvers.
 
 Running AdGuard Home or Pi-hole at home, the office or a business? Use these
@@ -97,6 +100,7 @@ fetched over HTTP.
 | `index.html` | Home: the DNS lookup banner and the endpoint picker |
 | `network.html` | The network map and the AS sites behind it |
 | `resolver.html` | ΕΛΠΙΣ Resolver and its public addresses |
+| `ml-dsa-44.html` | Post-quantum DNSSEC explained, with a test you can run |
 | `setup.html` | Setup guide |
 | `mission.html` | About: block lists, promises, how to check us |
 | `style-main.css` | Colour tokens, light and dark themes, all components |
@@ -114,6 +118,7 @@ fetched over HTTP.
 | `img/sea-map.svg` | South East Asia land for the network map, generated |
 | `img/hero-mesh.svg` | The light mesh behind every banner, generated |
 | `tools/make-graphics.py` | Regenerates both of those. Only needed if you change them |
+| `tools/make-og-card.py` | Renders the social cards in `tools/cards/` to `img/og-*.jpg` |
 | `tools/stamp-assets.py` | Re-stamps `?hash=` cache busters after any asset change |
 
 The look follows Firefox: night-violet banners with a glow underneath,
@@ -130,7 +135,18 @@ is a few thousand points from Natural Earth that nobody should type by hand:
 python tools/make-graphics.py
 ```
 
-It downloads world-atlas from jsDelivr each run; pass `--topojson` with a
+Pages can have their own social card, the picture Discord, Telegram and X
+show when a link is shared. A card is a 1200 × 630 HTML page in
+`tools/cards/`; headless Firefox photographs it:
+
+```
+python tools/make-og-card.py ml-dsa-44
+```
+
+That writes `img/og-ml-dsa-44.jpg`, which the page names in `og:image` and
+`twitter:image`. It needs Firefox and Pillow (`pip install pillow`).
+
+The map generator downloads world-atlas from jsDelivr each run; pass `--topojson` with a
 local copy to work offline. The AS sites, cities and traffic on the map live
 at the top of `js/app-map.js` &mdash; add a city there, no regeneration needed.
 
