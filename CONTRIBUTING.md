@@ -133,6 +133,7 @@ plan to run it. That is the whole ritual.
 | `js/app-quote.js` | Footer quotes |
 | `js/app-mikrotik.js` | The `.rsc` generator |
 | `js/app-setup.js` | Setup page helpers and code block copy buttons |
+| `img/resolver-mark.svg` | The ΕΛΠΙΣ Resolver mark, from elpis-resolver's `docs/images`; used as the `bi-resolver` icon |
 | `img/sea-map.svg` | Land for the network map. Generated, do not hand edit |
 | `img/hero-mesh.svg` | The light mesh behind the banners. Generated, do not hand edit |
 | `tools/make-graphics.py` | Regenerates both of those |

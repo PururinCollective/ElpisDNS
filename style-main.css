@@ -362,6 +362,22 @@ code,
 	display:none;
 }
 
+/*
+	The ΕΛΠΙΣ Resolver mark, used like a Bootstrap icon: <i class="bi-resolver">.
+	A mask rather than an <img>, so it takes the colour of the text around
+	it in either theme, and sits on the same baseline as the bi-* glyphs.
+*/
+.bi-resolver{
+	display:inline-block;
+	width:1em;
+	height:1em;
+	vertical-align:-.125em;
+
+	background-color:currentColor;
+	-webkit-mask:url("img/resolver-mark.svg?hash=885d971e") center / contain no-repeat;
+	mask:url("img/resolver-mark.svg?hash=885d971e") center / contain no-repeat;
+}
+
 /* ---------- buttons ---------- */
 
 .btn{

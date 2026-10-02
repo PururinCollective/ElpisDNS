@@ -115,6 +115,7 @@ fetched over HTTP.
 | `js/app-quote.js` | Footer quotes |
 | `js/app-mikrotik.js` | RouterOS `.rsc` generator |
 | `js/app-setup.js` | Setup page helpers, code block copy buttons |
+| `img/resolver-mark.svg` | The ΕΛΠΙΣ Resolver mark, from elpis-resolver's `docs/images`; used as the `bi-resolver` icon |
 | `img/sea-map.svg` | South East Asia land for the network map, generated |
 | `img/hero-mesh.svg` | The light mesh behind every banner, generated |
 | `tools/make-graphics.py` | Regenerates both of those. Only needed if you change them |
