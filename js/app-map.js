@@ -15,7 +15,7 @@
 
 const MAP_SITES = [
 	{
-		place: "Kuala Lumpur, MY",
+		place: "Kuala Lumpur",
 		lon: 101.6865, lat: 3.1412,
 		networks: [
 			["AS153334", "Origin TechLab"],
@@ -23,7 +23,7 @@ const MAP_SITES = [
 		]
 	},
 	{
-		place: "Semenyih, MY",
+		place: "Semenyih",
 		lon: 101.843, lat: 2.9516,
 		networks: [
 			["AS154516", "Perfect Network"]
@@ -35,21 +35,42 @@ const MAP_SITES = [
 		networks: [
 			["AS135134", "Shana Network"]
 		]
+	},
+	{
+		place: "Cyberjaya",
+		lon: 101.6572, lat: 2.9228,
+		networks: [
+			["AS219206", "Interdata Networks"]
+		]
+	},
+	{
+		place: "Jakarta",
+		lon: 106.8286, lat: -6.175,
+		networks: [
+			["AS140389", "DewaBiz"]
+		]
 	}
 ];
 
 // Where the label boxes sit, in map pixels, and which sites they explain.
-// Both spots are open sea at every width the labels are shown.
+// All three are open sea at every width the labels are shown: the Indian
+// Ocean west of Sumatra, the South China Sea, and south of Java. The
+// legend sits top right, out of their way.
 const MAP_CALLOUTS = [
-	{ x: 16, y: 484, sites: [0, 1], width: 208 },
-	{ x: 378, y: 288, sites: [2], width: 176 }
+	{ x: 16, y: 420, sites: [0, 3, 1], width: 180 },
+	{ x: 378, y: 288, sites: [2], width: 176 },
+	{ x: 212, y: 640, sites: [4], width: 196 }
 ];
+
+// A city closer than this to a site is in the same city as it, and an
+// arc that short is only a smudge; its traffic goes to the next site.
+const MAP_SAME_PLACE = 12;
 
 // [name, longitude, latitude, label side]. No side means no label: the
 // dot and its traffic are enough, and forty labels would be a mess.
 const MAP_CITIES = [
 	["Pekanbaru", 101.4478, 0.5071, "left"],
-	["Depok", 106.7942, -6.4025, "right"],
+	["Depok", 106.7942, -6.4025, "left"],
 	["Medan", 98.6722, 3.5952, "left"],
 	["Banda Aceh", 95.3238, 5.5483],
 	["Padang", 100.4172, -0.9471],
@@ -165,13 +186,14 @@ function drawMap(svg){
 			.map((site, s) => ({ s, d: Math.hypot(site.at[0] - at[0], site.at[1] - at[1]) }))
 			.sort((a, b) => a.d - b.d);
 
-		const targets = [ranked[0].s];
+		const near = ranked.find(r => r.d > MAP_SAME_PLACE) || ranked[0];
+		const targets = [near.s];
 
-		// The two Malaysian sites are a few pixels apart, so "second
-		// nearest" for a Malaysian city would be its own neighbour.
+		// The Malaysian sites are a few pixels apart, so "second nearest"
+		// for a Malaysian city would be its own neighbour.
 		const other = ranked.find(r =>
-			Math.hypot(sites[r.s].at[0] - sites[ranked[0].s].at[0],
-				sites[r.s].at[1] - sites[ranked[0].s].at[1]) > 20);
+			Math.hypot(sites[r.s].at[0] - sites[near.s].at[0],
+				sites[r.s].at[1] - sites[near.s].at[1]) > 20);
 
 		if(i % 2 === 0 && other) targets.push(other.s);
 
@@ -222,7 +244,7 @@ function drawMap(svg){
 			MAP_SITES[s].networks.map(([asn, name]) => ({ asn, name, place: MAP_SITES[s].place, s }))
 		);
 
-		const height = 18 + rows.length * 44;
+		const height = 17 + rows.length * 40;
 		const group = mapEl("g", { class: "callout" });
 
 		// Leader lines from the box edge nearest the site.
@@ -230,8 +252,15 @@ function drawMap(svg){
 
 			const [x, y] = sites[s].at;
 
-			const ex = x < callout.x ? callout.x : callout.x + callout.width;
-			const ey = Math.max(callout.y + 14, Math.min(callout.y + height - 14, y));
+			// From the side facing the site, or the top edge when the site
+			// is straight above the box.
+			let ex = x < callout.x ? callout.x : callout.x + callout.width;
+			let ey = Math.max(callout.y + 14, Math.min(callout.y + height - 14, y));
+
+			if(x > callout.x && x < callout.x + callout.width && y < callout.y){
+				ex = x;
+				ey = callout.y;
+			}
 
 			group.append(mapEl("path", {
 				class: "callout-line",
@@ -250,12 +279,12 @@ function drawMap(svg){
 
 		rows.forEach((row, n) => {
 
-			const y = callout.y + 30 + n * 44;
+			const y = callout.y + 26 + n * 40;
 
 			group.append(
 				mapEl("text", { class: "callout-name", x: callout.x + 14, y }, row.name),
-				mapEl("text", { class: "callout-asn", x: callout.x + 14, y: y + 18 }, row.asn),
-				mapEl("text", { class: "callout-where", x: callout.x + 86, y: y + 18 }, row.place)
+				mapEl("text", { class: "callout-asn", x: callout.x + 14, y: y + 17 }, row.asn),
+				mapEl("text", { class: "callout-where", x: callout.x + 86, y: y + 17 }, row.place)
 			);
 		});
 

@@ -1043,6 +1043,14 @@ a.hero-pill:hover{
 	color:var(--text);
 }
 
+.sub-lead{
+	max-width:760px;
+	margin:-6px 0 14px;
+	color:var(--text-soft);
+	font-size:16px;
+	line-height:1.65;
+}
+
 .prose{
 	max-width:760px;
 	color:var(--text-soft);
@@ -1524,6 +1532,53 @@ a.as-card:hover{
 	line-height:1.55;
 }
 
+.as-grid-3{
+	grid-template-columns:repeat(3,minmax(0,1fr));
+}
+
+/* What a site is (Colo or VPS) and what it runs (DNS Guard, Resolver). */
+.as-tags{
+	display:flex;
+	flex-wrap:wrap;
+	gap:6px;
+	margin-top:10px;
+}
+
+.as-tag{
+	display:inline-flex;
+	align-items:center;
+	gap:5px;
+
+	padding:3px 10px;
+	border-radius:var(--pill);
+	border:1px solid var(--line-strong);
+
+	color:var(--text-soft);
+	font-size:12.5px;
+	font-weight:600;
+}
+
+.as-tag-run{
+	border-color:color-mix(in srgb, var(--accent) 45%, transparent);
+	background:var(--accent-soft);
+	color:var(--accent);
+}
+
+.roles{
+	display:flex;
+	flex-wrap:wrap;
+	gap:8px 20px;
+	margin:-4px 0 20px;
+	color:var(--text-soft);
+	font-size:14.5px;
+}
+
+.roles span{
+	display:inline-flex;
+	align-items:center;
+	gap:8px;
+}
+
 /* ---------- network map ---------- */
 
 .map-card{
@@ -1649,10 +1704,12 @@ a.as-card:hover{
 	opacity:.7;
 }
 
+/* Top right: the Philippine Sea is empty, and the bottom left is where
+   the Malaysian and Indonesian labels need the room. */
 .map-legend{
 	position:absolute;
-	left:16px;
-	bottom:16px;
+	right:16px;
+	top:16px;
 
 	display:flex;
 	flex-wrap:wrap;

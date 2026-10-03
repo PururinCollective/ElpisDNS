@@ -31,10 +31,10 @@
 <!-- Mozilla's fonts carry no Greek: this one is only the letters of ΕΛΠΙΣ -->
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&text=%CE%95%CE%9B%CE%A0%CE%99%CE%A3&display=swap" rel="stylesheet">
 
-<link href="style-main.css?hash=512e7c5c" rel="stylesheet">
-<link href="style-mobile.css?hash=7098d31d" rel="stylesheet">
+<link href="style-main.css?hash=a33c0b9f" rel="stylesheet">
+<link href="style-mobile.css?hash=90df77b3" rel="stylesheet">
 
-<meta name="description" content="Where Elpis DNS runs: four community networks in Kuala Lumpur, Semenyih and Singapore serving South East Asia, with ECS for CDN speed and DNS64 for IPv6-only networks.">
+<meta name="description" content="Where Elpis DNS runs: six networks in Malaysia, Singapore and Indonesia, with DNS Guard everywhere, our own resolver, ECS for CDN speed and DNS64.">
 <link rel="canonical" href="https://elpis.violetnetworks.xyz/network.html">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
@@ -44,7 +44,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://elpis.violetnetworks.xyz/network.html">
 <meta property="og:title" content="The ΕΛΠΙΣ DNS network">
-<meta property="og:description" content="Four community networks across South East Asia, one goal: private, fast DNS close to you.">
+<meta property="og:description" content="Six networks across Malaysia, Singapore and Indonesia, one goal: private, fast DNS close to you.">
 <meta property="og:image" content="https://elpis.violetnetworks.xyz/img/og-image.jpg">
 <meta property="og:image:secure_url" content="https://elpis.violetnetworks.xyz/img/og-image.jpg">
 <meta property="og:image:type" content="image/jpeg">
@@ -56,7 +56,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://elpis.violetnetworks.xyz/network.html">
 <meta name="twitter:title" content="The ΕΛΠΙΣ DNS network">
-<meta name="twitter:description" content="Four community networks across South East Asia, one goal: private, fast DNS close to you.">
+<meta name="twitter:description" content="Six networks across Malaysia, Singapore and Indonesia, one goal: private, fast DNS close to you.">
 <meta name="twitter:image" content="https://elpis.violetnetworks.xyz/img/og-image.jpg">
 <meta name="twitter:image:alt" content="ΕΛΠΙΣ DNS — By the community, for the community">
 
@@ -139,7 +139,7 @@
 		<span class="page-pill"><i class="bi bi-globe-asia-australia"></i> Network</span>
 		<h1 class="page-title">Close to you, <span class="flame">across the region</span></h1>
 		<p class="page-lead">
-			ΕΛΠΙΣ DNS answers from Malaysia and Singapore, on four community
+			ΕΛΠΙΣ DNS answers from Malaysia, Singapore and Indonesia, on six
 			networks. From Pekanbaru to Manila, your question doesn't have to
 			leave South East Asia.
 		</p>
@@ -156,7 +156,7 @@
 				<svg class="sea-map" id="sea-map" viewBox="0 0 1040 704" data-proj="88 140 23"
 					role="img" aria-labelledby="map-title">
 
-					<title id="map-title">Map of South East Asia. ΕΛΠΙΣ DNS answers from Kuala Lumpur, Semenyih and Singapore, with DNS traffic arriving from cities across the region.</title>
+					<title id="map-title">Map of South East Asia. ΕΛΠΙΣ DNS answers from Kuala Lumpur, Cyberjaya, Semenyih, Singapore and Jakarta, with DNS traffic arriving from cities across the region.</title>
 
 					<defs>
 						<pattern id="sea-dots" width="14" height="14" patternUnits="userSpaceOnUse">
@@ -184,34 +184,85 @@
 
 			<h2 class="sub-title">Where we answer from</h2>
 
-			<div class="as-grid">
+			<p class="sub-lead">
+				Every site runs <b>DNS Guard</b>, the encrypted, filtering front you
+				connect to. Two also run <b>ΕΛΠΙΣ Resolver</b>, which asks the root
+				servers itself.
+			</p>
+
+			<div class="roles">
+				<span><span class="as-tag"><i class="bi bi-building"></i> Colo</span> our own server, in a data centre</span>
+				<span><span class="as-tag"><i class="bi bi-cloud"></i> VPS</span> a rented virtual server, run by a community member</span>
+			</div>
+
+			<div class="as-grid as-grid-3">
 
 				<a class="as-card" href="https://bgp.tools/as/154516" target="_blank" rel="noopener">
 					<span class="as-num">AS154516</span>
 					<span class="as-name">Perfect Network</span>
 					<span class="as-where"><i class="bi bi-geo-alt"></i> Semenyih, Malaysia</span>
-					<span class="as-role">Home of the main resolvers and the Malaysian CDN endpoints.</span>
+					<span class="as-tags">
+						<span class="as-tag"><i class="bi bi-building"></i> Colo</span>
+						<span class="as-tag as-tag-run"><i class="bi bi-shield-check"></i> DNS Guard</span>
+						<span class="as-tag as-tag-run"><i class="bi-resolver"></i> Resolver</span>
+					</span>
+					<span class="as-role">The main endpoints, the CDN ones, and the Fizo and Sakurako resolvers.</span>
 				</a>
 
 				<a class="as-card" href="https://bgp.tools/as/153334" target="_blank" rel="noopener">
 					<span class="as-num">AS153334</span>
 					<span class="as-name">Origin TechLab</span>
 					<span class="as-where"><i class="bi bi-geo-alt"></i> Kuala Lumpur, Malaysia</span>
+					<span class="as-tags">
+						<span class="as-tag"><i class="bi bi-building"></i> Colo</span>
+						<span class="as-tag as-tag-run"><i class="bi bi-shield-check"></i> DNS Guard</span>
+					</span>
 					<span class="as-role">A second Malaysian path, for when one upstream has a bad day.</span>
-				</a>
-
-				<a class="as-card" href="https://bgp.tools/as/135134" target="_blank" rel="noopener">
-					<span class="as-num">AS135134</span>
-					<span class="as-name">Shana Network</span>
-					<span class="as-where"><i class="bi bi-geo-alt"></i> Singapore</span>
-					<span class="as-role">Answers from Singapore, tuned for international routes.</span>
 				</a>
 
 				<a class="as-card" href="https://bgp.tools/as/204535" target="_blank" rel="noopener">
 					<span class="as-num">AS204535</span>
 					<span class="as-name">Kevin Tan Networks</span>
 					<span class="as-where"><i class="bi bi-geo-alt"></i> Kuala Lumpur, Malaysia</span>
+					<span class="as-tags">
+						<span class="as-tag"><i class="bi bi-building"></i> Colo</span>
+						<span class="as-tag as-tag-run"><i class="bi bi-shield-check"></i> DNS Guard</span>
+						<span class="as-tag as-tag-run"><i class="bi-resolver"></i> Resolver</span>
+					</span>
 					<span class="as-role">Runs the Kevin resolvers. Moving to a new upstream, AS154516.</span>
+				</a>
+
+				<a class="as-card" href="https://bgp.tools/as/135134" target="_blank" rel="noopener">
+					<span class="as-num">AS135134</span>
+					<span class="as-name">Shana Network</span>
+					<span class="as-where"><i class="bi bi-geo-alt"></i> Singapore</span>
+					<span class="as-tags">
+						<span class="as-tag"><i class="bi bi-building"></i> Colo</span>
+						<span class="as-tag as-tag-run"><i class="bi bi-shield-check"></i> DNS Guard</span>
+					</span>
+					<span class="as-role">Answers from Singapore, tuned for international routes.</span>
+				</a>
+
+				<a class="as-card" href="https://bgp.tools/as/219206" target="_blank" rel="noopener">
+					<span class="as-num">AS219206</span>
+					<span class="as-name">Interdata Networks</span>
+					<span class="as-where"><i class="bi bi-geo-alt"></i> Cyberjaya, Malaysia</span>
+					<span class="as-tags">
+						<span class="as-tag"><i class="bi bi-cloud"></i> VPS</span>
+						<span class="as-tag as-tag-run"><i class="bi bi-shield-check"></i> DNS Guard</span>
+					</span>
+					<span class="as-role">Run by Syahpian, tuned for international routes.</span>
+				</a>
+
+				<a class="as-card" href="https://bgp.tools/as/140389" target="_blank" rel="noopener">
+					<span class="as-num">AS140389</span>
+					<span class="as-name">DewaBiz</span>
+					<span class="as-where"><i class="bi bi-geo-alt"></i> Jakarta, Indonesia</span>
+					<span class="as-tags">
+						<span class="as-tag"><i class="bi bi-cloud"></i> VPS</span>
+						<span class="as-tag as-tag-run"><i class="bi bi-shield-check"></i> DNS Guard</span>
+					</span>
+					<span class="as-role">Run by Ryukura in Jakarta DC 1, bringing ΕΛΠΙΣ closer to Indonesia.</span>
 				</a>
 			</div>
 		</div>
@@ -351,7 +402,7 @@
 <script src="js/app-theme.js?hash=eeee62ab"></script>
 <script src="js/app-nav.js?hash=12265ac1"></script>
 <script src="js/app-quote.js?hash=04725593"></script>
-<script src="js/app-map.js?hash=c3676397"></script>
+<script src="js/app-map.js?hash=4e7adf28"></script>
 
 </body>
 </html>

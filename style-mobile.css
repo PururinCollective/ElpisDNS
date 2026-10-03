@@ -9,6 +9,7 @@
 
 	.cards-4,
 	.as-grid,
+	.as-grid-3,
 	.stats{
 		grid-template-columns:repeat(2,minmax(0,1fr));
 	}
@@ -102,6 +103,7 @@
 	.cards-2,
 	.cards-4,
 	.as-grid,
+	.as-grid-3,
 	.footer-grid{
 		grid-template-columns:1fr;
 	}

@@ -8,7 +8,7 @@
 
 Free, encrypted DNS for South East Asia. Ads and trackers blocked, no query
 logs, and our own resolver answering all the way from the root &mdash; no ISP,
-no Google, no Cloudflare in between. Run by volunteers on four community
+no Google, no Cloudflare in between. Run by volunteers on six community
 networks, and aligned with the vision of
 [EFF Internet Freedom and Privacy](https://www.eff.org/).
 
