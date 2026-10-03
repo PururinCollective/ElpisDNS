@@ -219,7 +219,7 @@ press **.rsc**.
 - [AS154516](https://bgp.tools/as/154516) &mdash; Perfect Network, Semenyih, Malaysia
 - [AS153334](https://bgp.tools/as/153334) &mdash; Origin TechLab, Kuala Lumpur, Malaysia
 - [AS135134](https://bgp.tools/as/135134) &mdash; Shana Network, Singapore
-- [AS204535](https://bgp.tools/as/204535) &mdash; kevin.moe, Kuala Lumpur, Malaysia
+- [AS204535](https://bgp.tools/as/204535) &mdash; Kevin Tan Networks, Kuala Lumpur, Malaysia
 
 ---
 

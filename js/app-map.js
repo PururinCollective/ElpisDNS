@@ -19,7 +19,7 @@ const MAP_SITES = [
 		lon: 101.6865, lat: 3.1412,
 		networks: [
 			["AS153334", "Origin TechLab"],
-			["AS204535", "kevin.moe"]
+			["AS204535", "Kevin Tan Networks"]
 		]
 	},
 	{
@@ -41,7 +41,7 @@ const MAP_SITES = [
 // Where the label boxes sit, in map pixels, and which sites they explain.
 // Both spots are open sea at every width the labels are shown.
 const MAP_CALLOUTS = [
-	{ x: 16, y: 484, sites: [0, 1], width: 196 },
+	{ x: 16, y: 484, sites: [0, 1], width: 208 },
 	{ x: 378, y: 288, sites: [2], width: 176 }
 ];
 
