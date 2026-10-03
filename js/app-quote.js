@@ -62,6 +62,8 @@ const footerQuotes = [
 
 	/* ---- house lines ---- */
 
+	{ text: "By the community, for the community." },
+
 	{ text: "A network built upon strong foundations shall not falter." },
 
 	{ text: "Defend privacy. Preserve freedom. Protect the open internet." },

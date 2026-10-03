@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Our network — ΕΛΠΙΣ DNS across South East Asia</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/svg+xml" href="img/elpis-mark.svg?hash=22f4687a">
+<link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+
+<!-- Paint the correct theme before the first frame, no white flash -->
+<script>
+	(function(){
+		var choice = "auto";
+		try { choice = localStorage.getItem("elpis-theme") || "auto"; } catch(e){}
+		var dark = choice === "dark" ||
+			(choice === "auto" &&
+			 window.matchMedia("(prefers-color-scheme: dark)").matches);
+		document.documentElement.dataset.theme = dark ? "dark" : "light";
+		document.documentElement.dataset.themeChoice = choice;
+	})();
+</script>
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mozilla+Headline:wdth,wght@75..100,500..700&family=Mozilla+Text:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Mozilla's fonts carry no Greek: this one is only the letters of ΕΛΠΙΣ -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&text=%CE%95%CE%9B%CE%A0%CE%99%CE%A3&display=swap" rel="stylesheet">
+
+<link href="style-main.css?hash=4e8a9a16" rel="stylesheet">
+<link href="style-mobile.css?hash=90df77b3" rel="stylesheet">
+
+<meta name="description" content="Where Elpis DNS runs: six networks in Malaysia, Singapore and Indonesia, with DNS Guard everywhere, our own resolver, ECS for CDN speed and DNS64.">
+<link rel="canonical" href="https://elpis.violetnetworks.xyz/network.html">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+<!-- Open Graph: Facebook, Discord, Telegram, Slack, WhatsApp, LinkedIn -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ΕΛΠΙΣ DNS">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://elpis.violetnetworks.xyz/network.html">
+<meta property="og:title" content="The ΕΛΠΙΣ DNS network">
+<meta property="og:description" content="Six networks across Malaysia, Singapore and Indonesia, one goal: private, fast DNS close to you.">
+<meta property="og:image" content="https://elpis.violetnetworks.xyz/img/og-image.jpg">
+<meta property="og:image:secure_url" content="https://elpis.violetnetworks.xyz/img/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ΕΛΠΙΣ DNS — By the community, for the community">
+
+<!-- X / Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://elpis.violetnetworks.xyz/network.html">
+<meta name="twitter:title" content="The ΕΛΠΙΣ DNS network">
+<meta name="twitter:description" content="Six networks across Malaysia, Singapore and Indonesia, one goal: private, fast DNS close to you.">
+<meta name="twitter:image" content="https://elpis.violetnetworks.xyz/img/og-image.jpg">
+<meta name="twitter:image:alt" content="ΕΛΠΙΣ DNS — By the community, for the community">
+
+<!-- The stripe Discord paints down the side of the embed -->
+<meta name="theme-color" content="#1d0b3d">
+
+<script type="application/ld+json">
+{
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": "WebPage",
+			"@id": "https://elpis.violetnetworks.xyz/network.html#page",
+			"url": "https://elpis.violetnetworks.xyz/network.html",
+			"name": "The ΕΛΠΙΣ DNS network",
+			"isPartOf": {
+				"@id": "https://elpis.violetnetworks.xyz/#website"
+			}
+		},
+		{
+			"@type": "BreadcrumbList",
+			"itemListElement": [
+				{
+					"@type": "ListItem",
+					"position": 1,
+					"name": "ΕΛΠΙΣ DNS",
+					"item": "https://elpis.violetnetworks.xyz/"
+				},
+				{
+					"@type": "ListItem",
+					"position": 2,
+					"name": "Network",
+					"item": "https://elpis.violetnetworks.xyz/network.html"
+				}
+			]
+		}
+	]
+}
+</script>
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- Top bar -->
+<header class="topbar">
+	<div class="wrap topbar-inner">
+
+		<a class="brand" href="index.html">
+			<img src="img/elpis-mark.svg?hash=22f4687a" alt="" class="brand-mark" width="32" height="32">
+			<span class="brand-name">ΕΛΠΙΣ <span class="brand-dns">DNS</span></span>
+		</a>
+
+		<nav class="nav" id="nav" aria-label="Main">
+			<a href="index.html">Home</a>
+			<a href="network.html" aria-current="page">Network</a>
+			<a href="resolver.html">Resolver</a>
+			<a href="ml-dsa-44.html">ML-DSA-44</a>
+			<a href="setup.html">Setup</a>
+			<a href="mission.html">About</a>
+		</nav>
+
+		<div class="topbar-tools">
+			<a class="icon-btn" href="https://github.com/PururinCollective/ElpisDNS" target="_blank" rel="noopener" title="Source on GitHub" aria-label="Source on GitHub">
+				<i class="bi bi-github"></i>
+			</a>
+			<button class="icon-btn" id="theme-btn" type="button" title="Theme" aria-label="Theme">
+				<i class="bi bi-circle-half"></i>
+			</button>
+			<button class="icon-btn nav-toggle" id="nav-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav">
+				<i class="bi bi-list"></i>
+			</button>
+		</div>
+	</div>
+</header>
+
+<section class="page-hero on-night">
+	<div class="wrap">
+		<span class="page-pill"><i class="bi bi-globe-asia-australia"></i> Network</span>
+		<h1 class="page-title">Close to you, <span class="flame">across the region</span></h1>
+		<p class="page-lead">
+			ΕΛΠΙΣ DNS answers from Malaysia, Singapore and Indonesia, on six
+			networks. From Pekanbaru to Manila, your question doesn't have to
+			leave South East Asia.
+		</p>
+	</div>
+</section>
+
+<main id="main">
+
+	<!-- The map -->
+	<section class="section section-tight">
+		<div class="wrap">
+
+			<div class="map-card">
+				<svg class="sea-map" id="sea-map" viewBox="0 0 1040 704" data-proj="88 140 23"
+					role="img" aria-labelledby="map-title">
+
+					<title id="map-title">Map of South East Asia. ΕΛΠΙΣ DNS answers from Kuala Lumpur, Cyberjaya, Semenyih, Singapore and Jakarta, with DNS traffic arriving from cities across the region.</title>
+
+					<defs>
+						<pattern id="sea-dots" width="14" height="14" patternUnits="userSpaceOnUse">
+							<circle class="map-dots" cx="7" cy="7" r="1.1"/>
+						</pattern>
+					</defs>
+
+					<rect class="map-sea" width="1040" height="704"/>
+					<rect width="1040" height="704" fill="url(#sea-dots)"/>
+
+					<use class="map-land" href="img/sea-map.svg?hash=c736c038#land"/>
+
+					<g id="map-traffic"></g>
+					<g id="map-cities"></g>
+					<g id="map-callouts"></g>
+					<g id="map-hubs"></g>
+				</svg>
+
+				<div class="map-legend" aria-hidden="true">
+					<span><i class="legend-hub"></i> ΕΛΠΙΣ site</span>
+					<span><i class="legend-city"></i> City</span>
+					<span><i class="legend-traffic"></i> DNS traffic</span>
+				</div>
+			</div>
+
+			<h2 class="sub-title">Where we answer from</h2>
+
+			<p class="sub-lead">
+				Every site runs <b>DNS Guard</b>, the encrypted, filtering front you
+				connect to. Three also run <b>ΕΛΠΙΣ Resolver</b>, which asks the root
+				servers itself.
+			</p>
+
+			<div class="roles">
+				<span><span class="as-tag"><i class="bi bi-building"></i> Colo</span> our own server, in a data centre</span>
+				<span><span class="as-tag"><i class="bi bi-cloud"></i> VPS</span> a rented virtual server, run by a community member</span>
+			</div>
+
+			<div class="as-grid as-grid-3">
+
+				<a class="as-card" href="https://bgp.tools/as/154516" target="_blank" rel="noopener">
+					<span class="as-num">AS154516</span>
+					<span class="as-name">Perfect Network</span>
+					<span class="as-where"><i class="bi bi-geo-alt"></i> Semenyih, Malaysia</span>
+					<span class="as-tags">
+						<span class="as-tag"><i class="bi bi-building"></i> Colo</span>
+						<span class="as-tag as-tag-run"><i class="bi bi-shield-check"></i> DNS Guard</span>
+						<span class="as-tag as-tag-run"><i class="bi-resolver"></i> Resolver</span>
+					</span>
+					<span class="as-role">The main endpoints, the CDN ones, and the Fizo and Sakurako resolvers.</span>
+				</a>
+
+				<a class="as-card" href="https://bgp.tools/as/153334" target="_blank" rel="noopener">
+					<span class="as-num">AS153334</span>
+					<span class="as-name">Origin TechLab</span>
+					<span class="as-where"><i class="bi bi-geo-alt"></i> Kuala Lumpur, Malaysia</span>
+					<span class="as-tags">
+						<span class="as-tag"><i class="bi bi-building"></i> Colo</span>
+						<span class="as-tag as-tag-run"><i class="bi bi-shield-check"></i> DNS Guard</span>
+					</span>
+					<span class="as-role">A second Malaysian path, for when one upstream has a bad day.</span>
+				</a>
+
+				<a class="as-card" href="https://bgp.tools/as/204535" target="_blank" rel="noopener">
+					<span class="as-num">AS204535</span>
+					<span class="as-name">Kevin Tan Networks</span>
+					<span class="as-where"><i class="bi bi-geo-alt"></i> Kuala Lumpur, Malaysia</span>
+					<span class="as-tags">
+						<span class="as-tag"><i class="bi bi-building"></i> Colo</span>
+						<span class="as-tag as-tag-run"><i class="bi bi-shield-check"></i> DNS Guard</span>
+						<span class="as-tag as-tag-run"><i class="bi-resolver"></i> Resolver</span>
+					</span>
+					<span class="as-role">Runs the Kevin resolvers. Moving to a new upstream, AS154516.</span>
+				</a>
+
+				<a class="as-card" href="https://bgp.tools/as/135134" target="_blank" rel="noopener">
+					<span class="as-num">AS135134</span>
+					<span class="as-name">Shana Network</span>
+					<span class="as-where"><i class="bi bi-geo-alt"></i> Singapore</span>
+					<span class="as-tags">
+						<span class="as-tag"><i class="bi bi-building"></i> Colo</span>
+						<span class="as-tag as-tag-run"><i class="bi bi-shield-check"></i> DNS Guard</span>
+					</span>
+					<span class="as-role">Answers from Singapore, tuned for international routes.</span>
+				</a>
+
+				<a class="as-card" href="https://bgp.tools/as/219206" target="_blank" rel="noopener">
+					<span class="as-num">AS219206</span>
+					<span class="as-name">Interdata Networks</span>
+					<span class="as-where"><i class="bi bi-geo-alt"></i> Cyberjaya, Malaysia</span>
+					<span class="as-tags">
+						<span class="as-tag"><i class="bi bi-cloud"></i> VPS</span>
+						<span class="as-tag as-tag-run"><i class="bi bi-shield-check"></i> DNS Guard</span>
+					</span>
+					<span class="as-role">Run by Syahpian, tuned for international routes.</span>
+				</a>
+
+				<a class="as-card" href="https://bgp.tools/as/140389" target="_blank" rel="noopener">
+					<span class="as-num">AS140389</span>
+					<span class="as-name">DewaBiz</span>
+					<span class="as-where"><i class="bi bi-geo-alt"></i> Jakarta, Indonesia</span>
+					<span class="as-tags">
+						<span class="as-tag"><i class="bi bi-cloud"></i> VPS</span>
+						<span class="as-tag as-tag-run"><i class="bi bi-shield-check"></i> DNS Guard</span>
+						<span class="as-tag as-tag-run"><i class="bi-resolver"></i> Resolver</span>
+					</span>
+					<span class="as-role">Run by Ryukura in Jakarta DC 1: DNS Guard and ΕΛΠΙΣ Resolver on one VPS.</span>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- What makes it fast -->
+	<section class="section section-alt">
+		<div class="wrap">
+
+			<div class="section-head">
+				<p class="eyebrow">Built for South East Asia</p>
+				<h2 class="section-title">Fast where you are</h2>
+				<p class="section-lead">
+					A few things we do so pages, videos and games load quickly here,
+					not just somewhere far away.
+				</p>
+			</div>
+
+			<div class="cards cards-2">
+
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-play-btn"></i></span>
+					<h3 class="card-title">ECS for faster video</h3>
+					<p class="card-text">
+						<code>a.hitoha.moe</code> and <code>b.hitoha.moe</code> send EDNS
+						Client Subnet: a shortened prefix of your address, like a /24
+						or a /56, never the full one. YouTube and other CDNs use it to
+						pick the cache nearest you. No other endpoint passes yours on.
+					</p>
+				</div>
+
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-diagram-3"></i></span>
+					<h3 class="card-title">DNS64 for IPv6-only</h3>
+					<p class="card-text">
+						No IPv4 on your network, like a VPS with only IPv6? DNS64 gives
+						IPv4-only sites an address on our own NAT64 gateway, so you
+						reach them anyway. Nothing to install: use <code>64.hitoha.moe</code>.
+					</p>
+				</div>
+
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-lock"></i></span>
+					<h3 class="card-title">Encrypted all the way</h3>
+					<p class="card-text">
+						DNS over HTTPS and DNS over TLS on every endpoint. Your ISP sees
+						that you're using DNS, but not what you look up.
+					</p>
+				</div>
+
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-arrow-repeat"></i></span>
+					<h3 class="card-title">More than one of everything</h3>
+					<p class="card-text">
+						Each endpoint has several hostnames on more than one network.
+						Add two or three to your device and it keeps working when one
+						goes down.
+					</p>
+				</div>
+			</div>
+
+			<div class="cta">
+				<div>
+					<div class="cta-title">Pick the endpoint for your region</div>
+					<p class="cta-text">
+						Malaysia, Singapore or Indonesia, Standard or Family, DoH or DoT.
+						We build the address for you.
+					</p>
+				</div>
+				<div class="cta-actions">
+					<a class="btn btn-elpis" href="index.html#start">
+						<i class="bi bi-lightning-charge-fill"></i> Get your DNS
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+	<div class="wrap footer-grid">
+
+		<div>
+			<a class="brand" href="index.html">
+				<img src="img/elpis-mark.svg?hash=22f4687a" alt="" class="brand-mark" width="32" height="32">
+				<span class="brand-name">ΕΛΠΙΣ <span class="brand-dns">DNS</span></span>
+			</a>
+			<p class="footer-slogan">By the community, for the community.</p>
+			<p class="footer-text">
+				Free, encrypted DNS for South East Asia. Part of the Pururin
+				Collective, in the spirit of
+				<a href="https://www.eff.org/" target="_blank" rel="noopener">EFF</a>'s
+				fight for internet freedom and privacy.
+			</p>
+		</div>
+
+		<div>
+			<h2 class="footer-title">Explore</h2>
+			<ul class="footer-links">
+				<li><a href="index.html#start">Get your DNS</a></li>
+				<li><a href="network.html">Network</a></li>
+				<li><a href="resolver.html">Resolver</a></li>
+				<li><a href="ml-dsa-44.html">ML-DSA-44</a></li>
+				<li><a href="setup.html">Setup guide</a></li>
+				<li><a href="mission.html">About</a></li>
+			</ul>
+		</div>
+
+		<div>
+			<h2 class="footer-title">Community</h2>
+			<ul class="footer-links">
+				<li><a href="https://github.com/PururinCollective/ElpisDNS" target="_blank" rel="noopener">GitHub</a></li>
+				<li><a href="https://discord.gg/aw8pt2SWnv" target="_blank" rel="noopener">Discord</a></li>
+				<li><a href="https://pururin.moe/" target="_blank" rel="noopener">Forum</a></li>
+				<li><a href="https://openpon.org/" target="_blank" rel="noopener">OpenPON</a></li>
+			</ul>
+		</div>
+
+		<div>
+			<h2 class="footer-title">Supported by</h2>
+			<ul class="footer-links">
+				<li><a href="https://bgp.tools/as/154516" target="_blank" rel="noopener"><span class="as-num">AS154516</span> Perfect Network</a></li>
+				<li><a href="https://bgp.tools/as/153334" target="_blank" rel="noopener"><span class="as-num">AS153334</span> Origin TechLab</a></li>
+				<li><a href="https://bgp.tools/as/135134" target="_blank" rel="noopener"><span class="as-num">AS135134</span> Shana Network</a></li>
+				<li><a href="https://bgp.tools/as/204535" target="_blank" rel="noopener"><span class="as-num">AS204535</span> Kevin Tan Networks</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="wrap footer-bottom">
+		<div id="footer-quote"></div>
+		<p>Made with ♥ by the community &middot; © 2026 ΕΛΠΙΣ DNS</p>
+	</div>
+</footer>
+
+<script src="js/app-theme.js?hash=eeee62ab"></script>
+<script src="js/app-nav.js?hash=12265ac1"></script>
+<script src="js/app-quote.js?hash=04725593"></script>
+<script src="js/app-map.js?hash=4e7adf28"></script>
+
+</body>
+</html>
