@@ -4,7 +4,7 @@
 	"//": "ΕΛΠΙΣ DNS resolver database. Everything the website shows is built from this file. To add your own DoH/DoT resolver, copy one block inside \"resolvers\", change the values, and open a pull request. Read CONTRIBUTING.md first.",
 
 	"version": 2,
-	"updated": "2026-10-02",
+	"updated": "2026-10-04",
 
 	"regions": [
 		{ "code": "MY", "label": "Malaysia" },
@@ -157,8 +157,10 @@
 			"feature": "International",
 			"kind": ["DoH", "DoT"],
 			"maintainer": "Ryukura",
-			"notes": "Our Indonesian entry, run by the Ryukura crew.",
+			"notes": "Our Indonesian entry, answering from Jakarta. Run by Ryukura.",
 			"servers": [
+				"d.hitoha.moe",
+				"id.pururin.moe",
 				"dns.ryukura.biz.id"
 			]
 		}

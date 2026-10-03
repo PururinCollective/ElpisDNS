@@ -31,7 +31,7 @@
 <!-- Mozilla's fonts carry no Greek: this one is only the letters of ΕΛΠΙΣ -->
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&text=%CE%95%CE%9B%CE%A0%CE%99%CE%A3&display=swap" rel="stylesheet">
 
-<link href="style-main.css?hash=a33c0b9f" rel="stylesheet">
+<link href="style-main.css?hash=4e8a9a16" rel="stylesheet">
 <link href="style-mobile.css?hash=90df77b3" rel="stylesheet">
 
 <meta name="description" content="Public ΕΛΠΙΣ Resolver addresses for your own AdGuard Home or Pi-hole: recursive DNS straight from the root, DNSSEC with post-quantum ML-DSA-44, no ISP, no Google, no Cloudflare.">
@@ -186,8 +186,8 @@
 				</div>
 
 				<div class="stat">
-					<div class="stat-num">6</div>
-					<p class="stat-text">public resolvers, on IPv4 and IPv6</p>
+					<div class="stat-num">7</div>
+					<p class="stat-text">public resolvers, in Malaysia and Indonesia</p>
 				</div>
 			</div>
 
@@ -241,6 +241,11 @@
 							<td data-label="IPv4"><span class="ip-cell"><code>89.23.82.82</code> <button class="copy-mini" type="button" data-copy="89.23.82.82" aria-label="Copy 89.23.82.82"><i class="bi bi-clipboard"></i></button></span></td>
 							<td data-label="IPv6"><span class="ip-cell"><code>2402:4e20:bab1::1111</code> <button class="copy-mini" type="button" data-copy="2402:4e20:bab1::1111" aria-label="Copy 2402:4e20:bab1::1111"><i class="bi bi-clipboard"></i></button></span></td>
 						</tr>
+						<tr>
+							<td class="srv-name">Ryukura <span class="srv-tag srv-tag-info" title="Jakarta, Indonesia">Jakarta</span></td>
+							<td data-label="IPv4"><span class="ip-cell"><code>103.253.245.167:5301</code> <button class="copy-mini" type="button" data-copy="103.253.245.167:5301" aria-label="Copy 103.253.245.167:5301"><i class="bi bi-clipboard"></i></button></span></td>
+							<td data-label="IPv6"><span class="ip-none">IPv4 only for now</span></td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
@@ -251,7 +256,7 @@
 					<i class="bi bi-clipboard"></i> Copy all IPv6
 				</button>
 				<button class="btn btn-elpis-ghost" type="button"
-					data-copy="151.158.198.47&#10;151.158.198.46&#10;151.158.198.49:5301&#10;151.158.198.49:5302&#10;89.23.82.53&#10;89.23.82.82">
+					data-copy="151.158.198.47&#10;151.158.198.46&#10;151.158.198.49:5301&#10;151.158.198.49:5302&#10;89.23.82.53&#10;89.23.82.82&#10;103.253.245.167:5301">
 					<i class="bi bi-clipboard"></i> Copy all IPv4
 				</button>
 			</div>
@@ -334,7 +339,8 @@
 				<div>
 					Mix servers from different groups, like one Fizo, one Sakurako and one
 					Kevin. They sit on different machines, so one going down for an
-					upgrade never takes your DNS with it.
+					upgrade never takes your DNS with it. In Indonesia, add Ryukura in
+					Jakarta: it's the closest to you.
 				</div>
 			</div>
 		</div>

@@ -51,6 +51,7 @@ recursion and DNSSEC.
 | Sakurako-2 | `151.158.198.49:5302` | `2402:4e20:b00b::1111` |
 | Kevin-1    | `89.23.82.53`         | `2402:4e20:bab1::1001` |
 | Kevin-2    | `89.23.82.82`         | `2402:4e20:bab1::1111` |
+| Ryukura    | `103.253.245.167:5301` | IPv4 only for now     |
 
 > AS204535 (`89.23.82.0/24` and `2a0f:1cc6:bab1::/48`) is moving to a new BGP
 > upstream, AS154516. The Kevin IPv4 addresses may change.
