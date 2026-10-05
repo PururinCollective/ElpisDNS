@@ -156,6 +156,7 @@
 		<div class="jump">
 			<a href="#public"><i class="bi bi-hdd-network"></i> Public resolvers</a>
 			<a href="#use"><i class="bi bi-sliders"></i> AdGuard Home &amp; Pi-hole</a>
+			<a href="#adox"><i class="bi bi-lock"></i> ADoX</a>
 			<a href="#inside"><i class="bi-resolver"></i> What's inside</a>
 			<a href="https://github.com/PururinCollective/elpis-resolver" target="_blank" rel="noopener"><i class="bi bi-github"></i> Source</a>
 		</div>
@@ -224,12 +225,12 @@
 						<tr>
 							<td class="srv-name">Fizo-1</td>
 							<td data-label="IPv4"><span class="ip-cell"><code>151.158.198.47</code> <button class="copy-mini" type="button" data-copy="151.158.198.47" aria-label="Copy 151.158.198.47"><i class="bi bi-clipboard"></i></button></span></td>
-							<td data-label="IPv6"><span class="ip-cell"><code>2402:4e20:c0de::b00b</code> <button class="copy-mini" type="button" data-copy="2402:4e20:6767::b00b" aria-label="Copy 2402:4e20:6767::b00b"><i class="bi bi-clipboard"></i></button></span></td>
+							<td data-label="IPv6"><span class="ip-cell"><code>2402:4e20:c0de::b00b</code> <button class="copy-mini" type="button" data-copy="2402:4e20:c0de::b00b" aria-label="Copy 2402:4e20:c0de::b00b"><i class="bi bi-clipboard"></i></button></span></td>
 						</tr>
 						<tr>
 							<td class="srv-name">Fizo-2</td>
 							<td data-label="IPv4"><span class="ip-cell"><code>151.158.198.46</code> <button class="copy-mini" type="button" data-copy="151.158.198.46" aria-label="Copy 151.158.198.46"><i class="bi bi-clipboard"></i></button></span></td>
-							<td data-label="IPv6"><span class="ip-cell"><code>2402:4e20:c0de::bab1</code> <button class="copy-mini" type="button" data-copy="2402:4e20:6767::bab1" aria-label="Copy 2402:4e20:6767::bab1"><i class="bi bi-clipboard"></i></button></span></td>
+							<td data-label="IPv6"><span class="ip-cell"><code>2402:4e20:c0de::bab1</code> <button class="copy-mini" type="button" data-copy="2402:4e20:c0de::bab1" aria-label="Copy 2402:4e20:c0de::bab1"><i class="bi bi-clipboard"></i></button></span></td>
 						</tr>
 						<tr>
 							<td class="srv-name">Kevin-1</td>
@@ -252,7 +253,7 @@
 
 			<div class="table-actions">
 				<button class="btn btn-elpis" type="button"
-					data-copy="2402:4e20:6767::b00b&#10;2402:4e20:6767::bab1&#10;2402:4e20:b00b::1001&#10;2402:4e20:b00b::1111&#10;2a0f:1cc6:bab1::1111&#10;2a0f:1cc6:bab1::1001">
+					data-copy="2402:4e20:c0de::b00b&#10;2402:4e20:c0de::bab1&#10;2402:4e20:b00b::1001&#10;2402:4e20:b00b::1111&#10;2a0f:1cc6:bab1::1111&#10;2a0f:1cc6:bab1::1001">
 					<i class="bi bi-clipboard"></i> Copy all IPv6
 				</button>
 				<button class="btn btn-elpis-ghost" type="button"
@@ -296,7 +297,7 @@
 						<li>Go to <b>Settings</b> &rarr; <b>DNS settings</b> &rarr; <b>Upstream DNS servers</b>.</li>
 						<li>Paste the addresses, one per line. Ports go after a colon.</li>
 					</ol>
-					<div class="code-block"><pre>2402:4e20:6767::b00b
+					<div class="code-block"><pre>2402:4e20:c0de::b00b
 2402:4e20:b00b::1001
 2a0f:1cc6:bab1::1111
 151.158.198.47
@@ -314,7 +315,7 @@
 						<li>Go to <b>Settings</b> &rarr; <b>DNS</b> and untick the built-in providers.</li>
 						<li>Add ours under <b>Custom DNS servers</b>. Pi-hole writes the port after a <code>#</code>.</li>
 					</ol>
-					<div class="code-block"><pre>2402:4e20:6767::b00b
+					<div class="code-block"><pre>2402:4e20:c0de::b00b
 2402:4e20:b00b::1001
 151.158.198.47
 151.158.198.49#5301</pre></div>
@@ -336,8 +337,72 @@
 		</div>
 	</section>
 
+	<!-- ADoX -->
+	<section class="section" id="adox">
+		<div class="wrap">
+
+			<div class="section-head">
+				<p class="eyebrow">New &middot; ADoX</p>
+				<h2 class="section-title">Encrypted past us, too</h2>
+				<p class="section-lead">
+					DoH and DoT encrypt the trip from you to us. ADoX covers the next
+					one: ΕΛΠΙΣ Resolver now asks the root, the TLDs and each domain's
+					name server over DNS over TLS, wherever they take it.
+				</p>
+			</div>
+
+			<div class="cards cards-2">
+
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-lock"></i></span>
+					<h3 class="card-title">How it works</h3>
+					<ol class="doc-steps">
+						<li>The first question to a name server goes plain, as always, with a copy over TLS on port 853. Nobody waits on the copy, so it costs no time.</li>
+						<li>The server answers over TLS? From then on it gets every question over TLS only, on a connection kept open.</li>
+						<li>It doesn't? It gets plain DNS as before, and we try TLS again every hour.</li>
+						<li>Servers that take TLS are asked first, so fewer of your names cross the wire in the clear.</li>
+						<li>Each question is padded to 128 bytes, so its length gives less away.</li>
+					</ol>
+				</div>
+
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-eye-slash"></i></span>
+					<h3 class="card-title">What it stops, and what it doesn't</h3>
+					<p class="card-text">
+						It stops anyone <b>watching</b> the path, like the networks between
+						us and the name server, from reading what we ask. It can't stop
+						someone <b>sitting on</b> the path, who could block port 853 and send
+						us back to plain DNS, which is where we were before.
+					</p>
+					<p class="card-text" style="margin-top:12px">
+						The name server still sees the question; it has to, to answer it.
+						And DNSSEC checks every answer the same way, however it arrived.
+					</p>
+					<p class="card-text" style="margin-top:12px">
+						Few name servers take TLS yet. <code>b.root-servers.net</code> and
+						Facebook's do, and more will as their operators turn it on.
+					</p>
+				</div>
+			</div>
+
+			<div class="note">
+				<i class="bi bi-patch-check"></i>
+				<div>
+					<b>See it yourself.</b> Use ΕΛΠΙΣ as your DNS and open
+					<a href="https://dnscheck.tools/" target="_blank" rel="noopener">dnscheck.tools</a>:
+					<b>ADoX</b> in the bottom bar means our resolver reached its test
+					server over TLS. Running your own? Add
+					<code>authoritative-dot: opportunistic</code> to <code>elpis.conf</code>.
+					It's off by default, and the
+					<a href="https://github.com/PururinCollective/elpis-resolver/blob/main/docs/configuration.md#-dns-over-tls-to-authoritative-servers" target="_blank" rel="noopener">configuration guide</a>
+					has the details.
+				</div>
+			</div>
+		</div>
+	</section>
+
 	<!-- What's inside -->
-	<section class="section" id="inside">
+	<section class="section section-alt" id="inside">
 		<div class="wrap">
 
 			<div class="section-head">
@@ -366,9 +431,10 @@
 					<span class="card-icon"><i class="bi bi-diagram-3"></i></span>
 					<h3 class="card-title">Straight to the root</h3>
 					<p class="card-text">
-						Root, then TLD, then the name server with the answer. Nobody
-						upstream keeps a copy of your questions.
+						Root, then TLD, then the name server with the answer, over TLS
+						where they take it. Nobody upstream keeps a copy of your questions.
 					</p>
+					<a class="card-more" href="#adox">What ADoX is <i class="bi bi-arrow-right"></i></a>
 				</div>
 
 				<div class="card">

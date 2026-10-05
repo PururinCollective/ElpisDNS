@@ -39,14 +39,18 @@ second resolver in the world to validate
 (algorithm 18, FIPS 204), and
 it answers more than 30 million queries a day across our resolvers.
 
+It also does [ADoX](https://elpis.violetnetworks.xyz/resolver.html#adox): what
+it asks the root, the TLDs and each domain's name server goes over DNS over TLS
+wherever they take it (RFC 9539), and plain DNS where they don't.
+
 Running AdGuard Home or Pi-hole at home, the office or a business? Use these
 as your upstream. They are unfiltered on purpose &mdash; your lists, our
 recursion and DNSSEC.
 
 | Server     | IPv4                  | IPv6                   |
 |------------|-----------------------|------------------------|
-| Fizo-1     | `151.158.198.47`      | `2402:4e20:6767::b00b` |
-| Fizo-2     | `151.158.198.46`      | `2402:4e20:6767::bab1` |
+| Fizo-1     | `151.158.198.47`      | `2402:4e20:c0de::b00b` |
+| Fizo-2     | `151.158.198.46`      | `2402:4e20:c0de::bab1` |
 | Sakurako-1 | `151.158.198.49:5301` | `2402:4e20:b00b::1001` |
 | Sakurako-2 | `151.158.198.49:5302` | `2402:4e20:b00b::1111` |
 | Kevin-1    | `89.23.82.53`         | `2a0f:1cc6:bab1::1111` |
