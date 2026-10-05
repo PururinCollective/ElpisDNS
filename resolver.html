@@ -232,14 +232,14 @@
 							<td data-label="IPv6"><span class="ip-cell"><code>2402:4e20:c0de::bab1</code> <button class="copy-mini" type="button" data-copy="2402:4e20:6767::bab1" aria-label="Copy 2402:4e20:6767::bab1"><i class="bi bi-clipboard"></i></button></span></td>
 						</tr>
 						<tr>
-							<td class="srv-name">Kevin-1 <span class="srv-tag" title="Moving to a new upstream, see the note below">IPv6 may change</span></td>
+							<td class="srv-name">Kevin-1</td>
 							<td data-label="IPv4"><span class="ip-cell"><code>89.23.82.53</code> <button class="copy-mini" type="button" data-copy="89.23.82.53" aria-label="Copy 89.23.82.53"><i class="bi bi-clipboard"></i></button></span></td>
-							<td data-label="IPv6"><span class="ip-cell"><code>2402:4e20:bab1::1001</code> <button class="copy-mini" type="button" data-copy="2402:4e20:bab1::1001" aria-label="Copy 2402:4e20:bab1::1001"><i class="bi bi-clipboard"></i></button></span></td>
+							<td data-label="IPv6"><span class="ip-cell"><code>2a0f:1cc6:bab1::1111</code> <button class="copy-mini" type="button" data-copy="2a0f:1cc6:bab1::1111" aria-label="Copy 2a0f:1cc6:bab1::1111"><i class="bi bi-clipboard"></i></button></span></td>
 						</tr>
 						<tr>
-							<td class="srv-name">Kevin-2 <span class="srv-tag" title="Moving to a new upstream, see the note below">IPv6 may change</span></td>
+							<td class="srv-name">Kevin-2</td>
 							<td data-label="IPv4"><span class="ip-cell"><code>89.23.82.82</code> <button class="copy-mini" type="button" data-copy="89.23.82.82" aria-label="Copy 89.23.82.82"><i class="bi bi-clipboard"></i></button></span></td>
-							<td data-label="IPv6"><span class="ip-cell"><code>2402:4e20:bab1::1111</code> <button class="copy-mini" type="button" data-copy="2402:4e20:bab1::1111" aria-label="Copy 2402:4e20:bab1::1111"><i class="bi bi-clipboard"></i></button></span></td>
+							<td data-label="IPv6"><span class="ip-cell"><code>2a0f:1cc6:bab1::1001</code> <button class="copy-mini" type="button" data-copy="2a0f:1cc6:bab1::1001" aria-label="Copy 2a0f:1cc6:bab1::1001"><i class="bi bi-clipboard"></i></button></span></td>
 						</tr>
 						<tr>
 							<td class="srv-name">Ryukura <span class="srv-tag srv-tag-info" title="Jakarta, Indonesia">Jakarta</span></td>
@@ -252,7 +252,7 @@
 
 			<div class="table-actions">
 				<button class="btn btn-elpis" type="button"
-					data-copy="2402:4e20:6767::b00b&#10;2402:4e20:6767::bab1&#10;2402:4e20:b00b::1001&#10;2402:4e20:b00b::1111&#10;2402:4e20:bab1::1001&#10;2402:4e20:bab1::1111">
+					data-copy="2402:4e20:6767::b00b&#10;2402:4e20:6767::bab1&#10;2402:4e20:b00b::1001&#10;2402:4e20:b00b::1111&#10;2a0f:1cc6:bab1::1111&#10;2a0f:1cc6:bab1::1001">
 					<i class="bi bi-clipboard"></i> Copy all IPv6
 				</button>
 				<button class="btn btn-elpis-ghost" type="button"
@@ -269,16 +269,6 @@
 					calls. Want ours too? Use the encrypted endpoints on the
 					<a href="index.html#start">home page</a> instead. IPv6 is the better
 					path when you have it.
-				</div>
-			</div>
-
-			<div class="note note-warn">
-				<i class="bi bi-exclamation-triangle"></i>
-				<div>
-					<b>Kevin-1 and Kevin-2 IPv4 may change.</b> AS204535
-					(<code>89.23.82.0/24</code> and <code>2a0f:1cc6:bab1::/48</code>) is
-					moving to a new BGP upstream, AS154516. Keep more than one server in
-					your list and you won't notice the move.
 				</div>
 			</div>
 		</div>
@@ -308,7 +298,7 @@
 					</ol>
 					<div class="code-block"><pre>2402:4e20:6767::b00b
 2402:4e20:b00b::1001
-2402:4e20:bab1::1001
+2a0f:1cc6:bab1::1111
 151.158.198.47
 151.158.198.49:5301</pre></div>
 					<ol class="doc-steps" style="--start:2">

@@ -49,12 +49,9 @@ recursion and DNSSEC.
 | Fizo-2     | `151.158.198.46`      | `2402:4e20:6767::bab1` |
 | Sakurako-1 | `151.158.198.49:5301` | `2402:4e20:b00b::1001` |
 | Sakurako-2 | `151.158.198.49:5302` | `2402:4e20:b00b::1111` |
-| Kevin-1    | `89.23.82.53`         | `2402:4e20:bab1::1001` |
-| Kevin-2    | `89.23.82.82`         | `2402:4e20:bab1::1111` |
+| Kevin-1    | `89.23.82.53`         | `2a0f:1cc6:bab1::1111` |
+| Kevin-2    | `89.23.82.82`         | `2a0f:1cc6:bab1::1001` |
 | Ryukura    | `103.253.245.167:5301` | IPv4 only for now     |
-
-> AS204535 (`89.23.82.0/24` and `2a0f:1cc6:bab1::/48`) is moving to a new BGP
-> upstream, AS154516. The Kevin IPv4 addresses may change.
 
 ## Adding your DoH/DoT resolver
 
