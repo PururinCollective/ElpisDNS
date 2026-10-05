@@ -17,6 +17,7 @@ networks, and aligned with the vision of
 - **[Resolver](https://elpis.violetnetworks.xyz/resolver.html)** &mdash; public recursive resolvers for your own AdGuard Home or Pi-hole
 - **[ML-DSA-44](https://elpis.violetnetworks.xyz/ml-dsa-44.html)** &mdash; post-quantum DNSSEC explained, and how to test it yourself
 - **[Setup guide](https://elpis.violetnetworks.xyz/setup.html)** &mdash; Android, iPhone, Windows, Firefox, Chrome, MikroTik, OpenWrt, AdGuard Home
+- **[Partners](https://elpis.violetnetworks.xyz/partners.html)** &mdash; vendors and MSPs: our DNS under your own domain, free
 - **[About](https://elpis.violetnetworks.xyz/mission.html)** &mdash; what we block, what we never keep, and how to check us
 - **[Add your resolver](CONTRIBUTING.md)** &mdash; one JSON block, one pull request
 
@@ -104,6 +105,7 @@ fetched over HTTP.
 | `resolver.html` | ΕΛΠΙΣ Resolver and its public addresses |
 | `ml-dsa-44.html` | Post-quantum DNSSEC explained, with a test you can run |
 | `setup.html` | Setup guide |
+| `partners.html` | For vendors and MSPs: your own domain on our servers |
 | `mission.html` | About: block lists, promises, how to check us |
 | `style-main.css` | Colour tokens, light and dark themes, all components |
 | `style-mobile.css` | Narrow layout |

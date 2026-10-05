@@ -18,6 +18,12 @@
 		grid-template-columns:1fr 1fr;
 	}
 
+	/* Seven links only just fit beside the brand before they fold
+	   into the menu at 920px; tighter pills keep them on one row. */
+	.nav a{
+		padding:8px 10px;
+	}
+
 	/* Six steps in a row get too narrow to read; three by two. */
 	.flow-steps{
 		grid-template-columns:repeat(3,minmax(0,1fr));

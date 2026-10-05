@@ -1081,6 +1081,10 @@ a.hero-pill:hover{
 	border-radius:var(--radius-lg);
 	padding:24px;
 
+	/* A long line in a code block scrolls inside it instead of
+	   stretching the card past a phone's edge. */
+	min-width:0;
+
 	transition:var(--speed);
 }
 
