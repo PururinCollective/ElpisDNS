@@ -43,6 +43,7 @@ tooltip before you push.
 | `feature` | yes | What makes it different from its siblings: `CDN`, `International`, `DNS64/NAT64`. |
 | `kind` | yes | Any of `DoH`, `DoT`, `DoQ`. List only what is really listening. |
 | `servers` | yes | Hostnames, at least one. No scheme, no path, no port. The site picks one at random so the load stays spread out. |
+| `dotServers` | no | Only if DoT answers on different hosts than `servers`, for example when the certificate on port 853 covers your IP addresses only. IPv4 addresses are fine here; Android Private DNS can't take them, so the site hides the Android button for those. |
 | `dohPath` | no | Only if your DoH path is not `/dns-query`. |
 | `dotPort` | no | Only if your DoT port is not `853`. |
 | `maintainer` | no | Who to poke when it breaks. |

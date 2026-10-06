@@ -27,13 +27,16 @@ function fillPicked(){
 	const endpoint = picked("elpis-endpoint", FALLBACK_ENDPOINT);
 	const host = picked("elpis-host", FALLBACK_HOST);
 
+	// The front page saves both transports for the pick, because some
+	// resolvers do DoT on other hosts than DoH. Older saves don't have
+	// them, so derive from the hostname as before.
 	const tls = endpoint.startsWith("tls://")
 		? endpoint
-		: `tls://${host}`;
+		: picked("elpis-tls", `tls://${host}`);
 
 	const https = endpoint.startsWith("https://")
 		? endpoint
-		: `https://${host}/dns-query`;
+		: picked("elpis-https", `https://${host}/dns-query`);
 
 	const values = {
 		endpoint,

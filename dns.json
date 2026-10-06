@@ -4,7 +4,7 @@
 	"//": "ΕΛΠΙΣ DNS resolver database. Everything the website shows is built from this file. To add your own DoH/DoT resolver, copy one block inside \"resolvers\", change the values, and open a pull request. Read CONTRIBUTING.md first.",
 
 	"version": 2,
-	"updated": "2026-10-04",
+	"updated": "2026-10-07",
 
 	"regions": [
 		{ "code": "MY", "label": "Malaysia" },
@@ -110,6 +110,31 @@
 			"servers": [
 				"c.hitoha.moe",
 				"doh.originwifi.com.my"
+			]
+		},
+
+		{
+			"id": "my-kevin-intl",
+			"region": "MY",
+			"provider": "Kevin Network",
+			"filter": "NSFW",
+			"network": "IPv4+IPv6",
+			"feature": "International",
+			"kind": ["DoH", "DoT"],
+			"maintainer": "Kevin Network",
+			"homepage": "https://bgp.tools/as/204535",
+			"notes": "Answers from Kuala Lumpur. DoH works on both the names and the IP addresses. DoT is IPv4 only and takes the IP address, so Android Private DNS can't use it.",
+			"servers": [
+				"89.23.82.53",
+				"dns.kevin.moe",
+				"anime4000.pururin.moe",
+				"89.23.82.82",
+				"dns.pig.my",
+				"sakurako.pururin.moe"
+			],
+			"dotServers": [
+				"89.23.82.53",
+				"89.23.82.82"
 			]
 		},
 

@@ -177,6 +177,16 @@
 						"pattern": "^(?!https?://)[a-z0-9]([a-z0-9-]*[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$"
 					}
 				},
+				"dotServers": {
+					"type": "array",
+					"description": "Hosts for DoT when they differ from servers, for example when the certificate on port 853 only covers your IP addresses. IPv4 addresses are fine here; Android Private DNS cannot use them, so the Android button hides for those.",
+					"minItems": 1,
+					"uniqueItems": true,
+					"items": {
+						"type": "string",
+						"pattern": "^(?!https?://)[a-z0-9]([a-z0-9-]*[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$"
+					}
+				},
 				"dohPath": {
 					"type": "string",
 					"description": "Override the DoH path when your server does not use /dns-query.",

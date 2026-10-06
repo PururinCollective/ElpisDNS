@@ -45,7 +45,7 @@ async function loadDatabase(){
 
 	try{
 
-		const response = await fetch("dns.json?hash=e4d3d448", { cache: "no-cache" });
+		const response = await fetch("dns.json?hash=f10d1c03", { cache: "no-cache" });
 
 		if(!response.ok){
 			throw new Error(`dns.json responded ${response.status}`);
@@ -297,11 +297,48 @@ function renderGroup(group){
 	});
 }
 
-function pickHost(entry){
+// Most entries serve DoH and DoT from the same hosts. dotServers covers
+// the ones whose port 853 only has a certificate for its IP addresses.
+function serversFor(entry, kind){
 
-	return entry.servers[
-		Math.floor(Math.random() * entry.servers.length)
-	];
+	return kind === "DoT" && entry.dotServers
+		? entry.dotServers
+		: entry.servers;
+}
+
+function pickHost(entry, kind){
+
+	const hosts = serversFor(entry, kind);
+
+	return hosts[Math.floor(Math.random() * hosts.length)];
+}
+
+// Android Private DNS only takes a hostname, never an IP address.
+function isIPAddress(host){
+
+	return /^\d{1,3}(\.\d{1,3}){3}$/.test(host) || host.includes(":");
+}
+
+// The hostname to give Android: the picked one when it does DoT,
+// otherwise any DoT host that is a name. Empty when there is none.
+function androidHost(entry, host){
+
+	if(!entry.kind.includes("DoT")) return "";
+
+	const names = serversFor(entry, "DoT").filter(h => !isIPAddress(h));
+
+	return names.includes(host) ? host : (names[0] || "");
+}
+
+// The same host on another transport when it serves both, otherwise
+// one that does, so the setup page shows a DoH and DoT that both work.
+function endpointFor(entry, kind, host){
+
+	if(!entry.kind.includes(kind)) return "";
+
+	const hosts = serversFor(entry, kind);
+
+	return buildEndpoint(entry, kind, hosts.includes(host) ? host : pickHost(entry, kind));
 }
 
 // Host with the port attached, but only when it is not the default one
@@ -332,13 +369,18 @@ function buildEndpoint(entry, kind, host){
 // which is why the host is picked once and passed to both.
 function buildStamp(entry, kind, host){
 
+	const target = host + (authority(entry, kind) || "");
+
 	try{
 
+		// An IP host goes in the address field too, so the client
+		// connects straight to it instead of trying to resolve it.
 		return dnsStamp(
 			kind,
-			host + (authority(entry, kind) || ""),
+			target,
 			entry.dohPath || db.defaults.dohPath,
-			{ ...db.defaults.stamp, ...entry.stamp }
+			{ ...db.defaults.stamp, ...entry.stamp },
+			isIPAddress(host) ? target : ""
 		);
 	}
 	catch(err){
@@ -376,12 +418,24 @@ function escapeHTML(value){
 
 // The setup page reads this back, so the guide can show the
 // endpoint the visitor actually picked instead of an example.
-function remember(endpoint, stamp){
+// No Android hostname leaves the key out, and the guide falls back
+// to one that works.
+function remember(entry, host, endpoint, stamp){
+
+	const android = androidHost(entry, host);
 
 	try{
 		localStorage.setItem("elpis-endpoint", endpoint);
-		localStorage.setItem("elpis-host", hostnameOf(endpoint));
+		localStorage.setItem("elpis-https", endpointFor(entry, "DoH", host));
+		localStorage.setItem("elpis-tls", endpointFor(entry, "DoT", host));
 		localStorage.setItem("elpis-stamp", stamp || "");
+
+		if(android){
+			localStorage.setItem("elpis-host", android);
+		}
+		else{
+			localStorage.removeItem("elpis-host");
+		}
 	}
 	catch(err){
 		/* private browsing, nothing to remember */
@@ -402,7 +456,7 @@ function renderResult(entry){
 		return;
 	}
 
-	const host = pickHost(entry);
+	const host = pickHost(entry, state.kind);
 
 	const endpoint = buildEndpoint(entry, state.kind, host);
 
@@ -411,9 +465,11 @@ function renderResult(entry){
 	setText("endpoint", endpoint);
 	setText("stamp", stamp || "No stamp: this transport has no stamp format.");
 
-	remember(endpoint, stamp);
+	remember(entry, host, endpoint, stamp);
 
-	setHTML("server-list", entry.servers.map(server => `
+	const hosts = serversFor(entry, state.kind);
+
+	setHTML("server-list", hosts.map(server => `
 		<span class="server-badge">${escapeHTML(server)}</span>
 	`).join(""));
 
@@ -437,7 +493,7 @@ function renderResult(entry){
 			entry.homepage
 				? `<a href="${escapeHTML(entry.homepage)}" target="_blank" rel="noopener">${escapeHTML(entry.maintainer)}</a>`
 				: escapeHTML(entry.maintainer)
-		} &bull; ${entry.servers.length} host${entry.servers.length === 1 ? "" : "s"} in rotation</div>`
+		} &bull; ${hosts.length} host${hosts.length === 1 ? "" : "s"} in rotation</div>`
 		: "";
 
 	setHTML("summary", `<div class="summary-chips">${chips}</div>${notes}${filterNote}${credit}`);
@@ -448,8 +504,12 @@ function renderActions(){
 	const rsc = document.getElementById("download-rsc-btn");
 	const host = document.getElementById("copy-host-btn");
 
+	// Shown per pick, not per entry: an IP host can't go in Android.
+	const android = state.kind === "DoT" &&
+		!isIPAddress(hostnameOf(document.getElementById("endpoint").innerText));
+
 	if(rsc) rsc.style.display = state.kind === "DoH" ? "inline-flex" : "none";
-	if(host) host.style.display = state.kind === "DoT" ? "inline-flex" : "none";
+	if(host) host.style.display = android ? "inline-flex" : "none";
 }
 
 function refresh(){
@@ -563,7 +623,7 @@ wire("shuffle-btn", () => {
 
 	if(!current) return;
 
-	const host = pickHost(current);
+	const host = pickHost(current, state.kind);
 
 	const endpoint = buildEndpoint(current, state.kind, host);
 
@@ -572,7 +632,9 @@ wire("shuffle-btn", () => {
 	setText("endpoint", endpoint);
 	setText("stamp", stamp || "No stamp: this transport has no stamp format.");
 
-	remember(endpoint, stamp);
+	remember(current, host, endpoint, stamp);
+
+	renderActions();
 });
 
 window.addEventListener("hashchange", () => {

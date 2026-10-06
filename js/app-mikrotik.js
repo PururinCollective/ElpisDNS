@@ -63,7 +63,10 @@ async function generateMikrotikRSC(event){
 
 	const entry = window.ElpisDNS ? window.ElpisDNS.entry : null;
 
-	const [ipv4, ipv6] = await Promise.all([
+	// An IP address endpoint has no name for the router to look up.
+	const literal = /^\d{1,3}(\.\d{1,3}){3}$/.test(domain);
+
+	const [ipv4, ipv6] = literal ? [[], []] : await Promise.all([
 		resolveDomain(domain, 1),
 		resolveDomain(domain, 28)
 	]);
@@ -79,9 +82,9 @@ async function generateMikrotikRSC(event){
 		`# Import a certificate store first, or verify-doh-cert will fail:\n` +
 		`#   /tool fetch url="https://curl.se/ca/cacert.pem"\n` +
 		`#   /certificate import file-name=cacert.pem passphrase=""\n\n` +
-		`/ip dns static remove [ find name="${domain}" ]\n\n`;
+		(literal ? "" : `/ip dns static remove [ find name="${domain}" ]\n\n`);
 
-	if(!ipv4.length && !ipv6.length){
+	if(!literal && !ipv4.length && !ipv6.length){
 
 		rsc +=
 			`# WARNING: no addresses came back for ${domain}.\n` +
