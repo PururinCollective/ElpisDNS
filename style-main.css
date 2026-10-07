@@ -2514,6 +2514,29 @@ a.as-card:hover{
 	margin-right:4px;
 }
 
+.footer-title-more{
+	margin-top:28px;
+}
+
+/*
+	Violet Networks' wordmark is pastel, so it gets a night-violet tile in
+	both themes, the way the banners do; on white paper it would vanish.
+*/
+.footer-sponsor{
+	display:inline-block;
+	padding:12px 16px;
+
+	background:var(--night);
+	border:1px solid var(--line);
+	border-radius:var(--radius-sm);
+}
+
+.footer-sponsor-logo{
+	display:block;
+	width:140px;
+	height:auto;
+}
+
 .footer-bottom{
 	margin-top:40px;
 	padding-top:24px;
