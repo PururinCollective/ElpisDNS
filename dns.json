@@ -4,7 +4,7 @@
 	"//": "ΕΛΠΙΣ DNS resolver database. Everything the website shows is built from this file. To add your own DoH/DoT resolver, copy one block inside \"resolvers\", change the values, and open a pull request. Read CONTRIBUTING.md first.",
 
 	"version": 2,
-	"updated": "2026-08-15",
+	"updated": "2026-10-07",
 
 	"regions": [
 		{ "code": "MY", "label": "Malaysia" },
@@ -46,7 +46,7 @@
 			"kind": ["DoH", "DoT"],
 			"maintainer": "Anime4000",
 			"homepage": "https://bgp.tools/as/154516",
-			"notes": "Family profile riding the Perfect Network CDN inside Malaysia.",
+			"notes": "Family profile on Perfect Network in Malaysia. a.hitoha.moe also sends ECS, so YouTube and other CDNs serve you from the nearest cache.",
 			"servers": [
 				"a.hitoha.moe",
 				"a.curecomp.pro",
@@ -65,7 +65,7 @@
 			"kind": ["DoH", "DoT"],
 			"maintainer": "Anime4000",
 			"homepage": "https://bgp.tools/as/154516",
-			"notes": "The everyday resolver. Local CDN answers, low latency across Malaysian eyeball networks.",
+			"notes": "The everyday pick: fast local answers across Malaysian networks. b.hitoha.moe also sends ECS, so YouTube and other CDNs serve you from the nearest cache.",
 			"servers": [
 				"b.hitoha.moe",
 				"ryo.pururin.moe",
@@ -88,7 +88,7 @@
 			"kind": ["DoH", "DoT"],
 			"maintainer": "Anime4000",
 			"homepage": "https://bgp.tools/as/154516",
-			"notes": "For IPv6-only networks. Synthesises AAAA records so legacy IPv4-only hosts stay reachable.",
+			"notes": "For IPv6-only networks, like a VPS without IPv4. DNS64 points IPv4-only sites at our NAT64 gateway, so you can still reach them.",
 			"servers": [
 				"64.hitoha.moe",
 				"64.ryukura.biz.id",
@@ -106,10 +106,35 @@
 			"kind": ["DoH", "DoT"],
 			"maintainer": "Origin TechLab",
 			"homepage": "https://bgp.tools/as/153334",
-			"notes": "Second opinion inside Malaysia, useful when one upstream is having a bad day.",
+			"notes": "A second Malaysian option, handy when one network is having a bad day.",
 			"servers": [
 				"c.hitoha.moe",
 				"doh.originwifi.com.my"
+			]
+		},
+
+		{
+			"id": "my-kevin-intl",
+			"region": "MY",
+			"provider": "Kevin Network",
+			"filter": "NSFW",
+			"network": "IPv4+IPv6",
+			"feature": "International",
+			"kind": ["DoH", "DoT"],
+			"maintainer": "Kevin Network",
+			"homepage": "https://bgp.tools/as/204535",
+			"notes": "Answers from Kuala Lumpur. DoH works on both the names and the IP addresses. DoT is IPv4 only and takes the IP address, so Android Private DNS can't use it.",
+			"servers": [
+				"89.23.82.53",
+				"dns.kevin.moe",
+				"anime4000.pururin.moe",
+				"89.23.82.82",
+				"dns.pig.my",
+				"sakurako.pururin.moe"
+			],
+			"dotServers": [
+				"89.23.82.53",
+				"89.23.82.82"
 			]
 		},
 
@@ -122,7 +147,7 @@
 			"feature": "International",
 			"kind": ["DoH", "DoT"],
 			"maintainer": "Syahpian",
-			"notes": "Community operated, tuned for international transit rather than local CDN.",
+			"notes": "Run by the community, tuned for international routes rather than local CDNs.",
 			"servers": [
 				"dns.pytonode.my.id"
 			]
@@ -138,7 +163,7 @@
 			"kind": ["DoH", "DoT"],
 			"maintainer": "Shana Network",
 			"homepage": "https://bgp.tools/as/135134",
-			"notes": "Answers from Singapore. The way out when a local resolver develops opinions.",
+			"notes": "Answers from Singapore. A good way out when your local DNS starts blocking things.",
 			"servers": [
 				"gg.hitoha.moe",
 				"shana.ryukura.biz.id",
@@ -157,8 +182,10 @@
 			"feature": "International",
 			"kind": ["DoH", "DoT"],
 			"maintainer": "Ryukura",
-			"notes": "Indonesian entry point, maintained by the Ryukura crew.",
+			"notes": "Our Indonesian entry, answering from Jakarta. Run by Ryukura.",
 			"servers": [
+				"d.hitoha.moe",
+				"id.pururin.moe",
 				"dns.ryukura.biz.id"
 			]
 		}

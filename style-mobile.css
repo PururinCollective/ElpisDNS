@@ -1,182 +1,364 @@
-@media (max-width: 992px){
+/*
+	ΕΛΠΙΣ DNS - narrow screens
+
+	Tablets first, then phones. Everything here is a rearrangement of
+	style-main.css; no colour is ever set in this file.
+*/
+
+@media (max-width: 1100px){
+
+	.cards-4,
+	.as-grid,
+	.as-grid-3,
+	.stats{
+		grid-template-columns:repeat(2,minmax(0,1fr));
+	}
+
+	.footer-grid{
+		grid-template-columns:1fr 1fr;
+	}
+
+	/* Seven links only just fit beside the brand before they fold
+	   into the menu at 920px; tighter pills keep them on one row. */
+	.nav a{
+		padding:8px 10px;
+	}
+
+	/* Six steps in a row get too narrow to read; three by two. */
+	.flow-steps{
+		grid-template-columns:repeat(3,minmax(0,1fr));
+	}
+
+	.flow-steps li:nth-child(3){
+		border-right:0;
+	}
+
+	.flow-steps li:nth-child(-n+3){
+		border-bottom:1px solid rgba(255,255,255,.06);
+	}
+}
+
+@media (max-width: 900px){
+
+	.cards{
+		grid-template-columns:repeat(2,minmax(0,1fr));
+	}
 
 	.cta{
 		flex-direction:column;
 		align-items:flex-start;
 	}
-}
 
-@media (max-width: 768px){
-
-	/* TOP BAR */
-
-	.topbar-inner{
-		flex-wrap:wrap;
-		gap:8px;
-		padding:8px 4px;
-	}
-
-	.topbar-name{
-		font-size:17px;
-		letter-spacing:2px;
-	}
-
-	.topbar-link span{
+	/* The map labels shrink with the map; past here they stop being
+	   readable, and the cards under the map say the same thing. */
+	.callout,
+	.city-label{
 		display:none;
 	}
+}
 
-	.topbar-link{
-		padding:8px 10px;
+@media (max-width: 920px){
+
+	/* TOP BAR - the links fold into a menu */
+
+	.nav-toggle{
+		display:inline-flex;
+	}
+
+	.nav{
+		position:absolute;
+		top:100%;
+		left:0;
+		right:0;
+
+		display:none;
+		flex-direction:column;
+		align-items:stretch;
+		gap:2px;
+
+		margin:0;
+		padding:10px var(--gutter) 16px;
+
+		background:#170931;
+		border-bottom:1px solid rgba(255,255,255,.08);
+		box-shadow:0 24px 40px -12px rgba(0,0,0,.5);
+	}
+
+	.nav.is-open{
+		display:flex;
+	}
+
+	.nav a{
+		padding:12px 14px;
+		border-radius:12px;
 		font-size:16px;
+	}
+
+	.topbar-tools{
+		margin-left:auto;
+	}
+}
+
+@media (max-width: 720px){
+
+	:root{
+		--gutter:16px;
+	}
+
+	.cards,
+	.cards-2,
+	.cards-4,
+	.as-grid,
+	.as-grid-3,
+	.footer-grid{
+		grid-template-columns:1fr;
+	}
+
+	.stats{
+		grid-template-columns:1fr 1fr;
+		gap:10px;
+	}
+
+	.stat{
+		padding:18px;
 	}
 
 	/* HERO */
 
-	.hero-banner{
-		height:240px;
+	.hero-pill,
+	.page-pill{
+		font-size:13px;
+		padding:8px 14px;
 	}
 
-	/* The map cannot be beside the text on a phone, so it goes behind it:
-	   whole map visible, pinned to the top, words over the bottom half. */
-	.hero-banner::after{
-		padding:0;
-		background-position:right top;
-		background-size:contain;
-		opacity:.85;
+	.hero-cta .btn{
+		flex:1 1 auto;
 	}
 
-	.hero-overlay{
-		align-items:flex-end;
-		background:linear-gradient(
-			180deg,
-			rgba(11,14,19,.15) 0%,
-			rgba(11,14,19,.55) 38%,
-			rgba(11,14,19,.90) 68%,
-			rgba(11,14,19,.96) 100%
-		);
+	/* FLOW - same grid, smaller boxes: icon on top, name under it */
+
+	.flow-window{
+		margin-left:calc(var(--gutter) * -0.5);
+		margin-right:calc(var(--gutter) * -0.5);
 	}
 
-	.hero-kicker{
-		font-size:10px;
-		letter-spacing:3px;
+	.flow-badge{
+		display:none;
 	}
 
-	.hero-title{
-		font-size:38px;
-		letter-spacing:3px;
+	.flow{
+		column-gap:14px;
+		row-gap:10px;
+		padding:22px 10px 18px;
 	}
 
-	.hero-subtitle{
-		font-size:14px;
-		line-height:1.6;
+	.flow-node{
+		flex-direction:column;
+		gap:6px;
+		padding:8px 4px;
+		text-align:center;
 	}
 
-	.brand{
-		font-size:32px;
-		letter-spacing:2px;
-	}
-
-	.section-heading{
-		font-size:20px;
-	}
-
-	/* CONTENT */
-
-	.container{
-		padding-left:18px;
-		padding-right:18px;
-	}
-
-	.subtitle{
+	.fn-icon{
+		width:32px;
+		height:32px;
 		font-size:15px;
-		line-height:1.7;
-		text-align:left;
+		border-radius:9px;
 	}
 
-	/* HOUSE RULES */
+	.fn-icon img{
+		width:22px;
+		height:22px;
+	}
 
-	.rules{
+	.fn-glyph{
+		font-size:11.5px;
+	}
+
+	.fn-text b{
+		font-size:11.5px;
+		line-height:1.2;
+	}
+
+	.fn-text small{
+		display:none;
+	}
+
+	.flow-chip,
+	.flow-note{
+		font-size:10.5px;
+		padding:3px 8px;
+	}
+
+	/* One step at a time, as a caption. Without JavaScript the class
+	   is never set and the whole list stays readable.
+
+	   The steps are stacked in a single grid cell rather than hidden
+	   with display:none, which would stop them counting: every caption
+	   would read "1". Stacked, the box is also as tall as the longest
+	   step, so the page doesn't jump as they change. */
+	.flow-live .flow-steps li{
+		grid-area:1 / 1;
+		visibility:hidden;
+		opacity:0;
+		border:0;
+		transition:opacity .25s;
+	}
+
+	.flow-live .flow-steps li.is-on{
+		visibility:visible;
+		opacity:1;
+	}
+
+	.flow-steps{
 		grid-template-columns:1fr;
 	}
 
-	/* SELECTOR LAYOUT */
+	.flow-steps li{
+		border-right:0;
+		padding:14px 16px 18px;
+		font-size:14px;
+	}
 
-	.selector-group{
+	.flow-steps li::before{
+		display:inline-flex;
+		margin:0 10px 0 0;
+		vertical-align:middle;
+	}
+
+	/* PICKER - label above, buttons in a two column grid */
+
+	.pick-rows{
+		padding:14px 14px 4px;
+	}
+
+	.pick-row{
 		flex-direction:column;
-		border-left:none;
-		margin-bottom:22px;
-	}
-
-	.selector-label{
-		min-width:100%;
-		margin-bottom:10px;
-		padding-top:0;
-		border-left:4px solid var(--accent);
-		padding-left:10px;
-	}
-
-	/* BUTTON GRID */
-
-	.selector-options{
-		display:grid !important;
-		grid-template-columns:1fr 1fr;
 		gap:6px;
+		padding:8px 0;
 	}
 
-	.selector-options.full-width{
-		display:block !important;
+	.pick-label{
+		flex:none;
+		padding-top:0;
 	}
 
-	/* FULL WIDTH */
-
-	.command-box{
+	.pick-options{
+		display:grid;
+		grid-template-columns:1fr 1fr;
 		width:100%;
-		overflow:hidden;
-		padding:16px;
 	}
-
-	/* BUTTONS */
 
 	.option-btn{
-		width:100%;
 		min-width:0;
-		padding:14px 8px;
+		padding:11px 8px;
 		font-size:14px;
-		margin:0;
 	}
 
-	.btn-elpis,
-	.btn-elpis-ghost{
-		flex:1 1 auto;
-		justify-content:center;
+	.pick-result{
+		padding:16px 14px;
 	}
-
-	/* ENDPOINT */
 
 	#endpoint{
-		font-size:13px;
-		overflow-x:auto;
-		white-space:nowrap;
-		width:100%;
-	}
-
-	/* SUMMARY */
-
-	.selection-summary{
+		flex-basis:100%;
 		font-size:13.5px;
 	}
 
-	.address-grid{
-		grid-template-columns:1fr;
+	.result-actions{
+		width:100%;
 	}
 
-	/* GATES */
-
-	.gates{
-		grid-template-columns:1fr;
+	.result-actions .btn{
+		flex:1 1 auto;
 	}
 
-	/* BLACKLIST */
+	.picker-next{
+		padding:14px;
+	}
+
+	.picker-next .btn{
+		width:100%;
+	}
+
+	/* MAP */
+
+	.map-legend{
+		position:static;
+		border-radius:0;
+		border:0;
+		border-top:1px solid var(--line);
+		justify-content:center;
+	}
+
+	/* TABLE - each server becomes a little card */
+
+	.ip-table thead{
+		display:none;
+	}
+
+	.ip-table,
+	.ip-table tbody,
+	.ip-table tr,
+	.ip-table td{
+		display:block;
+		width:100%;
+	}
+
+	.ip-table tr{
+		padding:12px 14px;
+		border-bottom:1px solid var(--line);
+	}
+
+	.ip-table tr:last-child{
+		border-bottom:0;
+	}
+
+	.ip-table td{
+		padding:4px 0;
+		border:0;
+		white-space:normal;
+	}
+
+	.ip-table td[data-label]::before{
+		content:attr(data-label);
+		display:inline-block;
+		min-width:44px;
+		color:var(--text-faint);
+		font-size:12px;
+		font-weight:700;
+	}
+
+	.ip-cell code{
+		font-size:13px;
+		word-break:break-all;
+	}
+
+	.table-actions .btn{
+		flex:1 1 auto;
+	}
+
+	.ip-table tbody th{
+		display:block;
+		padding:0 0 6px;
+		border:0;
+	}
+
+	/* "Quantum" is a longer label than "IPv4", and the bar sits beside
+	   its label rather than under it. */
+	.size-table td[data-label]::before{
+		min-width:76px;
+	}
+
+	.size-table td.size-col{
+		display:flex;
+		align-items:center;
+	}
+
+	.size-cell{
+		flex:1;
+	}
+
+	/* BLOCK LISTS */
 
 	.bl-item > summary{
 		flex-wrap:wrap;
@@ -184,20 +366,9 @@
 		padding:12px 14px;
 	}
 
-	.bl-index{
-		font-size:17px;
-		min-width:24px;
-	}
-
-	.bl-name{
-		flex:1 1 auto;
-		font-size:17px;
-	}
-
-	/* The tag drops to its own line rather than squeezing the name. */
 	.bl-tag{
 		order:3;
-		flex:0 0 auto;
+		margin-left:40px;
 	}
 
 	.bl-chev{
@@ -206,22 +377,16 @@
 	}
 
 	.bl-body{
-		padding:0 14px 14px 14px;
+		padding:0 14px 14px;
 	}
 
-	/* A subscription URL and a button side by side leaves the URL a
-	   sliver wide, so they stack and each takes the full row. */
-	.bl-url,
-	.copy-row{
+	.bl-url{
 		flex-direction:column;
 		align-items:stretch;
-		gap:8px;
+		padding:10px;
 	}
 
-	.bl-url code,
-	.copy-row code{
-		/* The row is a column here, so the inherited flex:1 would stretch the
-		   height rather than the width and crop the text to half a line. */
+	.bl-url code{
 		flex:none;
 		width:100%;
 		font-size:11.5px;
@@ -229,34 +394,30 @@
 
 	.bl-note{
 		white-space:normal;
-		text-align:center;
 	}
 
-	/* SETUP PAGE */
+	/* SETUP */
 
-	.doc-jump{
-		flex-direction:column;
+	.picked-box{
+		grid-template-columns:1fr;
+		gap:2px;
 	}
 
-	.doc-jump a{
-		width:100%;
+	.picked-box dd{
+		margin-bottom:10px;
 	}
 
-	.doc-section{
-		padding:18px;
+	.doc-tag{
+		margin-left:0;
+	}
+
+	.jump{
+		justify-content:flex-start;
 	}
 
 	/* FOOTER */
 
-	footer{
-		text-align:center;
-	}
-
-	.footer-title{
-		margin-top:12px;
-	}
-
-	.footer-links{
-		align-items:center;
+	.footer{
+		padding-top:44px;
 	}
 }

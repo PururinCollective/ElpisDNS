@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<!--
+	Social card for ml-dsa-44.html: what Discord, Telegram, X, Facebook
+	and friends show when the page is shared. Exactly 1200 x 630.
+
+	Not part of the site. Render it with:
+
+		python tools/make-og-card.py ml-dsa-44
+
+	which writes img/og-ml-dsa-44.jpg.
+-->
+<link href="https://fonts.googleapis.com/css2?family=Mozilla+Headline:wdth,wght@75..100,500..700&family=Mozilla+Text:wght@400..700&family=JetBrains+Mono:wght@500&display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&text=%CE%95%CE%9B%CE%A0%CE%99%CE%A3&display=block" rel="stylesheet">
+<style>
+	:root{
+		--flame:linear-gradient(90deg,#ffbd4f 0%,#ff7139 28%,#ff3750 55%,#e31587 75%,#9059ff 100%);
+		--display:"Mozilla Headline","Roboto Condensed","Arial Narrow",sans-serif;
+		--body:"Mozilla Text",system-ui,sans-serif;
+	}
+
+	html,body{
+		margin:0;
+		width:1200px;
+		height:630px;
+		overflow:hidden;
+	}
+
+	body{
+		position:relative;
+		color:#fff;
+		font-family:var(--body);
+
+		background:
+			radial-gradient(60% 75% at 82% 110%, rgba(203,158,255,.55) 0%, rgba(144,89,255,.4) 35%, rgba(117,66,229,0) 72%),
+			radial-gradient(45% 55% at 0% 0%, rgba(227,21,135,.22) 0%, rgba(227,21,135,0) 70%),
+			linear-gradient(160deg, #140728 0%, #1d0b3d 50%, #2c1266 100%);
+	}
+
+	.mesh{
+		position:absolute;
+		inset:0;
+		background:url("../../img/hero-mesh.svg") center / cover no-repeat;
+		opacity:.3;
+		-webkit-mask-image:linear-gradient(90deg, rgba(0,0,0,.15) 0%, #000 70%);
+		mask-image:linear-gradient(90deg, rgba(0,0,0,.15) 0%, #000 70%);
+	}
+
+	.text{
+		position:absolute;
+		left:72px;
+		top:64px;
+		width:640px;
+	}
+
+	.brand{
+		display:flex;
+		align-items:center;
+		gap:14px;
+		font-family:var(--display);
+		font-size:34px;
+		font-weight:700;
+		font-stretch:85%;
+		letter-spacing:.06em;
+	}
+
+	.brand img{
+		width:52px;
+		height:52px;
+	}
+
+	.flame{
+		background:var(--flame);
+		-webkit-background-clip:text;
+		background-clip:text;
+		color:transparent;
+	}
+
+	.pill{
+		display:inline-block;
+		margin-top:44px;
+		padding:10px 20px;
+		border-radius:12px;
+		background:rgba(29,11,61,.75);
+		border:1.5px solid rgba(171,113,255,.6);
+		box-shadow:0 0 0 5px rgba(117,66,229,.14);
+		font-size:22px;
+		font-weight:600;
+	}
+
+	h1{
+		margin:18px 0 0;
+		font-family:var(--display);
+		font-size:150px;
+		font-weight:700;
+		font-stretch:78%;
+		line-height:.95;
+		letter-spacing:-.01em;
+	}
+
+	.lead{
+		margin:18px 0 0;
+		font-size:31px;
+		line-height:1.3;
+		color:rgba(255,255,255,.92);
+	}
+
+	.lead b{
+		color:#fff;
+	}
+
+	.chips{
+		position:absolute;
+		left:72px;
+		bottom:56px;
+		display:flex;
+		gap:12px;
+	}
+
+	.chips span{
+		padding:9px 18px;
+		border-radius:999px;
+		background:rgba(255,255,255,.08);
+		border:1px solid rgba(255,255,255,.2);
+		font-family:"JetBrains Mono",monospace;
+		font-size:20px;
+		font-weight:500;
+	}
+
+	.lattice{
+		position:absolute;
+		right:30px;
+		top:50px;
+		width:440px;
+		height:530px;
+	}
+
+	.url{
+		position:absolute;
+		right:72px;
+		bottom:62px;
+		color:rgba(255,255,255,.7);
+		font-family:"JetBrains Mono",monospace;
+		font-size:19px;
+	}
+</style>
+</head>
+<body>
+
+<div class="mesh"></div>
+
+<!-- A lattice: every point is a whole-number mix of two base vectors.
+     Finding the shortest vector in one is the hard problem ML-DSA rests on. -->
+<svg class="lattice" viewBox="0 0 440 530" aria-hidden="true">
+	<defs>
+		<linearGradient id="flame" x1="0" y1="0" x2="1" y2="0">
+			<stop offset="0" stop-color="#ffbd4f"/>
+			<stop offset=".45" stop-color="#ff7139"/>
+			<stop offset="1" stop-color="#e31587"/>
+		</linearGradient>
+		<marker id="tip" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+			<path d="M0 0 L10 5 L0 10 z" fill="#ffbd4f"/>
+		</marker>
+		<marker id="tip-v" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+			<path d="M0 0 L10 5 L0 10 z" fill="#cb9eff"/>
+		</marker>
+	</defs>
+	<g id="points"></g>
+	<g id="art"></g>
+</svg>
+
+<div class="text">
+	<div class="brand">
+		<img src="../../img/elpis-mark.svg" alt="">
+		<span>ΕΛΠΙΣ <span class="flame">DNS</span></span>
+	</div>
+
+	<div class="pill">Post-quantum DNSSEC</div>
+
+	<h1 class="flame">ML-DSA-44</h1>
+
+	<p class="lead">
+		Validated by ΕΛΠΙΣ Resolver.<br>
+		<b>Second in the world.</b>
+	</p>
+</div>
+
+<div class="chips">
+	<span>Algorithm 18</span>
+	<span>FIPS 204</span>
+	<span>2,420-byte signatures</span>
+</div>
+
+<div class="url">elpis.violetnetworks.xyz</div>
+
+<script>
+	// Lattice points from two skewed base vectors, drawn once at load.
+	(function(){
+		var ns = "http://www.w3.org/2000/svg";
+		var points = document.getElementById("points");
+		var art = document.getElementById("art");
+		var b1 = [62, 18], b2 = [-22, 58];
+		var o = [190, 255];
+
+		function el(name, attrs){
+			var n = document.createElementNS(ns, name);
+			for(var k in attrs) n.setAttribute(k, attrs[k]);
+			return n;
+		}
+
+		function at(i, j){
+			return [o[0] + i * b1[0] + j * b2[0], o[1] + i * b1[1] + j * b2[1]];
+		}
+
+		for(var i = -6; i <= 6; i++){
+			for(var j = -6; j <= 6; j++){
+				var p = at(i, j);
+				if(p[0] < 8 || p[0] > 432 || p[1] < 8 || p[1] > 522) continue;
+				var d = Math.hypot(p[0] - o[0], p[1] - o[1]);
+				points.appendChild(el("circle", {
+					cx: p[0], cy: p[1],
+					r: d < 1 ? 7 : 4.2,
+					fill: d < 1 ? "#fff" : "#d9c8ff",
+					"fill-opacity": d < 1 ? 1 : Math.max(.3, .95 - d / 380)
+				}));
+			}
+		}
+
+		// The cell the two base vectors span.
+		var c1 = at(1, 0), c2 = at(1, 1), c3 = at(0, 1);
+		art.appendChild(el("path", {
+			d: "M" + o + " L" + c1 + " L" + c2 + " L" + c3 + " Z",
+			fill: "rgba(144,89,255,.22)",
+			stroke: "rgba(203,158,255,.55)",
+			"stroke-width": 1.5
+		}));
+
+		// The base vectors, and a long one that is a mix of them.
+		function arrow(to, stroke, marker, width){
+			art.appendChild(el("line", {
+				x1: o[0], y1: o[1], x2: to[0], y2: to[1],
+				stroke: stroke, "stroke-width": width, "stroke-linecap": "round",
+				"marker-end": "url(#" + marker + ")"
+			}));
+		}
+
+		arrow(c1, "#cb9eff", "tip-v", 4);
+		arrow(c3, "#cb9eff", "tip-v", 4);
+		arrow(at(3, -2), "url(#flame)", "tip", 5);
+	})();
+</script>
+
+</body>
+</html>

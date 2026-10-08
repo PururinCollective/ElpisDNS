@@ -53,13 +53,12 @@ function applyTheme(choice){
 	document.documentElement.dataset.theme = theme;
 	document.documentElement.dataset.themeChoice = choice;
 
-	// Keeps Bootstrap components in step with the page.
-	document.documentElement.setAttribute("data-bs-theme", theme);
-
+	// The browser's own toolbar matches the top bar, a shade deeper
+	// in the dark theme so it sits with the page below it.
 	const meta = document.querySelector('meta[name="theme-color"]');
 
 	if(meta){
-		meta.setAttribute("content", theme === "dark" ? "#131416" : "#f24f2f");
+		meta.setAttribute("content", theme === "dark" ? "#140b26" : "#1d0b3d");
 	}
 
 	const button = document.getElementById("theme-btn");

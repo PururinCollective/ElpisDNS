@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>ML-DSA-44: post-quantum DNSSEC, validated — ΕΛΠΙΣ DNS</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/svg+xml" href="img/elpis-mark.svg?hash=22f4687a">
+<link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+
+<!-- Paint the correct theme before the first frame, no white flash -->
+<script>
+	(function(){
+		var choice = "auto";
+		try { choice = localStorage.getItem("elpis-theme") || "auto"; } catch(e){}
+		var dark = choice === "dark" ||
+			(choice === "auto" &&
+			 window.matchMedia("(prefers-color-scheme: dark)").matches);
+		document.documentElement.dataset.theme = dark ? "dark" : "light";
+		document.documentElement.dataset.themeChoice = choice;
+	})();
+</script>
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mozilla+Headline:wdth,wght@75..100,500..700&family=Mozilla+Text:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Mozilla's fonts carry no Greek: this one is only the letters of ΕΛΠΙΣ -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&text=%CE%95%CE%9B%CE%A0%CE%99%CE%A3&display=swap" rel="stylesheet">
+
+<link href="style-main.css?hash=c2b817b8" rel="stylesheet">
+<link href="style-mobile.css?hash=45d49a63" rel="stylesheet">
+
+<meta name="description" content="ML-DSA-44 is post-quantum DNSSEC: FIPS 204, algorithm 18. ΕΛΠΙΣ Resolver validates it, second in the world after 1.1.1.1. See how, and test it yourself.">
+<link rel="canonical" href="https://elpis.violetnetworks.xyz/ml-dsa-44.html">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="author" content="ΕΛΠΙΣ DNS">
+
+<!-- Open Graph: Facebook, Discord, Telegram, Slack, WhatsApp, LinkedIn -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ΕΛΠΙΣ DNS">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://elpis.violetnetworks.xyz/ml-dsa-44.html">
+<meta property="og:title" content="ML-DSA-44: post-quantum DNSSEC, validated">
+<meta property="og:description" content="The DNSSEC signature built to survive quantum computers. ΕΛΠΙΣ Resolver checks it, second in the world after Cloudflare's 1.1.1.1. Here's how, and how to test it yourself.">
+<meta property="og:image" content="https://elpis.violetnetworks.xyz/img/og-ml-dsa-44.jpg">
+<meta property="og:image:secure_url" content="https://elpis.violetnetworks.xyz/img/og-ml-dsa-44.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ML-DSA-44, post-quantum DNSSEC: algorithm 18, FIPS 204, validated by ΕΛΠΙΣ Resolver, second in the world.">
+<meta property="article:published_time" content="2026-10-02T00:00:00+08:00">
+<meta property="article:modified_time" content="2026-10-02T00:00:00+08:00">
+<meta property="article:section" content="DNSSEC">
+<meta property="article:tag" content="ML-DSA-44">
+<meta property="article:tag" content="Post-quantum cryptography">
+<meta property="article:tag" content="DNSSEC">
+
+<!-- X / Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://elpis.violetnetworks.xyz/ml-dsa-44.html">
+<meta name="twitter:title" content="ML-DSA-44: post-quantum DNSSEC, validated">
+<meta name="twitter:description" content="The DNSSEC signature built to survive quantum computers. ΕΛΠΙΣ Resolver checks it, second in the world after 1.1.1.1.">
+<meta name="twitter:image" content="https://elpis.violetnetworks.xyz/img/og-ml-dsa-44.jpg">
+<meta name="twitter:image:alt" content="ML-DSA-44, post-quantum DNSSEC: algorithm 18, FIPS 204, validated by ΕΛΠΙΣ Resolver, second in the world.">
+
+<!-- The stripe Discord paints down the side of the embed -->
+<meta name="theme-color" content="#1d0b3d">
+
+<script type="application/ld+json">
+{
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": "TechArticle",
+			"@id": "https://elpis.violetnetworks.xyz/ml-dsa-44.html#article",
+			"headline": "ML-DSA-44: post-quantum DNSSEC, validated",
+			"description": "What ML-DSA-44 is, why DNSSEC needs it, how ΕΛΠΙΣ Resolver validates it, and how to test it yourself.",
+			"image": "https://elpis.violetnetworks.xyz/img/og-ml-dsa-44.jpg",
+			"datePublished": "2026-10-02",
+			"dateModified": "2026-10-02",
+			"inLanguage": "en",
+			"proficiencyLevel": "Beginner",
+			"mainEntityOfPage": "https://elpis.violetnetworks.xyz/ml-dsa-44.html",
+			"isPartOf": {
+				"@id": "https://elpis.violetnetworks.xyz/#website"
+			},
+			"author": {
+				"@id": "https://elpis.violetnetworks.xyz/#org"
+			},
+			"publisher": {
+				"@id": "https://elpis.violetnetworks.xyz/#org"
+			},
+			"about": [
+				{
+					"@type": "DefinedTerm",
+					"name": "ML-DSA-44",
+					"description": "The smallest parameter set of ML-DSA, the module-lattice digital signature algorithm standardised by NIST in FIPS 204. DNSSEC algorithm number 18."
+				},
+				{
+					"@type": "Thing",
+					"name": "DNSSEC",
+					"sameAs": "https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions"
+				},
+				{
+					"@type": "Thing",
+					"name": "Post-quantum cryptography",
+					"sameAs": "https://en.wikipedia.org/wiki/Post-quantum_cryptography"
+				}
+			],
+			"citation": [
+				"https://csrc.nist.gov/pubs/fips/204/final",
+				"https://datatracker.ietf.org/doc/draft-westerbaan-dnssec-mldsa/",
+				"https://www.iana.org/assignments/dns-sec-alg-numbers"
+			]
+		},
+		{
+			"@type": "Organization",
+			"@id": "https://elpis.violetnetworks.xyz/#org",
+			"name": "ΕΛΠΙΣ DNS",
+			"alternateName": "Elpis DNS",
+			"url": "https://elpis.violetnetworks.xyz/",
+			"logo": "https://elpis.violetnetworks.xyz/img/elpis-logo.svg"
+		},
+		{
+			"@type": "FAQPage",
+			"@id": "https://elpis.violetnetworks.xyz/ml-dsa-44.html#faq",
+			"mainEntity": [
+				{
+					"@type": "Question",
+					"name": "Do I need to change anything to use ML-DSA-44?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "No. If you use ΕΛΠΙΣ DNS or our public resolvers, ML-DSA-44 signatures are checked automatically, alongside every other DNSSEC algorithm."
+					}
+				},
+				{
+					"@type": "Question",
+					"name": "Is my DNS quantum-safe now?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "Only for zones signed with ML-DSA-44, and today those are mostly test zones. The root and most top-level domains still sign with RSA or ECDSA, and the encryption on DoH and DoT is a separate matter. Validators have to come first; zones follow once enough resolvers can check the new signatures."
+					}
+				},
+				{
+					"@type": "Question",
+					"name": "Why is an ML-DSA-44 signature so big?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "Lattice signatures trade size for safety. An ML-DSA-44 signature is 2,420 bytes, almost 38 times an ECDSA P-256 signature. A signed answer often no longer fits in one UDP packet, so it moves to TCP. The resolver does that for you."
+					}
+				},
+				{
+					"@type": "Question",
+					"name": "Who else validates ML-DSA-44?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "Cloudflare's 1.1.1.1 was first, from 10 September 2026. ΕΛΠΙΣ Resolver is the second resolver in the world to validate it, and other open-source resolvers are working on it too."
+					}
+				},
+				{
+					"@type": "Question",
+					"name": "Which DNSSEC algorithms does ΕΛΠΙΣ Resolver check?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "RSA from 1024 to 4096 bits, ECDSA P-256 and P-384, Ed25519, and ML-DSA-44, with ML-DSA-65 and ML-DSA-87 ready for when they are given algorithm numbers. All of it is implemented from scratch in C99."
+					}
+				},
+				{
+					"@type": "Question",
+					"name": "What does algorithm number 18 mean?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "Every DNSSEC signature says which algorithm made it, as a number from the IANA registry. ML-DSA-44 was given number 18 in August 2026, from the draft by Bas Westerbaan and Sophie Schmieg."
+					}
+				}
+			]
+		},
+		{
+			"@type": "BreadcrumbList",
+			"itemListElement": [
+				{
+					"@type": "ListItem",
+					"position": 1,
+					"name": "ΕΛΠΙΣ DNS",
+					"item": "https://elpis.violetnetworks.xyz/"
+				},
+				{
+					"@type": "ListItem",
+					"position": 2,
+					"name": "ML-DSA-44",
+					"item": "https://elpis.violetnetworks.xyz/ml-dsa-44.html"
+				}
+			]
+		}
+	]
+}
+</script>
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- Top bar -->
+<header class="topbar">
+	<div class="wrap topbar-inner">
+
+		<a class="brand" href="index.html">
+			<img src="img/elpis-mark.svg?hash=22f4687a" alt="" class="brand-mark" width="32" height="32">
+			<span class="brand-name">ΕΛΠΙΣ <span class="brand-dns">DNS</span></span>
+		</a>
+
+		<nav class="nav" id="nav" aria-label="Main">
+			<a href="index.html">Home</a>
+			<a href="network.html">Network</a>
+			<a href="resolver.html">Resolver</a>
+			<a href="ml-dsa-44.html" aria-current="page">ML-DSA-44</a>
+			<a href="setup.html">Setup</a>
+			<a href="partners.html">Partners</a>
+			<a href="mission.html">About</a>
+		</nav>
+
+		<div class="topbar-tools">
+			<a class="icon-btn" href="https://github.com/PururinCollective/ElpisDNS" target="_blank" rel="noopener" title="Source on GitHub" aria-label="Source on GitHub">
+				<i class="bi bi-github"></i>
+			</a>
+			<button class="icon-btn" id="theme-btn" type="button" title="Theme" aria-label="Theme">
+				<i class="bi bi-circle-half"></i>
+			</button>
+			<button class="icon-btn nav-toggle" id="nav-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav">
+				<i class="bi bi-list"></i>
+			</button>
+		</div>
+	</div>
+</header>
+
+<section class="page-hero on-night">
+	<div class="wrap">
+		<span class="page-pill"><i class="bi bi-shield-lock-fill"></i> Post-quantum DNSSEC</span>
+		<h1 class="page-title">ML-DSA-44,<br><span class="flame">ready for the quantum age</span></h1>
+		<p class="page-lead">
+			DNSSEC proves a DNS answer is real. <b>ML-DSA-44</b> is the new signature
+			built to stay safe even against quantum computers, and ΕΛΠΙΣ Resolver
+			already checks it: <b>second in the world</b>, after Cloudflare's 1.1.1.1.
+		</p>
+		<div class="jump">
+			<a href="#what"><i class="bi bi-question-circle"></i> What it is</a>
+			<a href="#size"><i class="bi bi-rulers"></i> How big</a>
+			<a href="#how"><i class="bi bi-gear"></i> How we check it</a>
+			<a href="#try"><i class="bi bi-terminal"></i> Try it</a>
+			<a href="#faq"><i class="bi bi-chat-dots"></i> FAQ</a>
+		</div>
+	</div>
+</section>
+
+<main id="main">
+
+	<!-- The numbers -->
+	<section class="section section-tight">
+		<div class="wrap">
+
+			<div class="stats">
+
+				<div class="stat">
+					<div class="stat-num">18</div>
+					<p class="stat-text">its DNSSEC algorithm number, assigned by IANA</p>
+				</div>
+
+				<div class="stat">
+					<div class="stat-num">FIPS 204</div>
+					<p class="stat-text">the NIST standard it comes from, August 2024</p>
+				</div>
+
+				<div class="stat">
+					<div class="stat-num">2,420</div>
+					<p class="stat-text">bytes in every signature</p>
+				</div>
+
+				<div class="stat">
+					<div class="stat-num">2nd</div>
+					<p class="stat-text">resolver in the world to validate it</p>
+				</div>
+			</div>
+
+			<!-- What it is -->
+			<div class="section-head" id="what">
+				<p class="eyebrow">What it is</p>
+				<h2 class="section-title">A signature quantum computers can't fake</h2>
+				<p class="section-lead">
+					Three ideas, and you know everything you need.
+				</p>
+			</div>
+
+			<div class="cards">
+
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-patch-check"></i></span>
+					<h3 class="card-title">DNSSEC, in one line</h3>
+					<p class="card-text">
+						Domains sign their DNS records. Your resolver checks the signature,
+						so a fake answer gets thrown away instead of sending you to the
+						wrong place.
+					</p>
+				</div>
+
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-cpu"></i></span>
+					<h3 class="card-title">The quantum problem</h3>
+					<p class="card-text">
+						Today's signatures use RSA, ECDSA or Ed25519. A large enough quantum
+						computer could forge all three. None exists yet, but DNS changes
+						slowly, so the fix has to start early.
+					</p>
+				</div>
+
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-grid-3x3"></i></span>
+					<h3 class="card-title">The lattice answer</h3>
+					<p class="card-text">
+						ML-DSA is built on lattice maths that no known quantum attack breaks.
+						NIST made it a standard, FIPS 204. The <b>44</b> is the smallest and
+						fastest of its three sizes.
+					</p>
+				</div>
+			</div>
+
+			<div class="note">
+				<i class="bi bi-hourglass-split"></i>
+				<div>
+					<b>Why validators go first.</b> A domain can only switch to a new
+					signature once resolvers understand it, or its answers stop working.
+					So resolvers have to learn it before anyone signs with it. IANA gave
+					ML-DSA-44 algorithm number 18 in August 2026, Cloudflare switched it on
+					in 1.1.1.1 on 10 September 2026, and ΕΛΠΙΣ Resolver is next.
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Size -->
+	<section class="section section-alt" id="size">
+		<div class="wrap">
+
+			<div class="section-head">
+				<p class="eyebrow">How big</p>
+				<h2 class="section-title">Safer, but much bigger</h2>
+				<p class="section-lead">
+					Signature size per DNSSEC algorithm, in bytes. ML-DSA-44 is almost
+					38 times an ECDSA signature, which is why signed answers now often
+					travel over TCP instead of a single UDP packet.
+				</p>
+			</div>
+
+			<div class="table-wrap">
+				<table class="ip-table size-table">
+					<caption class="visually-hidden">DNSSEC algorithms compared: algorithm number, quantum safety, public key size and signature size in bytes.</caption>
+					<thead>
+						<tr>
+							<th scope="col">Algorithm</th>
+							<th scope="col">Quantum-safe</th>
+							<th scope="col">Public key</th>
+							<th scope="col" class="size-col">Signature</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row"><span class="srv-name">RSA/SHA-256</span> <span class="alg-num">8 &middot; 2048-bit</span></th>
+							<td data-label="Quantum"><span class="safe-no"><i class="bi bi-x-circle"></i> No</span></td>
+							<td data-label="Key">260 B</td>
+							<td data-label="Sig" class="size-col">
+								<span class="size-cell">
+									<span class="size-bar"><i style="--w:10.58%" title="RSA/SHA-256 signature: 256 bytes"></i></span>
+									<span class="size-val">256 B</span>
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><span class="srv-name">ECDSA P-256</span> <span class="alg-num">13</span></th>
+							<td data-label="Quantum"><span class="safe-no"><i class="bi bi-x-circle"></i> No</span></td>
+							<td data-label="Key">64 B</td>
+							<td data-label="Sig" class="size-col">
+								<span class="size-cell">
+									<span class="size-bar"><i style="--w:2.64%" title="ECDSA P-256 signature: 64 bytes"></i></span>
+									<span class="size-val">64 B</span>
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><span class="srv-name">Ed25519</span> <span class="alg-num">15</span></th>
+							<td data-label="Quantum"><span class="safe-no"><i class="bi bi-x-circle"></i> No</span></td>
+							<td data-label="Key">32 B</td>
+							<td data-label="Sig" class="size-col">
+								<span class="size-cell">
+									<span class="size-bar"><i style="--w:2.64%" title="Ed25519 signature: 64 bytes"></i></span>
+									<span class="size-val">64 B</span>
+								</span>
+							</td>
+						</tr>
+						<tr class="is-hero">
+							<th scope="row"><span class="srv-name">ML-DSA-44</span> <span class="alg-num">18</span></th>
+							<td data-label="Quantum"><span class="safe-yes"><i class="bi bi-check-circle-fill"></i> Yes</span></td>
+							<td data-label="Key">1,312 B</td>
+							<td data-label="Sig" class="size-col">
+								<span class="size-cell">
+									<span class="size-bar"><i style="--w:100%" title="ML-DSA-44 signature: 2,420 bytes, almost 38 times ECDSA P-256"></i></span>
+									<span class="size-val">2,420 B</span>
+								</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+
+	<!-- How -->
+	<section class="section" id="how">
+		<div class="wrap">
+
+			<div class="section-head">
+				<p class="eyebrow">How we check it</p>
+				<h2 class="section-title">From the answer to the <code class="inline-code">ad</code> flag</h2>
+				<p class="section-lead">
+					What ΕΛΠΙΣ Resolver does when an answer arrives signed with ML-DSA-44.
+				</p>
+			</div>
+
+			<div class="cards cards-2">
+
+				<div class="card">
+					<ol class="doc-steps">
+						<li>The answer arrives with a signature marked <b>algorithm 18</b>.</li>
+						<li>We fetch the domain's <b>DNSKEY</b>: a 1,312-byte key. With its own signature the reply is about 3.8 KB, too big for one UDP packet, so it comes over <b>TCP</b>.</li>
+						<li>The parent zone's <b>DS</b> record, signed the classic way, vouches for that key by its key tag and SHA-256 digest.</li>
+						<li>We verify the signature with <b>FIPS 204</b> ML-DSA-44, exactly as the IETF draft says: pure ML-DSA, empty context.</li>
+						<li>It checks out, so you get the answer with the <b>ad</b> flag. It doesn't, so you get <b>SERVFAIL</b> and an Extended DNS Error saying why.</li>
+					</ol>
+				</div>
+
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-code-slash"></i></span>
+					<h3 class="card-title">Written from scratch</h3>
+					<p class="card-text">
+						ML-DSA lives in ΕΛΠΙΣ Resolver's own C99 code, next to RSA, ECDSA and
+						Ed25519, with no outside crypto library. The draft's worked example,
+						its key tag, DS digest and a real signature, is checked on every build.
+					</p>
+					<p class="card-text" style="margin-top:12px">
+						ML-DSA-65 and ML-DSA-87 are in there too, ready for when they get
+						algorithm numbers of their own.
+					</p>
+					<a class="card-more" href="https://github.com/PururinCollective/elpis-resolver" target="_blank" rel="noopener">
+						Read the source <i class="bi bi-arrow-up-right"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Try it -->
+	<section class="section section-alt" id="try">
+		<div class="wrap">
+
+			<div class="section-head">
+				<p class="eyebrow">Try it yourself</p>
+				<h2 class="section-title">Don't take our word for it</h2>
+				<p class="section-lead">
+					Cloudflare runs test zones signed with ML-DSA-44. Ask one of our
+					public resolvers about them with <code class="inline-code">dig</code>.
+				</p>
+			</div>
+
+			<div class="cards cards-2">
+
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-check2-circle"></i></span>
+					<h3 class="card-title">A good signature</h3>
+					<div class="code-block"><pre>dig @151.158.198.47 valid.mldsa44.dnstest.dev +dnssec</pre></div>
+					<p class="card-text">
+						Look for <code>ad</code> in the flags line. It means "authenticated
+						data": the ML-DSA-44 signature checked out.
+					</p>
+					<div class="code-block"><pre>;; flags: qr rd ra <b>ad</b>; QUERY: 1, ANSWER: 3</pre></div>
+				</div>
+
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-x-octagon"></i></span>
+					<h3 class="card-title">A forged signature</h3>
+					<div class="code-block"><pre>dig @151.158.198.47 invalid.mldsa44.dnstest.dev +dnssec</pre></div>
+					<p class="card-text">
+						This one is broken on purpose. A validating resolver must refuse it,
+						and say why:
+					</p>
+					<div class="code-block"><pre>;; status: <b>SERVFAIL</b>
+; EDE: 6 (DNSSEC Bogus)</pre></div>
+				</div>
+			</div>
+
+			<div class="note">
+				<i class="bi bi-lightbulb"></i>
+				<div>
+					Want to compare? Swap in <code>@1.1.1.1</code>. On IPv6, use
+					<code>@2402:4e20:c0de::b00b</code>. And
+					<code>expired.mldsa44.dnstest.dev</code> should fail with
+					<code>EDE: 7 (Signature Expired)</code>. Every address is on the
+					<a href="resolver.html#public">resolver page</a>.
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- FAQ -->
+	<section class="section" id="faq">
+		<div class="wrap">
+
+			<div class="section-head">
+				<p class="eyebrow">FAQ</p>
+				<h2 class="section-title">Good questions</h2>
+			</div>
+
+			<div class="blacklist">
+
+				<details class="bl-item" open>
+					<summary>
+						<span class="bl-index"><i class="bi bi-question"></i></span>
+						<span class="bl-name">Do I need to change anything to use ML-DSA-44?</span>
+						<i class="bi bi-chevron-down bl-chev"></i>
+					</summary>
+					<div class="bl-body">
+						<p class="bl-text">
+							No. If you use ΕΛΠΙΣ DNS or our public resolvers, ML-DSA-44
+							signatures are checked automatically, alongside every other
+							DNSSEC algorithm.
+						</p>
+					</div>
+				</details>
+
+				<details class="bl-item">
+					<summary>
+						<span class="bl-index"><i class="bi bi-question"></i></span>
+						<span class="bl-name">Is my DNS quantum-safe now?</span>
+						<i class="bi bi-chevron-down bl-chev"></i>
+					</summary>
+					<div class="bl-body">
+						<p class="bl-text">
+							Only for zones signed with ML-DSA-44, and today those are mostly
+							test zones. The root and most top-level domains still sign with
+							RSA or ECDSA, and the encryption on DoH and DoT is a separate
+							matter. Validators have to come first; zones follow once enough
+							resolvers can check the new signatures.
+						</p>
+					</div>
+				</details>
+
+				<details class="bl-item">
+					<summary>
+						<span class="bl-index"><i class="bi bi-question"></i></span>
+						<span class="bl-name">Why is an ML-DSA-44 signature so big?</span>
+						<i class="bi bi-chevron-down bl-chev"></i>
+					</summary>
+					<div class="bl-body">
+						<p class="bl-text">
+							Lattice signatures trade size for safety. An ML-DSA-44 signature
+							is 2,420 bytes, almost 38 times an ECDSA P-256 signature. A signed
+							answer often no longer fits in one UDP packet, so it moves to TCP.
+							The resolver does that for you.
+						</p>
+					</div>
+				</details>
+
+				<details class="bl-item">
+					<summary>
+						<span class="bl-index"><i class="bi bi-question"></i></span>
+						<span class="bl-name">Who else validates ML-DSA-44?</span>
+						<i class="bi bi-chevron-down bl-chev"></i>
+					</summary>
+					<div class="bl-body">
+						<p class="bl-text">
+							Cloudflare's 1.1.1.1 was first, from 10 September 2026. ΕΛΠΙΣ
+							Resolver is the second resolver in the world to validate it, and
+							other open-source resolvers are working on it too.
+						</p>
+					</div>
+				</details>
+
+				<details class="bl-item">
+					<summary>
+						<span class="bl-index"><i class="bi bi-question"></i></span>
+						<span class="bl-name">Which DNSSEC algorithms does ΕΛΠΙΣ Resolver check?</span>
+						<i class="bi bi-chevron-down bl-chev"></i>
+					</summary>
+					<div class="bl-body">
+						<p class="bl-text">
+							RSA from 1024 to 4096 bits, ECDSA P-256 and P-384, Ed25519, and
+							ML-DSA-44, with ML-DSA-65 and ML-DSA-87 ready for when they are
+							given algorithm numbers. All of it is implemented from scratch in C99.
+						</p>
+					</div>
+				</details>
+
+				<details class="bl-item">
+					<summary>
+						<span class="bl-index"><i class="bi bi-question"></i></span>
+						<span class="bl-name">What does algorithm number 18 mean?</span>
+						<i class="bi bi-chevron-down bl-chev"></i>
+					</summary>
+					<div class="bl-body">
+						<p class="bl-text">
+							Every DNSSEC signature says which algorithm made it, as a number
+							from the IANA registry. ML-DSA-44 was given number 18 in August
+							2026, from the draft by Bas Westerbaan and Sophie Schmieg.
+						</p>
+						<a class="bl-src" href="https://www.iana.org/assignments/dns-sec-alg-numbers" target="_blank" rel="noopener">
+							<i class="bi bi-box-arrow-up-right"></i> IANA DNSSEC algorithm numbers
+						</a>
+					</div>
+				</details>
+			</div>
+
+			<p class="hint" style="margin-top:20px">
+				Sources:
+				<a href="https://csrc.nist.gov/pubs/fips/204/final" target="_blank" rel="noopener">NIST FIPS 204</a> &middot;
+				<a href="https://datatracker.ietf.org/doc/draft-westerbaan-dnssec-mldsa/" target="_blank" rel="noopener">draft-westerbaan-dnssec-mldsa</a> &middot;
+				<a href="https://www.iana.org/assignments/dns-sec-alg-numbers" target="_blank" rel="noopener">IANA registry</a> &middot;
+				<a href="https://blog.cloudflare.com/post-quantum-dnssec-1111/" target="_blank" rel="noopener">Cloudflare: 1.1.1.1 and post-quantum DNSSEC</a>
+			</p>
+
+			<div class="cta">
+				<div>
+					<div class="cta-title">Get post-quantum DNSSEC today</div>
+					<p class="cta-text">
+						Pick an encrypted ΕΛΠΙΣ DNS endpoint, or put our public resolvers
+						behind your own AdGuard Home or Pi-hole. Either way, ML-DSA-44 is on.
+					</p>
+				</div>
+				<div class="cta-actions">
+					<a class="btn btn-elpis" href="index.html#start">
+						<i class="bi bi-lightning-charge-fill"></i> Get your DNS
+					</a>
+					<a class="btn btn-night-ghost" href="resolver.html#public">
+						<i class="bi bi-hdd-network"></i> Public resolvers
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+	<div class="wrap footer-grid">
+
+		<div>
+			<a class="brand" href="index.html">
+				<img src="img/elpis-mark.svg?hash=22f4687a" alt="" class="brand-mark" width="32" height="32">
+				<span class="brand-name">ΕΛΠΙΣ <span class="brand-dns">DNS</span></span>
+			</a>
+			<p class="footer-slogan">By the community, for the community.</p>
+			<p class="footer-text">
+				Free, encrypted DNS for South East Asia. Part of the Pururin
+				Collective, in the spirit of
+				<a href="https://www.eff.org/" target="_blank" rel="noopener">EFF</a>'s
+				fight for internet freedom and privacy.
+			</p>
+		</div>
+
+		<div>
+			<h2 class="footer-title">Explore</h2>
+			<ul class="footer-links">
+				<li><a href="index.html#start">Get your DNS</a></li>
+				<li><a href="network.html">Network</a></li>
+				<li><a href="resolver.html">Resolver</a></li>
+				<li><a href="ml-dsa-44.html">ML-DSA-44</a></li>
+				<li><a href="setup.html">Setup guide</a></li>
+				<li><a href="partners.html">Partners</a></li>
+				<li><a href="mission.html">About</a></li>
+			</ul>
+		</div>
+
+		<div>
+			<h2 class="footer-title">Community</h2>
+			<ul class="footer-links">
+				<li><a href="https://github.com/PururinCollective/ElpisDNS" target="_blank" rel="noopener">GitHub</a></li>
+				<li><a href="https://discord.gg/aw8pt2SWnv" target="_blank" rel="noopener">Discord</a></li>
+				<li><a href="https://pururin.moe/" target="_blank" rel="noopener">Forum</a></li>
+				<li><a href="https://openpon.org/" target="_blank" rel="noopener">OpenPON</a></li>
+			</ul>
+		</div>
+
+		<div>
+			<h2 class="footer-title">Supported by</h2>
+			<ul class="footer-links">
+				<li><a href="https://bgp.tools/as/154516" target="_blank" rel="noopener"><span class="as-num">AS154516</span> Perfect Network</a></li>
+				<li><a href="https://bgp.tools/as/153334" target="_blank" rel="noopener"><span class="as-num">AS153334</span> Origin TechLab</a></li>
+				<li><a href="https://bgp.tools/as/135134" target="_blank" rel="noopener"><span class="as-num">AS135134</span> Shana Network</a></li>
+				<li><a href="https://bgp.tools/as/204535" target="_blank" rel="noopener"><span class="as-num">AS204535</span> Kevin Tan Networks</a></li>
+			</ul>
+
+			<h2 class="footer-title footer-title-more">Domain &amp; website</h2>
+			<a class="footer-sponsor" href="https://violetnetworks.xyz/" target="_blank" rel="noopener">
+				<img src="img/violetnetworks-logo.svg?hash=72ef2be5" alt="Violet Networks" class="footer-sponsor-logo" width="180" height="62">
+			</a>
+		</div>
+	</div>
+
+	<div class="wrap footer-bottom">
+		<div id="footer-quote"></div>
+		<p>Made with ♥ by the community &middot; © 2026 ΕΛΠΙΣ DNS</p>
+	</div>
+</footer>
+
+<script src="js/app-theme.js?hash=eeee62ab"></script>
+<script src="js/app-nav.js?hash=12265ac1"></script>
+<script src="js/app-setup.js?hash=f5859101"></script>
+<script src="js/app-quote.js?hash=04725593"></script>
+
+</body>
+</html>
