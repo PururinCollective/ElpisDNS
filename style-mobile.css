@@ -55,6 +55,24 @@
 	.city-label{
 		display:none;
 	}
+
+	/* THE GATE - question, gate and the two ways out, top to bottom.
+	   The wires turn to point down. */
+	.gate{
+		grid-template-columns:minmax(0,1fr);
+	}
+
+	.gate-wire{
+		justify-self:center;
+		width:24px;
+		margin:15px 0;
+		transform:rotate(90deg);
+	}
+
+	/* THE ROAD TO 2.5.0 - three names side by side get too narrow */
+	.tl-acts{
+		grid-template-columns:1fr;
+	}
 }
 
 @media (max-width: 920px){
@@ -123,7 +141,73 @@
 		padding:18px;
 	}
 
+	/* THE ROAD TO 2.5.0 - the versions move off the left and sit above
+	   each card, beside the rail */
+
+	.timeline{
+		--when:0px;
+		--rail:34px;
+		gap:26px;
+	}
+
+	.tl{
+		grid-template-columns:var(--rail) minmax(0,1fr);
+		grid-template-areas:
+			"node when"
+			"node card";
+		column-gap:12px;
+	}
+
+	.tl-node{
+		grid-area:node;
+		margin-top:0;
+	}
+
+	.tl-major .tl-node{
+		width:34px;
+		height:34px;
+		margin-top:0;
+		font-size:15px;
+	}
+
+	.tl-when{
+		grid-area:when;
+		display:flex;
+		align-items:baseline;
+		flex-wrap:wrap;
+		gap:4px 10px;
+		padding:2px 0 10px;
+		text-align:left;
+	}
+
+	.tl-ver,
+	.tl-private .tl-ver,
+	.tl-ver-range{
+		font-size:24px;
+	}
+
+	.tl-major .tl-ver{
+		font-size:30px;
+	}
+
+	.tl-date{
+		margin-top:0;
+	}
+
+	.tl-card{
+		grid-area:card;
+		padding:18px;
+	}
+
+	.tl-figs{
+		grid-template-columns:1fr;
+	}
+
 	/* HERO */
+
+	.release-text{
+		display:none;
+	}
 
 	.hero-pill,
 	.page-pill{
