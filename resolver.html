@@ -31,8 +31,8 @@
 <!-- Mozilla's fonts carry no Greek: this one is only the letters of ΕΛΠΙΣ -->
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&text=%CE%95%CE%9B%CE%A0%CE%99%CE%A3&display=swap" rel="stylesheet">
 
-<link href="style-main.css?hash=c2b817b8" rel="stylesheet">
-<link href="style-mobile.css?hash=45d49a63" rel="stylesheet">
+<link href="style-main.css?hash=74386bac" rel="stylesheet">
+<link href="style-mobile.css?hash=5f87fafb" rel="stylesheet">
 
 <meta name="description" content="Public ΕΛΠΙΣ Resolver addresses for your own AdGuard Home or Pi-hole: recursive DNS straight from the root, DNSSEC with post-quantum ML-DSA-44, no ISP, no Google, no Cloudflare.">
 <link rel="canonical" href="https://elpis.violetnetworks.xyz/resolver.html">
@@ -75,6 +75,8 @@
 			"operatingSystem": "Linux, FreeBSD, macOS",
 			"description": "A recursive DNS resolver in portable C99 with SIMD kernels and DNSSEC validation, including post-quantum ML-DSA-44.",
 			"programmingLanguage": "C",
+			"softwareVersion": "2.5.0",
+			"releaseNotes": "https://github.com/PururinCollective/elpis-resolver/blob/main/CHANGELOG.md",
 			"codeRepository": "https://github.com/PururinCollective/elpis-resolver",
 			"isAccessibleForFree": true,
 			"offers": {
@@ -154,10 +156,18 @@
 			servers itself and checks every signature on the way, including
 			post-quantum ML-DSA-44. We're the second resolver in the world to do that.
 		</p>
+		<a class="release-chip" href="#erdentempel">
+			<span class="release-ver">2.5.0</span>
+			<span class="release-name">Erdentempel</span>
+			<span class="release-text">is out: refused at the door</span>
+			<i class="bi bi-arrow-right"></i>
+		</a>
 		<div class="jump">
 			<a href="#public"><i class="bi bi-hdd-network"></i> Public resolvers</a>
 			<a href="#use"><i class="bi bi-sliders"></i> AdGuard Home &amp; Pi-hole</a>
+			<a href="#erdentempel"><i class="bi bi-bank"></i> Erdentempel</a>
 			<a href="#adox"><i class="bi bi-lock"></i> ADoX</a>
+			<a href="#journey"><i class="bi bi-signpost-split"></i> The road to 2.5.0</a>
 			<a href="#inside"><i class="bi-resolver"></i> What's inside</a>
 			<a href="https://github.com/PururinCollective/elpis-resolver" target="_blank" rel="noopener"><i class="bi bi-github"></i> Source</a>
 		</div>
@@ -338,12 +348,101 @@
 		</div>
 	</section>
 
-	<!-- ADoX -->
-	<section class="section" id="adox">
+	<!-- Erdentempel: the built-in blocklist of 2.5.0 -->
+	<section class="section" id="erdentempel">
 		<div class="wrap">
 
 			<div class="section-head">
-				<p class="eyebrow">New &middot; ADoX</p>
+				<p class="eyebrow">New in 2.5.0 &middot; Erdentempel</p>
+				<h2 class="section-title">Refused at the door</h2>
+				<p class="section-lead">
+					A resolver open to the public is also asked for names whose only
+					purpose is to make it work: random labels under a domain someone is
+					flooding, and big signed answers aimed at a spoofed address.
+					ΕΛΠΙΣ Resolver now knows them, and turns them away before it even
+					looks at the cache.
+				</p>
+			</div>
+
+			<figure class="gate">
+				<div class="gate-box">
+					<i class="bi bi-chat-dots" aria-hidden="true"></i>
+					<span><b>A question</b><small>any type, UDP or TCP</small></span>
+				</div>
+				<span class="gate-wire" aria-hidden="true"></span>
+				<div class="gate-box gate-core">
+					<i class="bi bi-bank" aria-hidden="true"></i>
+					<span><b>The gate</b><small>a hash per label, about 20 ns</small></span>
+				</div>
+				<span class="gate-wire" aria-hidden="true"></span>
+				<div class="gate-ways">
+					<div class="gate-way gate-refused">
+						<span class="gate-tag">On the list</span>
+						<b>REFUSED &middot; EDE 15 (Blocked)</b>
+						<small>Nothing resolved, sent upstream or cached</small>
+					</div>
+					<div class="gate-way gate-pass">
+						<span class="gate-tag">Everything else</span>
+						<b>Cache &rarr; root &rarr; TLD &rarr; name server</b>
+						<small>DNSSEC checked, ML-DSA-44 included</small>
+					</div>
+				</div>
+			</figure>
+
+			<div class="cards cards-2">
+
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-bank"></i></span>
+					<h3 class="card-title">How the gate works</h3>
+					<ol class="doc-steps">
+						<li>The names come from the ElpisDNS honeypot, which sees the abuse first, and are compiled into the binary.</li>
+						<li>Every question is checked: a name on the list, or any name below it, over UDP or TCP, of any type.</li>
+						<li>A match gets <b>REFUSED</b> with EDE 15 (Blocked), before the cache is looked at. Nothing is resolved for it.</li>
+						<li>The check is one hash per label, about 20 ns whether it matches or not, so a longer list costs nothing more.</li>
+					</ol>
+				</div>
+
+				<div class="card">
+					<span class="card-icon"><i class="bi bi-funnel"></i></span>
+					<h3 class="card-title">A gate, not a filter</h3>
+					<p class="card-text">
+						It isn't an ad blocker. Eleven names, none of them a site anyone
+						visits, so your AdGuard Home or Pi-hole still makes every call that
+						matters to you.
+					</p>
+					<p class="card-text" style="margin-top:12px">
+						What it saves is real. Each random label is a cache miss and a
+						full resolution of its own, and each spoofed question sends a big
+						answer to someone who never asked. Refused early, they cost almost
+						nothing, and the resolver is nobody's weapon.
+					</p>
+					<p class="card-text" style="margin-top:12px">
+						The status page counts them as <b>blocked</b>. Only the name the
+						client asks is checked, never a CNAME target.
+					</p>
+				</div>
+			</div>
+
+			<div class="note">
+				<i class="bi bi-terminal"></i>
+				<div>
+					<b>Running your own?</b> The gate is on by default, and
+					<code>blocklist: no</code> in <code>elpis.conf</code> switches it off.
+					2.5.0 also makes <code>elpis -t</code> fail a config with a bad value
+					in it instead of calling it OK, so an update never restarts onto one.
+					No config that worked stops working.
+					<a href="https://github.com/PururinCollective/elpis-resolver/releases/tag/v2.5.0" target="_blank" rel="noopener">Release notes</a>.
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ADoX -->
+	<section class="section section-alt" id="adox">
+		<div class="wrap">
+
+			<div class="section-head">
+				<p class="eyebrow">Since 2.4.0 &middot; ADoX</p>
 				<h2 class="section-title">Encrypted past us, too</h2>
 				<p class="section-lead">
 					DoH and DoT encrypt the trip from you to us. ADoX covers the next
@@ -402,8 +501,169 @@
 		</div>
 	</section>
 
+	<!-- The road to 2.5.0: only the releases that changed what Elpis is -->
+	<section class="section journey on-night" id="journey">
+		<div class="wrap">
+
+			<div class="section-head">
+				<p class="eyebrow">The road to 2.5.0</p>
+				<h2 class="section-title">From behind closed doors<br>to <span class="flame">Erdentempel</span></h2>
+				<p class="section-lead">
+					Thirty-one releases in twenty days, from the first public build to
+					the gate in 2.5.0. These are the ones that changed what ΕΛΠΙΣ
+					Resolver is.
+				</p>
+			</div>
+
+			<ol class="timeline" id="timeline">
+
+				<li class="tl tl-private">
+					<div class="tl-when">
+						<span class="tl-ver">Private</span>
+						<span class="tl-date">until 21 Sep 2026</span>
+					</div>
+					<span class="tl-node" aria-hidden="true"><i class="bi bi-lock-fill"></i></span>
+					<div class="tl-card">
+						<p class="tl-kicker">Before 1.0.0</p>
+						<h3 class="tl-title">Behind closed doors</h3>
+						<p class="tl-text">
+							A resolver that answers the public answers anyone, including
+							people who want to poison its cache, burn its CPU or bounce its
+							answers at someone else. Before 1.0.0, ours wasn't ready for them,
+							so it stayed private until it was.
+						</p>
+					</div>
+				</li>
+
+				<li class="tl tl-major">
+					<div class="tl-when">
+						<span class="tl-ver">1.0.0</span>
+						<time class="tl-date" datetime="2026-09-21">21 Sep 2026</time>
+					</div>
+					<span class="tl-node" aria-hidden="true"><i class="bi bi-stars"></i></span>
+					<div class="tl-card">
+						<p class="tl-kicker">The release that matters most</p>
+						<h3 class="tl-title">First light</h3>
+						<span class="tl-badge"><i class="bi bi-stars"></i> Built with Claude Opus</span>
+						<p class="tl-text">
+							Everything since stands on this one. It opened the doors on a
+							complete validating resolver in portable C99 with no
+							dependencies, and the defences a public one needs: DNS cookies
+							and 0x20 against spoofed answers, rate limiting against floods.
+						</p>
+						<ul class="tl-chips">
+							<li>DNSSEC with ML-DSA</li>
+							<li>NSEC &amp; NSEC3</li>
+							<li>QNAME minimisation</li>
+							<li>Serve-stale &amp; prefetch</li>
+							<li>DNS64</li>
+							<li>The root zone over AXFR</li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="tl">
+					<div class="tl-when">
+						<span class="tl-ver">2.0.0</span>
+						<time class="tl-date" datetime="2026-09-24">24 Sep 2026</time>
+					</div>
+					<span class="tl-node" aria-hidden="true"><i class="bi bi-speedometer2"></i></span>
+					<div class="tl-card">
+						<p class="tl-kicker">After sixteen 1.1 releases in three days</p>
+						<h3 class="tl-title">Meant to be left running</h3>
+						<p class="tl-text">
+							Benchmarked on 1,221 lookups across 28 groups of real services,
+							from Steam and YouTube to Shopee and Malaysian banks, with every
+							answer checked against 1.1.1.1.
+						</p>
+						<div class="tl-figs">
+							<div class="tl-fig"><b>1,218</b><span>of 1,221 answers the same as 1.1.1.1</span></div>
+							<div class="tl-fig"><b>0.6 ms</b><span>median answer, warm cache</span></div>
+							<div class="tl-fig"><b>4.2 ms</b><span>1.1.1.1's median, from the same place</span></div>
+						</div>
+					</div>
+				</li>
+
+				<li class="tl">
+					<div class="tl-when">
+						<span class="tl-ver">2.4.0</span>
+						<time class="tl-date" datetime="2026-10-05">5 Oct 2026</time>
+					</div>
+					<span class="tl-node" aria-hidden="true"><i class="bi bi-lock"></i></span>
+					<div class="tl-card">
+						<p class="tl-kicker">“Intrinsic Future” &middot; the first release with a name</p>
+						<h3 class="tl-title">Encrypted past us</h3>
+						<p class="tl-text">
+							ADoX: what Elpis asks the root, the TLDs and each name server goes
+							over TLS wherever they take it. The TLS 1.3 client is written in
+							the tree, so it's still one small binary with no dependencies.
+						</p>
+						<a class="tl-more" href="#adox">What ADoX is <i class="bi bi-arrow-right"></i></a>
+					</div>
+				</li>
+
+				<li class="tl">
+					<div class="tl-when">
+						<span class="tl-ver tl-ver-range">2.4.3 &ndash; 2.4.5</span>
+						<span class="tl-date">6 &ndash; 8 Oct 2026</span>
+					</div>
+					<span class="tl-node" aria-hidden="true"><i class="bi bi-moon-stars"></i></span>
+					<div class="tl-card">
+						<p class="tl-kicker">Three nights, three names</p>
+						<h3 class="tl-title">A journey among the stars</h3>
+						<ul class="tl-acts">
+							<li>
+								<span class="tl-act-name">Resilient Journey</span>
+								<time class="tl-act-meta" datetime="2026-10-06">2.4.3 &middot; 6 Oct</time>
+								<p>Looks after the host, not just the binary: the account, the systemd unit, the start at boot.</p>
+							</li>
+							<li>
+								<span class="tl-act-name">Celestial Equations</span>
+								<time class="tl-act-meta" datetime="2026-10-07">2.4.4 &middot; 7 Oct</time>
+								<p>Mail to Microsoft 365 resolves again: servers that refuse EDNS get asked without it.</p>
+							</li>
+							<li>
+								<span class="tl-act-name">Celestial Cascade</span>
+								<time class="tl-act-meta" datetime="2026-10-08">2.4.5 &middot; 8 Oct</time>
+								<p>Zones that sign on the fly, like Route 53, stop going SERVFAIL an hour after a lookup.</p>
+							</li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="tl tl-major tl-finale">
+					<div class="tl-when">
+						<span class="tl-ver">2.5.0</span>
+						<time class="tl-date" datetime="2026-10-10">10 Oct 2026</time>
+					</div>
+					<span class="tl-node" aria-hidden="true"><i class="bi bi-bank"></i></span>
+					<div class="tl-card">
+						<p class="tl-kicker">“Erdentempel” &middot; latest</p>
+						<h3 class="tl-title">Back to earth, with a guard at the gate</h3>
+						<p class="tl-text">
+							After three names among the stars, the journey comes back down.
+							Erdentempel, a temple of the earth: the names asked only to make a
+							resolver work, gathered by our honeypot, are refused before the
+							cache is even looked at.
+						</p>
+						<ol class="tl-arc" aria-label="The last four names, in order">
+							<li>Resilience</li>
+							<li>Precision</li>
+							<li>Flow</li>
+							<li>Protection</li>
+						</ol>
+						<div class="tl-links">
+							<a class="btn btn-elpis btn-sm" href="#erdentempel"><i class="bi bi-bank"></i> How the gate works</a>
+							<a class="btn btn-night-ghost btn-sm" href="https://github.com/PururinCollective/elpis-resolver/blob/main/CHANGELOG.md" target="_blank" rel="noopener"><i class="bi bi-journal-text"></i> Every release</a>
+						</div>
+					</div>
+				</li>
+			</ol>
+		</div>
+	</section>
+
 	<!-- What's inside -->
-	<section class="section section-alt" id="inside">
+	<section class="section" id="inside">
 		<div class="wrap">
 
 			<div class="section-head">
@@ -463,6 +723,7 @@
 						Written by the community with help from Claude AI, and reviewed in
 						the open on GitHub.
 					</p>
+					<a class="card-more" href="#journey">How it got here <i class="bi bi-arrow-right"></i></a>
 				</div>
 
 				<div class="card">
@@ -561,6 +822,7 @@
 <script src="js/app-copy.js?hash=7fdd7e69"></script>
 <script src="js/app-setup.js?hash=f5859101"></script>
 <script src="js/app-quote.js?hash=04725593"></script>
+<script src="js/app-journey.js?hash=bdc6855d"></script>
 
 </body>
 </html>

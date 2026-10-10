@@ -609,6 +609,57 @@ a.hero-pill:hover{
 	color:#fff;
 }
 
+/* The latest release, one line under the lead. */
+.release-chip{
+	display:inline-flex;
+	align-items:center;
+	gap:10px;
+
+	margin-top:24px;
+	padding:6px 16px 6px 6px;
+	border-radius:var(--pill);
+
+	background:rgba(255,255,255,.07);
+	border:1px solid rgba(255,255,255,.18);
+
+	color:rgba(255,255,255,.82);
+	font-size:14px;
+	transition:var(--speed);
+}
+
+.release-chip:hover{
+	background:rgba(255,255,255,.13);
+	border-color:rgba(255,255,255,.34);
+	color:#fff;
+	text-decoration:none;
+}
+
+.release-ver{
+	padding:3px 10px;
+	border-radius:var(--pill);
+	background:var(--violet);
+	box-shadow:0 0 18px -2px rgba(255,113,57,.7);
+
+	color:#fff;
+	font-family:var(--font-mono);
+	font-size:12.5px;
+	font-weight:500;
+}
+
+.release-name{
+	color:#fff;
+	font-weight:650;
+}
+
+.release-chip i{
+	color:var(--lavender);
+	transition:transform var(--speed);
+}
+
+.release-chip:hover i{
+	transform:translateX(3px);
+}
+
 /* ---------- the DNS flow, in a browser window ---------- */
 
 /*
@@ -2439,6 +2490,626 @@ a.as-card:hover{
 /* Phones have no hover, so the button is always there. */
 @media (hover: none){
 	.copy-code{ opacity:1 }
+}
+
+/* ---------- the gate (2.5.0 Erdentempel) ---------- */
+
+/*
+	One question on its way in: the gate first, then either REFUSED or
+	the usual walk from the cache to the name server. Side by side here,
+	stacked on a phone.
+*/
+
+.gate{
+	display:grid;
+	grid-template-columns:auto 44px auto 44px minmax(0,1fr);
+	align-items:center;
+
+	margin:0 0 16px;
+	padding:clamp(18px,3vw,28px);
+	border-radius:var(--radius-lg);
+
+	background:var(--surface);
+	border:1px solid var(--line);
+}
+
+.gate-box{
+	display:flex;
+	align-items:center;
+	gap:12px;
+
+	padding:12px 16px 12px 12px;
+	border-radius:var(--radius);
+	background:var(--bg-alt);
+	border:1px solid var(--line);
+}
+
+.gate-box i{
+	display:inline-flex;
+	align-items:center;
+	justify-content:center;
+	flex-shrink:0;
+
+	width:38px;
+	height:38px;
+	border-radius:11px;
+
+	background:var(--accent-soft);
+	color:var(--accent);
+	font-size:18px;
+}
+
+.gate-box b,
+.gate-way b{
+	display:block;
+	color:var(--text);
+	font-size:15px;
+	line-height:1.3;
+}
+
+.gate-box small,
+.gate-way small{
+	display:block;
+	margin-top:2px;
+	color:var(--text-faint);
+	font-size:12.5px;
+	line-height:1.4;
+}
+
+.gate-core{
+	border-color:var(--accent);
+	box-shadow:0 0 0 4px var(--accent-soft);
+}
+
+.gate-core i{
+	background:var(--primary);
+	color:var(--on-primary);
+}
+
+.gate-wire{
+	position:relative;
+	height:2px;
+	margin:0 8px 0 4px;
+	background:var(--line-strong);
+}
+
+.gate-wire::after{
+	content:"";
+	position:absolute;
+	right:-6px;
+	top:-4px;
+
+	border-left:7px solid var(--line-strong);
+	border-top:5px solid transparent;
+	border-bottom:5px solid transparent;
+}
+
+.gate-ways{
+	display:grid;
+	gap:10px;
+}
+
+.gate-way{
+	padding:10px 16px;
+	border-radius:var(--radius);
+	border:1px solid var(--line);
+	border-left-width:3px;
+}
+
+.gate-way b{
+	margin-top:2px;
+	font-family:var(--font-mono);
+	font-size:13.5px;
+	font-weight:500;
+}
+
+.gate-tag{
+	display:block;
+	font-size:11.5px;
+	font-weight:700;
+	letter-spacing:.1em;
+	text-transform:uppercase;
+}
+
+.gate-refused{
+	background:var(--warn-soft);
+	border-color:color-mix(in srgb, var(--warn) 40%, transparent);
+	border-left-color:var(--warn);
+}
+
+.gate-refused .gate-tag{
+	color:var(--warn);
+}
+
+.gate-pass{
+	background:var(--accent-soft);
+	border-color:color-mix(in srgb, var(--accent) 35%, transparent);
+	border-left-color:var(--accent);
+}
+
+.gate-pass .gate-tag{
+	color:var(--accent);
+}
+
+/* ---------- the road to 2.5.0 ---------- */
+
+/*
+	Night violet in both themes, like the banners, under a sky for the
+	celestial releases that thins out toward the bottom, where the story
+	comes back to earth and the glow turns to flame.
+
+	The rail down the timeline fills with the flame as you scroll:
+	js/app-journey.js sets --fill. Without it the rail is simply full.
+*/
+
+.journey{
+	position:relative;
+	isolation:isolate;
+	overflow:hidden;
+
+	color:#fff;
+	background:
+		radial-gradient(65% 30% at 50% 104%, rgba(255,113,57,.24) 0%, rgba(227,21,135,.14) 45%, rgba(227,21,135,0) 80%),
+		radial-gradient(45% 30% at 92% 0%, rgba(144,89,255,.30) 0%, rgba(144,89,255,0) 70%),
+		radial-gradient(35% 25% at 0% 30%, rgba(227,21,135,.12) 0%, rgba(227,21,135,0) 70%),
+		linear-gradient(180deg, var(--night-deep) 0%, var(--night) 55%, #2a0f4f 100%);
+}
+
+.journey::before{
+	content:"";
+	position:absolute;
+	inset:0;
+	z-index:-1;
+
+	background-image:
+		radial-gradient(1.5px 1.5px at 24px 36px, #fff, transparent),
+		radial-gradient(1px 1px at 150px 92px, rgba(255,255,255,.85), transparent),
+		radial-gradient(1.5px 1.5px at 236px 210px, var(--lavender), transparent),
+		radial-gradient(1px 1px at 96px 180px, rgba(255,255,255,.7), transparent),
+		radial-gradient(1.5px 1.5px at 60px 120px, rgba(255,255,255,.6), transparent),
+		radial-gradient(1px 1px at 330px 300px, var(--lavender), transparent),
+		radial-gradient(2px 2px at 400px 60px, rgba(255,255,255,.9), transparent);
+	background-size:
+		320px 280px, 320px 280px, 320px 280px,
+		470px 390px, 470px 390px, 470px 390px, 470px 390px;
+
+	-webkit-mask-image:linear-gradient(180deg, #000 0%, #000 50%, transparent 92%);
+	mask-image:linear-gradient(180deg, #000 0%, #000 50%, transparent 92%);
+	opacity:.75;
+	pointer-events:none;
+}
+
+.journey .eyebrow{
+	color:var(--lavender);
+}
+
+.journey .section-title{
+	color:#fff;
+}
+
+.journey .section-title .flame{
+	background:var(--flame);
+	-webkit-background-clip:text;
+	background-clip:text;
+	color:transparent;
+}
+
+.journey .section-lead{
+	color:rgba(255,255,255,.78);
+}
+
+.journey b{
+	color:#fff;
+}
+
+.timeline{
+	--when:150px;
+	--rail:48px;
+	--fill:1;
+
+	position:relative;
+	display:grid;
+	gap:22px;
+
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+
+/* The rail, and the flame climbing down it. It runs on past 2.5.0 and
+   fades out: the road doesn't end there. */
+.timeline::before,
+.timeline::after{
+	content:"";
+	position:absolute;
+	top:20px;
+	bottom:0;
+	left:calc(var(--when) + var(--rail) / 2 - 1px);
+
+	width:2px;
+	border-radius:2px;
+
+	-webkit-mask-image:linear-gradient(180deg, #000 calc(100% - 160px), transparent);
+	mask-image:linear-gradient(180deg, #000 calc(100% - 160px), transparent);
+}
+
+.timeline::before{
+	background:rgba(255,255,255,.12);
+}
+
+.timeline::after{
+	background:linear-gradient(180deg,
+		rgba(203,158,255,.25) 0%,
+		var(--lavender) 16%,
+		var(--violet-light) 45%,
+		#e31587 75%,
+		#ff7139 90%,
+		#ffbd4f 100%);
+	box-shadow:0 0 14px rgba(144,89,255,.55);
+
+	clip-path:inset(0 0 calc((1 - var(--fill)) * 100%) 0);
+}
+
+.tl{
+	position:relative;
+	display:grid;
+	grid-template-columns:var(--when) var(--rail) minmax(0,1fr);
+	align-items:start;
+}
+
+.tl-when{
+	padding:16px 4px 0 0;
+	text-align:right;
+}
+
+.tl-ver{
+	display:block;
+
+	font-family:var(--font-display);
+	font-size:32px;
+	font-weight:700;
+	font-stretch:80%;
+	line-height:1;
+	color:#fff;
+}
+
+.tl-ver-range{
+	font-size:22px;
+	line-height:1.1;
+}
+
+.tl-date{
+	display:block;
+	margin-top:6px;
+
+	color:rgba(255,255,255,.6);
+	font-family:var(--font-mono);
+	font-size:12.5px;
+}
+
+.tl-node{
+	position:relative;
+	z-index:1;
+	justify-self:center;
+
+	display:flex;
+	align-items:center;
+	justify-content:center;
+
+	width:32px;
+	height:32px;
+	margin-top:16px;
+	border-radius:50%;
+
+	background:var(--night);
+	border:2px solid var(--violet-light);
+	box-shadow:0 0 0 5px rgba(20,7,40,.9);
+
+	color:var(--lavender);
+	font-size:13px;
+}
+
+.tl-card{
+	min-width:0;
+	padding:22px 26px;
+	border-radius:var(--radius-lg);
+
+	background:rgba(255,255,255,.045);
+	border:1px solid rgba(255,255,255,.12);
+}
+
+.tl-kicker{
+	color:var(--lavender);
+	font-size:12px;
+	font-weight:700;
+	letter-spacing:.12em;
+	text-transform:uppercase;
+}
+
+.tl-title{
+	margin-top:6px;
+
+	font-family:var(--font-display);
+	font-size:clamp(23px,2.6vw,30px);
+	font-weight:700;
+	font-stretch:84%;
+	line-height:1.08;
+	color:#fff;
+}
+
+.tl-text{
+	max-width:700px;
+	margin-top:10px;
+
+	color:rgba(255,255,255,.8);
+	font-size:15.5px;
+	line-height:1.65;
+}
+
+.tl-more{
+	display:inline-flex;
+	align-items:center;
+	gap:4px;
+	margin-top:14px;
+
+	color:var(--lavender);
+	font-size:14.5px;
+	font-weight:600;
+}
+
+.tl-more:hover{
+	color:#fff;
+}
+
+/* Before 1.0.0: drawn in dashes, not yet part of anything public. */
+.tl-private .tl-ver{
+	color:rgba(255,255,255,.55);
+	font-size:26px;
+}
+
+.tl-private .tl-node{
+	border-style:dashed;
+	border-color:rgba(255,255,255,.4);
+	color:rgba(255,255,255,.65);
+}
+
+.tl-private .tl-card{
+	background:transparent;
+	border-style:dashed;
+	border-color:rgba(255,255,255,.2);
+}
+
+.tl-private .tl-text{
+	color:rgba(255,255,255,.7);
+}
+
+/* 1.0.0 and 2.5.0, the two the story turns on: the flame round the
+   edge, the version in flame, and a node that glows. */
+.tl-major .tl-card{
+	border:1px solid transparent;
+	background:
+		linear-gradient(rgba(34,14,70,.97), rgba(34,14,70,.97)) padding-box,
+		var(--flame) border-box;
+	box-shadow:0 24px 60px -28px rgba(227,21,135,.6);
+}
+
+.tl-major .tl-ver{
+	font-size:46px;
+
+	background:var(--flame);
+	-webkit-background-clip:text;
+	background-clip:text;
+	color:transparent;
+}
+
+.tl-major .tl-node{
+	width:42px;
+	height:42px;
+	margin-top:14px;
+
+	background:linear-gradient(135deg, #ff7139 0%, #e31587 50%, #9059ff 100%);
+	border:0;
+	box-shadow:0 0 0 5px rgba(20,7,40,.9), 0 0 28px rgba(255,113,57,.55);
+
+	color:#fff;
+	font-size:17px;
+}
+
+.tl-badge{
+	display:inline-flex;
+	align-items:center;
+	gap:7px;
+	margin-top:12px;
+	padding:5px 12px;
+	border-radius:var(--pill);
+
+	background:rgba(255,255,255,.08);
+	border:1px solid rgba(255,189,79,.45);
+
+	color:#ffd591;
+	font-size:13.5px;
+	font-weight:600;
+}
+
+.tl-chips{
+	display:flex;
+	flex-wrap:wrap;
+	gap:6px;
+
+	margin:16px 0 0;
+	padding:0;
+	list-style:none;
+}
+
+.tl-chips li{
+	padding:4px 11px;
+	border-radius:var(--pill);
+	background:rgba(255,255,255,.06);
+	border:1px solid rgba(255,255,255,.14);
+
+	color:rgba(255,255,255,.86);
+	font-size:13px;
+}
+
+.tl-figs{
+	display:grid;
+	grid-template-columns:repeat(3,minmax(0,1fr));
+	gap:10px;
+	margin-top:16px;
+}
+
+.tl-fig,
+.tl-acts li{
+	padding:14px 16px;
+	border-radius:var(--radius);
+	background:rgba(255,255,255,.05);
+	border:1px solid rgba(255,255,255,.1);
+}
+
+.tl-fig b{
+	display:block;
+
+	font-family:var(--font-display);
+	font-size:28px;
+	font-weight:700;
+	font-stretch:80%;
+	line-height:1;
+}
+
+.tl-fig span{
+	display:block;
+	margin-top:6px;
+
+	color:rgba(255,255,255,.66);
+	font-size:13px;
+	line-height:1.4;
+}
+
+/* The yardstick, not the result: drawn quieter. */
+.tl-fig:last-child b{
+	color:rgba(255,255,255,.6);
+}
+
+.tl-acts{
+	display:grid;
+	grid-template-columns:repeat(3,minmax(0,1fr));
+	gap:10px;
+
+	margin:16px 0 0;
+	padding:0;
+	list-style:none;
+}
+
+.tl-act-name{
+	display:block;
+
+	font-family:var(--font-display);
+	font-size:20px;
+	font-weight:650;
+	font-stretch:85%;
+	line-height:1.15;
+	color:#fff;
+}
+
+.tl-act-meta{
+	display:block;
+	margin-top:4px;
+
+	color:var(--lavender);
+	font-family:var(--font-mono);
+	font-size:12px;
+}
+
+.tl-acts p{
+	margin-top:8px;
+	color:rgba(255,255,255,.76);
+	font-size:14px;
+	line-height:1.55;
+}
+
+/* Resilience, precision, flow, protection: the last four names in a row. */
+.tl-arc{
+	display:flex;
+	flex-wrap:wrap;
+	align-items:center;
+	gap:6px;
+
+	margin:16px 0 0;
+	padding:0;
+	list-style:none;
+}
+
+.tl-arc li{
+	display:inline-flex;
+	align-items:center;
+	gap:6px;
+
+	color:rgba(255,255,255,.62);
+	font-size:13px;
+	font-weight:600;
+	letter-spacing:.06em;
+	text-transform:uppercase;
+}
+
+.tl-arc li + li::before{
+	content:"\2192";
+	color:rgba(255,255,255,.3);
+	letter-spacing:0;
+}
+
+.tl-arc li:last-child{
+	background:var(--flame);
+	-webkit-background-clip:text;
+	background-clip:text;
+	color:transparent;
+}
+
+.tl-arc li:last-child::before{
+	color:rgba(255,255,255,.3);
+	-webkit-text-fill-color:rgba(255,255,255,.3);
+}
+
+.tl-links{
+	display:flex;
+	flex-wrap:wrap;
+	gap:10px;
+	margin-top:20px;
+}
+
+/* Each release comes up as it reaches the screen, and the last node
+   keeps breathing. Only once the script has started, and only for
+   visitors who haven't asked for less motion. */
+.timeline.journey-live .tl{
+	opacity:0;
+	transform:translateY(18px);
+	transition:opacity .6s ease, transform .6s ease;
+}
+
+.timeline.journey-live .tl.is-in{
+	opacity:1;
+	transform:none;
+}
+
+.tl-finale .tl-node{
+	animation:tl-glow 2.8s ease-in-out infinite;
+}
+
+@keyframes tl-glow{
+	0%, 100%{ box-shadow:0 0 0 5px rgba(20,7,40,.9), 0 0 22px rgba(255,113,57,.45) }
+	50%     { box-shadow:0 0 0 5px rgba(20,7,40,.9), 0 0 40px rgba(255,113,57,.85) }
+}
+
+@media (prefers-reduced-motion: reduce){
+
+	.timeline.journey-live .tl{
+		opacity:1;
+		transform:none;
+		transition:none;
+	}
+
+	.tl-finale .tl-node{
+		animation:none;
+	}
 }
 
 /* ---------- footer ---------- */
