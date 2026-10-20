@@ -1,9 +1,8 @@
 /ip dns forwarders
-add doh-servers="https://b.hitoha.moe/dns-query,https://c.hitoha.moe/dns-query,https://gg.hitoha.moe/dns-query" name=AdGuard
+add doh-servers="https://b.hitoha.moe/dns-query,https://gg.hitoha.moe/dns-query" name=AdGuard
 
 /ip dns static
 add address=151.158.198.53 name=b.hitoha.moe type=A
-add address=160.187.96.67 name=c.hitoha.moe type=A
 add address=103.131.188.71 name=gg.hitoha.moe type=A
 add name=* forward-to=AdGuard type=FWD
 

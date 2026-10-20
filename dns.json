@@ -4,7 +4,7 @@
 	"//": "ΕΛΠΙΣ DNS resolver database. Everything the website shows is built from this file. To add your own DoH/DoT resolver, copy one block inside \"resolvers\", change the values, and open a pull request. Read CONTRIBUTING.md first.",
 
 	"version": 2,
-	"updated": "2026-10-07",
+	"updated": "2026-10-20",
 
 	"regions": [
 		{ "code": "MY", "label": "Malaysia" },
@@ -93,23 +93,6 @@
 				"64.hitoha.moe",
 				"64.ryukura.biz.id",
 				"64.undo.it"
-			]
-		},
-
-		{
-			"id": "my-origin-standard",
-			"region": "MY",
-			"provider": "Origin TechLab",
-			"filter": "NSFW",
-			"network": "IPv4+IPv6",
-			"feature": "CDN",
-			"kind": ["DoH", "DoT"],
-			"maintainer": "Origin TechLab",
-			"homepage": "https://bgp.tools/as/153334",
-			"notes": "A second Malaysian option, handy when one network is having a bad day.",
-			"servers": [
-				"c.hitoha.moe",
-				"doh.originwifi.com.my"
 			]
 		},
 

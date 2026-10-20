@@ -18,7 +18,6 @@ const MAP_SITES = [
 		place: "Kuala Lumpur",
 		lon: 101.6865, lat: 3.1412,
 		networks: [
-			["AS153334", "Origin TechLab"],
 			["AS204535", "Kevin Tan Networks"]
 		]
 	},
