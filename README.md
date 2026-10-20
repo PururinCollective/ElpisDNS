@@ -200,7 +200,7 @@ DoH forwarders:
 
 ```rsc
 /ip dns forwarders
-add doh-servers="https://b.hitoha.moe/dns-query,https://c.hitoha.moe/dns-query,https://gg.hitoha.moe/dns-query" name=AdGuard
+add doh-servers="https://b.hitoha.moe/dns-query,https://gg.hitoha.moe/dns-query" name=AdGuard
 ```
 
 Static entries so the router can find the resolver it is about to use:
@@ -208,7 +208,6 @@ Static entries so the router can find the resolver it is about to use:
 ```rsc
 /ip dns static
 add address=151.158.198.53 name=b.hitoha.moe type=A
-add address=160.187.96.67 name=c.hitoha.moe type=A
 add address=103.131.188.71 name=gg.hitoha.moe type=A
 add name=* forward-to=AdGuard type=FWD
 ```
@@ -221,7 +220,6 @@ press **.rsc**.
 ΕΛΠΙΣ DNS runs on these community networks. Thank you for keeping it free.
 
 - [AS154516](https://bgp.tools/as/154516) &mdash; Perfect Network, Semenyih, Malaysia
-- [AS153334](https://bgp.tools/as/153334) &mdash; Origin TechLab, Kuala Lumpur, Malaysia
 - [AS135134](https://bgp.tools/as/135134) &mdash; Shana Network, Singapore
 - [AS204535](https://bgp.tools/as/204535) &mdash; Kevin Tan Networks, Kuala Lumpur, Malaysia
 

@@ -45,7 +45,7 @@ async function loadDatabase(){
 
 	try{
 
-		const response = await fetch("dns.json?hash=f10d1c03", { cache: "no-cache" });
+		const response = await fetch("dns.json?hash=75461333", { cache: "no-cache" });
 
 		if(!response.ok){
 			throw new Error(`dns.json responded ${response.status}`);
